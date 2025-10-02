@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Network Analysis - Complexity Insights</title>
+    <meta name="description" content="Analysis of S&P 500 stock correlation networks to identify market structure and systemic risk indicators.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .project-header {
+            margin-top: 70px;
+            padding: 3rem 5% 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .project-header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-header h1 {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .project-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .content-section h2 {
+            color: #1e3a8a;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e0e7ff;
+        }
+
+        .content-section h3 {
+            color: #2563eb;
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            margin-top: 1rem;
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+            color: #1e40af;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #bfdbfe;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#research">Research</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="project-header">
+        <div class="project-header-content">
+            <a href="/projects/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+
+            <h1>Financial Network Analysis: Mapping S&P 500 Correlations</h1>
+
+            <div class="project-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>October 2025</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>3 week project</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span>Category: Network Analysis</span>
+                </div>
+            </div>
+
+            <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">NetworkX</span>
+                <span class="tag">Pandas</span>
+                <span class="tag">Matplotlib</span>
+                <span class="tag">Network Science</span>
+            </div>
+
+            <div class="project-links">
+                <a href="#" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+                <a href="#" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Download Report
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="project-content">
+        
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>
+                Financial markets are interconnected systems where the movement of one asset can cascade through the network, affecting many others. Understanding these interconnections is critical for risk management, portfolio construction, and identifying systemic vulnerabilities.
+            </p>
+            <p>
+                This project analyzes correlation networks among S&P 500 stocks to reveal hidden market structure. By applying network science techniques to stock price data, I identify key nodes, community structures, and how network topology changes during periods of market stress.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number">500</div>
+                    <div class="stat-label">Stocks Analyzed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">5 Years</div>
+                    <div class="stat-label">Historical Data</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">Sectors Mapped</div>
+                </div>
+            </div>
+
+            <div class="callout">
+                <h4><i class="fas fa-lightbulb"></i> Key Motivation</h4>
+                <p>Traditional correlation matrices are hard to interpret. Network visualization reveals patterns that would otherwise remain hidden in hundreds of pairwise correlations.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Methodology</h2>
+            
+            <h3>Data Collection</h3>
+            <p>
+                Stock price data was collected from Yahoo Finance API for all S&P 500 constituents from January 2020 to October 2025. Daily adjusted closing prices were used to calculate returns, ensuring dividends and splits were properly accounted for.
+            </p>
+
+            <h3>Network Construction</h3>
+            <p>
+                The correlation network was constructed by calculating Pearson correlation coefficients between all pairs of stocks based on their daily returns. To focus on meaningful relationships, only correlations above a threshold of 0.5 were included as edges in the network.
+            </p>
+
+            <div class="code-block">
+# Calculate correlation matrix
+returns = price_data.pct_change().dropna()
+corr_matrix = returns.corr()
+
+# Build network with threshold
+G = nx.Graph()
+for i in range(len(stocks)):
+    for j in range(i+1, len(stocks)):
+        if corr_matrix.iloc[i, j] > 0.5:
+            G.add_edge(stocks[i], stocks[j], 
+                      weight=corr_matrix.iloc[i, j])
+            </div>
+
+            <h3>Network Metrics</h3>
+            <p>
+                Several network metrics were calculated to characterize the structure:
+            </p>
+            <ul>
+                <li><strong>Degree Centrality:</strong> Identifies stocks with the most connections (highly correlated with many others)</li>
+                <li><strong>Betweenness Centrality:</strong> Reveals stocks that bridge different parts of the network</li>
+                <li><strong>Community Detection:</strong> Groups stocks into clusters using the Louvain algorithm</li>
+                <li><strong>Network Density:</strong> Measures overall interconnectedness of the market</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Results & Findings</h2>
+            
+            <h3>Network Structure During Normal Conditions</h3>
+            <p>
+                Under normal market conditions, the correlation network exhibits clear sectoral clustering. Stocks within the same sector (technology, financials, healthcare) form densely connected communities, while cross-sector connections are sparser.
+            </p>
+
+            <div class="figure">
+                <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=Network+Visualization" alt="S&P 500 correlation network">
+                <p class="figure-caption">Figure 1: S&P 500 correlation network colored by sector. Node size represents degree centrality.</p>
+            </div>
+
+            <h3>Key Findings</h3>
+            <ul>
+                <li><strong>Sectoral Homophily:</strong> Stocks cluster strongly by sector, with technology and financial sectors forming the most cohesive communities.</li>
+                <li><strong>Systematic Bridges:</strong> Large-cap stocks like Apple, Microsoft, and JPMorgan Chase show high betweenness centrality, acting as bridges between sectors.</li>
+                <li><strong>Market Stress Behavior:</strong> During the 2022 downturn, network density increased by 37%, indicating a "correlation breakdown" where diversification benefits eroded.</li>
+                <li><strong>Energy Sector Isolation:</strong> Energy stocks maintained lower correlations with other sectors, even during stress periods, suggesting potential diversification benefits.</li>
+            </ul>
+
+            <div class="callout">
+                <h4><i class="fas fa-exclamation-triangle"></i> Systemic Risk Implication</h4>
+                <p>The dramatic increase in network density during market stress suggests that traditional portfolio diversification may fail precisely when it's needed most.</p>
+            </div>
+
+            <h3>Centrality Analysis</h3>
+            <p>
+                The top 10 stocks by degree centrality were dominated by large-cap technology and financial stocks. These "hub" nodes represent systemic importance—their movements disproportionately affect the broader market.
+            </p>
+
+            <div class="figure">
+                <img src="https://via.placeholder.com/800x400/4facfe/ffffff?text=Centrality+Distribution" alt="Degree centrality distribution">
+                <p class="figure-caption">Figure 2: Distribution of degree centrality across all S&P 500 stocks. Long tail indicates a scale-free network structure.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Technical Implementation</h2>
+            
+            <p>
+                The analysis pipeline was implemented in Python using several key libraries. NetworkX provided network construction and analysis capabilities, while Pandas handled data manipulation and Matplotlib created visualizations.
+            </p>
+
+            <h3>Community Detection</h3>
+            <p>
+                The Louvain algorithm was used to identify communities in the network. This method optimizes modularity, finding groups of nodes with dense internal connections and sparse external connections.
+            </p>
+
+            <div class="code-block">
+from community import community_louvain
+
+# Detect communities
+communities = community_louvain.best_partition(G)
+
+# Calculate modularity score
+modularity = community_louvain.modularity(communities, G)
+print(f"Modularity: {modularity:.3f}")
+
+# Count communities
+n_communities = len(set(communities.values()))
+print(f"Number of communities: {n_communities}")
+            </div>
+
+            <p>
+                The analysis revealed 11 distinct communities, closely aligning with traditional sector classifications but with some interesting deviations where cross-sector correlations created hybrid groups.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>Conclusions & Future Work</h2>
+            
+            <p>
+                This project demonstrates how network science can reveal market structure that isn't apparent from traditional statistical analysis. The findings have practical implications for portfolio management, risk assessment, and understanding systemic vulnerabilities in financial markets.
+            </p>
+
+            <h3>Key Takeaways</h3>
+            <ul>
+                <li>Market structure is highly sectoral under normal conditions but becomes increasingly interconnected during stress</li>
+                <li>A small number of hub stocks play an outsized role in market dynamics</li>
+                <li>Network metrics can potentially serve as early warning indicators for market stress</li>
+                <li>Energy stocks maintain distinctive correlation patterns, warranting further investigation</li>
+            </ul>
+
+            <h3>Limitations</h3>
+            <p>
+                This analysis uses a static correlation threshold, which may miss dynamic relationships that change over time. Future work could implement rolling window analysis to capture temporal evolution of network structure. Additionally, the correlation measure captures only linear relationships and may miss more complex dependencies.
+            </p>
+
+            <h3>Future Directions</h3>
+            <p>
+                Several extensions could enhance this analysis:
+            </p>
+            <ul>
+                <li>Implement dynamic network analysis with time-varying correlations</li>
+                <li>Explore alternative similarity measures beyond Pearson correlation (e.g., mutual information, Granger causality)</li>
+                <li>Develop a predictive model using network metrics to forecast market volatility</li>
+                <li>Extend the analysis to include international markets and identify cross-border contagion pathways</li>
+                <li>Investigate how regulatory changes affect network structure</li>
+            </ul>
+
+            <div class="callout">
+                <h4><i class="fas fa-chart-line"></i> Practical Application</h4>
+                <p>This methodology could be adapted for portfolio construction, helping identify stocks that provide true diversification benefits rather than superficial sector differences.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Complexity Insights. <a href="/projects/">Back to Projects</a></p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
