@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- EDIT THESE -->
+    <title>Your Post Title - Complexity Insights</title>
+    <meta name="description" content="Brief description of your blog post for search engines">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Post Header */
+        .post-header {
+            margin-top: 70px;
+            padding: 3rem 5% 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .post-header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .post-header h1 {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Post Content */
+        .post-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .post-body {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .post-body h2 {
+            color: #1e3a8a;
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e7ff;
+        }
+
+        .post-body h2:first-child {
+            margin-top: 0;
+        }
+
+        .post-body h3 {
+            color: #2563eb;
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .post-body p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .post-body ul, .post-body ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .post-body li {
+            color: #555;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .post-body blockquote {
+            border-left: 4px solid #2563eb;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .post-body strong {
+            color: #1e3a8a;
+            font-weight: 600;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+
+        .callout.info {
+            background: #eff6ff;
+            border-color: #2563eb;
+        }
+
+        .callout.warning {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .callout.success {
+            background: #d1fae5;
+            border-color: #10b981;
+        }
+
+        .callout h4 {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .callout.info h4 {
+            color: #1e40af;
+        }
+
+        .callout.warning h4 {
+            color: #d97706;
+        }
+
+        .callout.success h4 {
+            color: #059669;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+        }
+
+        /* Images */
+        .post-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .post-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .image-caption {
+            margin-top: 0.75rem;
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        /* Footer Navigation */
+        .post-footer {
+            max-width: 800px;
+            margin: 3rem auto 0;
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: white;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .footer-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .post-header h1 {
+                font-size: 2rem;
+            }
+
+            .post-body {
+                padding: 2rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .post-footer {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#research">Research</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="post-header">
+        <div class="post-header-content">
+            <a href="/blog/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+
+            <!-- EDIT: Your post title -->
+            <h1>Your Blog Post Title Goes Here</h1>
+
+            <!-- EDIT: Post metadata -->
+            <div class="post-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>October 2, 2025</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>5 min read</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span>Category Name</span>
+                </div>
+            </div>
+
+            <!-- EDIT: Post tags -->
+            <div class="post-tags">
+                <span class="tag">Tag 1</span>
+                <span class="tag">Tag 2</span>
+                <span class="tag">Tag 3</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="post-content">
+        <article class="post-body">
+            
+            <!-- START YOUR CONTENT HERE -->
+            
+            <p>
+                Start with an engaging opening paragraph. Hook your reader and explain what they'll learn from this post.
+            </p>
+
+            <h2>Main Section Heading</h2>
+            
+            <p>
+                Write your main content here. Break it into digestible paragraphs. Use <strong>bold text</strong> for emphasis when needed.
+            </p>
+
+            <h3>Subsection Heading</h3>
+            
+            <p>
+                Continue your content with subsections as needed. Keep paragraphs focused and readable.
+            </p>
+
+            <!-- Example: Unordered List -->
+            <ul>
+                <li>First key point or item</li>
+                <li>Second key point or item</li>
+                <li>Third key point or item</li>
+            </ul>
+
+            <!-- Example: Info Callout Box -->
+            <div class="callout info">
+                <h4><i class="fas fa-info-circle"></i> Key Insight</h4>
+                <p>Use callout boxes to highlight important information, insights, or takeaways.</p>
+            </div>
+
+            <!-- Example: Code Block -->
+            <div class="code-block">
+# Example Python code
+import pandas as pd
+import numpy as np
+
+# Load data
+data = pd.read_csv('your_data.csv')
+
+# Perform analysis
+result = data.groupby('category').mean()
+print(result)
+            </div>
+
+            <!-- Example: Image with Caption -->
+            <div class="post-image">
+                <img src="https://via.placeholder.com/800x400/667eea/ffffff?text=Your+Image+Here" alt="Description of image">
+                <p class="image-caption">Figure 1: Brief description of what this image shows</p>
+            </div>
+
+            <h2>Another Major Section</h2>
+            
+            <p>
+                Continue building your argument or explanation. Reference figures and code examples as needed.
+            </p>
+
+            <!-- Example: Blockquote -->
+            <blockquote>
+                "Use blockquotes for memorable quotes or key statements you want to emphasize."
+            </blockquote>
+
+            <!-- Example: Warning Callout -->
+            <div class="callout warning">
+                <h4><i class="fas fa-exclamation-triangle"></i> Important Note</h4>
+                <p>Use warning boxes for caveats, limitations, or important considerations readers should keep in mind.</p>
+            </div>
+
+            <!-- Example: Numbered List -->
+            <h3>Step-by-Step Process</h3>
+            <ol>
+                <li>First step in your process</li>
+                <li>Second step with additional explanation</li>
+                <li>Third step to complete the workflow</li>
+            </ol>
+
+            <!-- Example: Success Callout -->
+            <div class="callout success">
+                <h4><i class="fas fa-check-circle"></i> Key Takeaway</h4>
+                <p>Summarize the main point or successful outcome here.</p>
+            </div>
+
+            <h2>Conclusion</h2>
+            
+            <p>
+                Wrap up your post with a strong conclusion. Summarize the key points and leave readers with something to think about or act on.
+            </p>
+
+            <p>
+                You can also end with a call to action, invitation for discussion, or pointer to related content.
+            </p>
+
+            <!-- END YOUR CONTENT -->
+
+        </article>
+
+        <!-- Optional: Navigation to other posts -->
+        <div class="post-footer">
+            <a href="/blog/" class="footer-nav-btn">
+                <i class="fas fa-arrow-left"></i> All Posts
+            </a>
+            <a href="#" class="footer-nav-btn">
+                Next Post <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+    </footer>
+
+</body>
+</html>
