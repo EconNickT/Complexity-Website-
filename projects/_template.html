@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- EDIT THESE -->
+    <title>Project Title - Complexity Insights</title>
+    <meta name="description" content="Brief description of your project for search engines">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* Project Header */
+        .project-header {
+            margin-top: 70px;
+            padding: 3rem 5% 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .project-header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-header h1 {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Project Content */
+        .project-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .content-section h2 {
+            color: #1e3a8a;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e0e7ff;
+        }
+
+        .content-section h3 {
+            color: #2563eb;
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        /* Image/Figure Styles */
+        .figure {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .figure img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            margin-top: 1rem;
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Callout Box */
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#research">Research</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="project-header">
+        <div class="project-header-content">
+            <a href="/projects/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+
+            <!-- EDIT: Project Title -->
+            <h1>Your Project Title Here</h1>
+
+            <!-- EDIT: Project Metadata -->
+            <div class="project-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>Month Year</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>X week project</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span>Category: Network Analysis</span>
+                </div>
+            </div>
+
+            <!-- EDIT: Project Tags -->
+            <div class="project-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Your Tool</span>
+                <span class="tag">Your Method</span>
+            </div>
+
+            <!-- EDIT: Project Links -->
+            <div class="project-links">
+                <a href="#" class="btn btn-primary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+                <a href="#" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Download Report
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="project-content">
+        
+        <!-- SECTION 1: Overview -->
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>
+                Write a compelling introduction to your project. What problem were you trying to solve? 
+                Why is it interesting or important?
+            </p>
+            <p>
+                Explain the broader context and why someone should care about this work.
+            </p>
+        </div>
+
+        <!-- SECTION 2: Methodology -->
+        <div class="content-section">
+            <h2>Methodology</h2>
+            
+            <h3>Data Sources</h3>
+            <p>
+                Describe where you got your data. Be specific about datasets, time periods, and any preprocessing.
+            </p>
+
+            <h3>Analytical Approach</h3>
+            <p>
+                Explain your methods. What techniques did you use? Why did you choose them?
+            </p>
+
+            <!-- Example of a callout box -->
+            <div class="callout">
+                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                <p>Use callout boxes to highlight important points or interesting findings.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 3: Results -->
+        <div class="content-section">
+            <h2>Results & Findings</h2>
+            
+            <p>
+                Present your key findings. What did you discover?
+            </p>
+
+            <!-- Example figure placeholder -->
+            <div class="figure">
+                <img src="https://via.placeholder.com/800x400/667eea/ffffff?text=Your+Visualization+Here" alt="Project visualization">
+                <p class="figure-caption">Figure 1: Description of your visualization</p>
+            </div>
+
+            <h3>Key Findings</h3>
+            <ul>
+                <li>First major finding with explanation</li>
+                <li>Second major finding with explanation</li>
+                <li>Third major finding with explanation</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 4: Code Example (Optional) -->
+        <div class="content-section">
+            <h2>Technical Implementation</h2>
+            
+            <p>
