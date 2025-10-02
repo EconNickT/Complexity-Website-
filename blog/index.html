@@ -4,10 +4,530 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - Complexity Insights</title>
+    <meta name="description" content="Insights and analysis on complexity economics, network science, and financial systems.">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo i {
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #2563eb;
+        }
+
+        /* Header */
+        .page-header {
+            margin-top: 70px;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            padding: 2rem 5%;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .filter-btn:hover {
+            border-color: #2563eb;
+            color: #2563eb;
+        }
+
+        .filter-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: white;
+        }
+
+        /* Blog Container */
+        .blog-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-image.complexity {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .blog-image.network {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .blog-image.market {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .blog-image.research {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .blog-content {
+            padding: 1.75rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-content h3 {
+            color: #1e3a8a;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+
+        .blog-content h3 a {
+            color: #1e3a8a;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .blog-content h3 a:hover {
+            color: #2563eb;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 1.5rem;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .blog-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.25rem;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.35rem 0.85rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .read-more:hover {
+            color: #1e40af;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e0;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .filter-container {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-<body style="font-family: Arial; padding: 40px; text-align: center;">
-    <h1>Blog Page - Test</h1>
-    <p>If you can see this, routing works!</p>
-    <a href="/">Back to Home</a>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#research">Research</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/blog/" class="active">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Insights & Analysis</h1>
+        <p>Exploring complexity economics, network science, and market dynamics through data and research</p>
+    </header>
+
+    <section class="filter-section">
+        <div class="filter-container">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-btn active" onclick="filterPosts('all')">All Posts</button>
+            <button class="filter-btn" onclick="filterPosts('complexity')">Complexity Economics</button>
+            <button class="filter-btn" onclick="filterPosts('network')">Network Analysis</button>
+            <button class="filter-btn" onclick="filterPosts('market')">Market Analysis</button>
+            <button class="filter-btn" onclick="filterPosts('research')">Research Notes</button>
+        </div>
+    </section>
+
+    <div class="blog-container">
+        <div class="blog-grid" id="blogGrid">
+            
+            <!-- BLOG POST CARD TEMPLATE - Copy this block to add new posts to index -->
+            <!-- 
+            <div class="blog-card" data-category="complexity">
+                <div class="blog-image complexity">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="blog-content">
+                    <h3><a href="/blog/your-post-url.html">Your Post Title</a></h3>
+                    <div class="blog-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct 15, 2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                    <p class="blog-excerpt">
+                        Brief excerpt of your blog post. Keep it 2-3 sentences that entice readers to click through.
+                    </p>
+                    <div class="blog-tags">
+                        <span class="tag">Tag1</span>
+                        <span class="tag">Tag2</span>
+                    </div>
+                    <a href="/blog/your-post-url.html" class="read-more">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            -->
+
+            <!-- Example Post 1 - Full Example -->
+            <div class="blog-card" data-category="complexity">
+                <div class="blog-image complexity">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="blog-content">
+                    <h3><a href="/blog/example-post.html">Why Traditional Economic Models Miss Systemic Risk</a></h3>
+                    <div class="blog-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct 2, 2025</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>8 min read</span>
+                        </div>
+                    </div>
+                    <p class="blog-excerpt">
+                        Traditional economic models assume equilibrium and independence. But real financial systems are interconnected networks where small shocks can cascade into crises. Here's why complexity theory offers a better framework.
+                    </p>
+                    <div class="blog-tags">
+                        <span class="tag">Complexity Economics</span>
+                        <span class="tag">Systemic Risk</span>
+                        <span class="tag">Network Theory</span>
+                    </div>
+                    <a href="/blog/example-post.html" class="read-more">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Example Post 2 - Coming Soon -->
+            <div class="blog-card" data-category="network">
+                <div class="blog-image network">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <div class="blog-content">
+                    <h3><a href="#">Network Centrality Measures Explained</a></h3>
+                    <div class="blog-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Coming Soon</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                    <p class="blog-excerpt">
+                        A practical guide to understanding degree, betweenness, closeness, and eigenvector centrality with financial network examples.
+                    </p>
+                    <div class="blog-tags">
+                        <span class="tag">Network Science</span>
+                        <span class="tag">Tutorial</span>
+                    </div>
+                    <a href="#" class="read-more" style="color: #999; cursor: not-allowed;">
+                        Coming Soon <i class="fas fa-clock"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Example Post 3 - Coming Soon -->
+            <div class="blog-card" data-category="market">
+                <div class="blog-image market">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="blog-content">
+                    <h3><a href="#">Market Microstructure: What Really Moves Prices</a></h3>
+                    <div class="blog-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Coming Soon</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>10 min read</span>
+                        </div>
+                    </div>
+                    <p class="blog-excerpt">
+                        Beyond supply and demand curves: exploring order flow, liquidity provision, and the mechanics of price discovery in modern markets.
+                    </p>
+                    <div class="blog-tags">
+                        <span class="tag">Market Microstructure</span>
+                        <span class="tag">Trading</span>
+                    </div>
+                    <a href="#" class="read-more" style="color: #999; cursor: not-allowed;">
+                        Coming Soon <i class="fas fa-clock"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+    </footer>
+
+    <script>
+        function filterPosts(category) {
+            const cards = document.querySelectorAll('.blog-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Animate cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
