@@ -154,6 +154,12 @@
             align-items: start;
         }
 
+        .founder-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
         .founder-image {
             width: 250px;
             height: 250px;
@@ -165,6 +171,12 @@
             color: white;
             font-size: 5rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .founder-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
 
         .founder-info h3 {
@@ -184,7 +196,6 @@
             background: #f9fafb;
             padding: 1.5rem;
             border-radius: 8px;
-            margin: 1.5rem 0;
             border-left: 4px solid #2563eb;
         }
 
@@ -201,6 +212,7 @@
         .credentials li {
             margin-bottom: 0.5rem;
             padding-left: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .credentials li::before {
@@ -215,7 +227,6 @@
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
-            margin-top: 1.5rem;
         }
 
         .social-link {
@@ -390,7 +401,10 @@
 
             .founder-section {
                 grid-template-columns: 1fr;
-                text-align: center;
+            }
+
+            .founder-left {
+                align-items: center;
             }
 
             .founder-image {
@@ -466,6 +480,11 @@
                     <h4>Data Analysis</h4>
                     <p>Extracting insights from complex economic data using advanced statistical methods</p>
                 </div>
+                <div class="mission-card">
+                    <i class="fas fa-handshake"></i>
+                    <h4>Corporate Finance & M&A</h4>
+                    <p>Applying complexity insights to valuation, deal structuring, and integration risk analysis</p>
+                </div>
             </div>
         </section>
 
@@ -489,15 +508,10 @@
         <!-- About the Founder Section -->
         <section class="section">
             <div class="founder-section">
-                <div class="founder-image">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="founder-info">
-                    <h3>Nicholas Thomas</h3>
-                    <p class="founder-title">Founder & Research Lead</p>
-                    <p>
-                        Economics graduate with a passion for applying complexity theory to financial systems. I combine rigorous quantitative training with programming skills to tackle questions about market dynamics, systemic risk, and network effects in economics.
-                    </p>
+                <div class="founder-left">
+                    <div class="founder-image">
+                        <i class="fas fa-user"></i>
+                    </div>
 
                     <div class="credentials">
                         <h4>Background & Skills</h4>
@@ -510,13 +524,9 @@
                         </ul>
                     </div>
 
-                    <p>
-                        Beyond complexity economics, I maintain an active interest in financial markets, computational social science, and the intersection of economics with computer science. I'm particularly excited about how new data sources and computational methods can help us understand economic systems in ways that weren't possible before.
-                    </p>
-
                     <div class="social-links">
                         <a href="https://nicholas-thomas.com" class="social-link website" target="_blank">
-                            <i class="fas fa-globe"></i> Personal Website
+                            <i class="fas fa-globe"></i> Website
                         </a>
                         <a href="https://linkedin.com/in/yourprofile" class="social-link linkedin" target="_blank">
                             <i class="fab fa-linkedin"></i> LinkedIn
@@ -525,9 +535,32 @@
                             <i class="fab fa-github"></i> GitHub
                         </a>
                         <a href="https://twitter.com/yourhandle" class="social-link twitter" target="_blank">
-                            <i class="fab fa-x-twitter"></i> X (Twitter)
+                            <i class="fab fa-x-twitter"></i> X
                         </a>
                     </div>
+                </div>
+
+                <div class="founder-right">
+                    <div class="founder-info">
+                        <h3>Nicholas Thomas</h3>
+                        <p class="founder-title">Founder & Research Lead</p>
+                    </div>
+                    
+                    <p>
+                        Economics graduate with a passion for applying complexity theory to financial systems. I combine rigorous quantitative training with programming skills to tackle questions about market dynamics, systemic risk, and network effects in economics.
+                    </p>
+
+                    <p>
+                        My work sits at the intersection of academic rigor and practical application. I'm particularly interested in how network structures shape financial contagion, how agent-based models can reveal emergent market behaviors, and how complexity theory helps us understand phenomena that traditional economic models miss.
+                    </p>
+
+                    <p>
+                        Beyond complexity economics, I maintain an active interest in corporate finance, M&A analytics, and computational social science. I'm excited about how new data sources and computational methods are transforming our ability to understand economic systems—from market microstructure to systemic risk propagation.
+                    </p>
+
+                    <p>
+                        I'm currently seeking opportunities where I can apply these skills to real-world challenges in finance, risk management, or economic research. Whether it's analyzing deal structures, modeling market dynamics, or building analytical tools, I'm passionate about turning complex data into actionable insights.
+                    </p>
                 </div>
             </div>
         </section>
