@@ -3,430 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Complexity Insights</title>
-    <meta name="description" content="Learn about Complexity Insights and founder Nicholas Thomas - applying complexity economics to real-world challenges.">
+    <title>About the Firm | Complexity Insights</title>
+    <meta name="description" content="Bridging academic complexity economics with real-world business strategy. Founded by Nicholas Thomas.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* * =========================================
+         * BRAND BIBLE V3.2 (Imported)
+         * ========================================= */
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #f9fafb;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* --- NAVIGATION --- */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+        .logo i { color: var(--accent); }
 
-        .logo i {
-            font-size: 1.3rem;
-        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #2563eb;
-        }
-
-        /* Header */
+        /* --- HEADER --- */
         .page-header {
             margin-top: 70px;
-            padding: 4rem 5%;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            padding: 5rem 5% 3rem;
+            background: var(--primary);
             color: white;
             text-align: center;
         }
 
-        .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
+        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
 
-        .page-header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 700px;
+        /* --- MISSION / CORE VALUES --- */
+        .mission-section {
+            padding: 4rem 5%;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Content Sections */
-        .content-wrapper {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 3rem 5%;
-        }
-
-        .section {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
-        }
-
-        .section h2 {
-            color: #1e3a8a;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #e0e7ff;
-        }
-
-        .section p {
-            color: #555;
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-            font-size: 1.05rem;
-        }
-
-        .section p:last-child {
-            margin-bottom: 0;
-        }
-
-        .section ul {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
-        .section li {
-            color: #555;
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+            text-align: center;
+            font-size: 1.15rem;
+            color: var(--text-dark);
             line-height: 1.8;
-            margin-bottom: 1rem;
-            padding-left: 1.75rem;
-            position: relative;
-            font-size: 1.05rem;
         }
 
-        .section li::before {
-            content: "→";
-            position: absolute;
-            left: 0;
-            color: #2563eb;
-            font-weight: bold;
-        }
-
-        /* Founder Section */
-        .founder-section {
+        .values-grid {
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-
-        .founder-left {
-            display: flex;
-            flex-direction: column;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
-        .founder-image {
-            width: 250px;
-            height: 250px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .value-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            transition: transform 0.3s;
         }
 
-        .founder-right {
+        .value-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .value-icon {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary); }
+        .value-card p { font-size: 0.95rem; color: var(--text-light); }
+
+        /* --- FOUNDER PROFILE (The Resume Booster) --- */
+        .founder-section {
+            background: white;
+            padding: 5rem 5%;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .founder-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 4rem;
+        }
+
+        /* Founder Sidebar (Photo + Quick Stats) */
+        .founder-sidebar {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .founder-info h3 {
-            color: #1e3a8a;
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .founder-title {
-            color: #2563eb;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-        }
-
-        .credentials {
-            background: #f9fafb;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #2563eb;
-        }
-
-        .credentials h4 {
-            color: #1e3a8a;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .credentials ul {
-            margin: 0;
-        }
-
-        .credentials li {
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .credentials li::before {
-            content: "▪";
-            color: #2563eb;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        /* Social Links */
-        .social-links {
+        .profile-photo {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 16px;
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            /* Replace with actual <img> later */
+            background-image: url('/path/to/your-photo.jpg'); /* Optional */
+            background-size: cover;
         }
 
-        .social-link {
-            display: inline-flex;
+        .resume-btn {
+            display: flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            background: #2563eb;
+            background: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 6px;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
+        }
+
+        .resume-btn:hover { background: var(--accent); transform: translateY(-2px); }
+
+        .quick-specs {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .spec-item { margin-bottom: 1rem; }
+        .spec-item:last-child { margin-bottom: 0; }
+        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-light); font-weight: 700; display: block; margin-bottom: 0.2rem; }
+        .spec-value { font-size: 0.95rem; font-weight: 600; color: var(--primary); }
+
+        /* Founder Bio */
+        .founder-bio h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .founder-role { font-size: 1.1rem; color: var(--accent); font-weight: 600; margin-bottom: 2rem; display: block; }
+        
+        .founder-bio p { margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); }
+
+        .social-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text-dark);
             font-weight: 600;
+            font-size: 0.9rem;
             transition: all 0.3s;
         }
 
-        .social-link:hover {
-            background: #1e40af;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        .social-pill:hover { border-color: var(--accent); color: var(--accent); background: white; }
+
+        /* --- ORIGIN STORY (Editorial Style) --- */
+        .origin-section {
+            padding: 5rem 5%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .social-link.website {
-            background: #1e3a8a;
+        .origin-section h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            text-align: center;
         }
 
-        .social-link.website:hover {
-            background: #1e40af;
-        }
-
-        .social-link.linkedin {
-            background: #0A66C2;
-        }
-
-        .social-link.linkedin:hover {
-            background: #004182;
-        }
-
-        .social-link.github {
-            background: #333;
-        }
-
-        .social-link.github:hover {
-            background: #000;
-        }
-
-        .social-link.twitter {
-            background: #1DA1F2;
-        }
-
-        .social-link.twitter:hover {
-            background: #0d8bd9;
-        }
-
-        /* Mission Points */
-        .mission-points {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+        .origin-text p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; }
+        
+        .highlight {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            border-left: 4px solid var(--accent);
+            padding-left: 1.5rem;
             margin: 2rem 0;
         }
 
-        .mission-card {
-            background: #f9fafb;
-            padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 4px solid #2563eb;
-        }
-
-        .mission-card i {
-            color: #2563eb;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .mission-card h4 {
-            color: #1e3a8a;
-            margin-bottom: 0.75rem;
-            font-size: 1.1rem;
-        }
-
-        .mission-card p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
-            color: white;
-            text-align: center;
-            padding: 3rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-
-        .cta-section h2 {
-            color: white;
-            border: none;
-            margin-bottom: 1rem;
-            padding: 0;
-        }
-
-        .cta-section p {
-            color: rgba(255,255,255,0.95);
-            margin-bottom: 2rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: white;
-            color: #1e3a8a;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-        }
-
-        .cta-button.secondary:hover {
-            background: white;
-            color: #1e3a8a;
-        }
-
-        /* Footer */
+        /* --- FOOTER --- */
         footer {
-            background: #2d3748;
-            color: white;
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
+
+        .footer-bottom {
             text-align: center;
-            padding: 2rem 5%;
-            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
         }
 
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .section {
-                padding: 2rem 1.5rem;
-            }
-
-            .founder-section {
-                grid-template-columns: 1fr;
-            }
-
-            .founder-left {
-                align-items: center;
-            }
-
-            .founder-image {
-                margin: 0 auto;
-            }
-
-            .social-links {
-                justify-content: center;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .mission-points {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-buttons {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .founder-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .intro-text { text-align: left; }
+            
+            /* Mobile Menu */
+            .nav-links.active {
+                display: flex;
                 flex-direction: column;
-                align-items: stretch;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
         }
     </style>
@@ -437,174 +297,184 @@
             <i class="fas fa-project-diagram"></i>
             Complexity Insights
         </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#research">Research</a></li>
-            <li><a href="/projects/">Projects</a></li>
-            <li><a href="/blog/">Blog</a></li>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/">Case Studies</a></li>
+            <li><a href="/blog/">Insights</a></li>
             <li><a href="/about/" class="active">About</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
     <header class="page-header">
-        <h1>About Complexity Insights</h1>
-        <p>Bridging academic theory with practical applications in economics and finance</p>
+        <h1>About the Firm</h1>
+        <p>Bridging the gap between academic theory and real-world strategy.</p>
     </header>
 
-    <div class="content-wrapper">
-        
-        <!-- What We Do Section -->
-        <section class="section">
-            <h2>What We Do</h2>
+    <section class="mission-section">
+        <div class="intro-text">
             <p>
-                Complexity Insights applies cutting-edge research in complexity economics, network science, and computational modeling to understand real-world economic systems. Traditional economic models often assume equilibrium and independence—assumptions that break down when analyzing interconnected financial systems, market dynamics, and systemic risk.
+                <strong>Traditional economic models assume equilibrium.</strong> But real markets are dynamic, adaptive, and constantly evolving. Complexity Insights applies cutting-edge computational methods to understand these systems as they actually are—complex, interconnected networks where small changes can cascade into large effects.
             </p>
-            <p>
-                We use advanced computational methods to reveal patterns that conventional approaches miss. By treating economic systems as complex adaptive networks rather than collections of independent agents, we gain deeper insights into how markets actually behave, how risks propagate through financial systems, and how small changes can cascade into large effects.
-            </p>
+        </div>
 
-            <div class="mission-points">
-                <div class="mission-card">
-                    <i class="fas fa-project-diagram"></i>
-                    <h4>Network Analysis</h4>
-                    <p>Mapping financial networks to identify systemic risks and contagion pathways</p>
-                </div>
-                <div class="mission-card">
-                    <i class="fas fa-users"></i>
-                    <h4>Agent-Based Modeling</h4>
-                    <p>Simulating market dynamics to understand emergent behavior and feedback loops</p>
-                </div>
-                <div class="mission-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Data Analysis</h4>
-                    <p>Extracting insights from complex economic data using advanced statistical methods</p>
-                </div>
-                <div class="mission-card">
-                    <i class="fas fa-handshake"></i>
-                    <h4>Corporate Finance & M&A</h4>
-                    <p>Applying complexity insights to valuation, deal structuring, and integration risk analysis</p>
-                </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-project-diagram"></i></div>
+                <h3>Network Analysis</h3>
+                <p>Mapping financial contagion pathways and identifying "Too Connected To Fail" institutions.</p>
             </div>
-        </section>
-
-        <!-- Why I Started This Section -->
-        <section class="section">
-            <h2>The Origin Story</h2>
-            <p>
-                During my economics studies, I became increasingly frustrated with the gap between textbook models and real-world outcomes. The 2008 financial crisis wasn't just a black swan event—it was a failure of models that assumed independence when the system was deeply interconnected.
-            </p>
-            <p>
-                I discovered complexity economics through research papers and realized this framework could explain phenomena that traditional models couldn't: market crashes, systemic risk, regime shifts, and emergent patterns. But most of this research stayed in academia, disconnected from practitioners who could benefit from these insights.
-            </p>
-            <p>
-                Complexity Insights was born from the desire to bridge that gap. This platform showcases how complexity theory can be applied to real problems in finance and economics. It's both a research portfolio and a demonstration that these methods aren't just theoretical—they provide practical value for understanding the systems we operate in every day.
-            </p>
-            <p>
-                Every project here represents an attempt to take academic concepts and apply them to answerable questions about market structure, risk propagation, and economic dynamics. The goal is to build a body of work that demonstrates the power of these approaches while contributing to the broader conversation about how we model economic systems.
-            </p>
-        </section>
-
-        <!-- About the Founder Section -->
-        <section class="section">
-            <div class="founder-section">
-                <div class="founder-left">
-                    <div class="founder-image">
-                        <i class="fas fa-user"></i>
-                    </div>
-
-                    <div class="credentials">
-                        <h4>Background & Skills</h4>
-                        <ul>
-                            <li>Bachelor's in Economics with focus on quantitative methods</li>
-                            <li>Advanced coursework in econometrics, financial economics, and game theory</li>
-                            <li>Self-taught programmer (Python, R, MATLAB) for economic analysis</li>
-                            <li>Experience with agent-based modeling, network analysis, and data visualization</li>
-                            <li>Strong foundation in statistical methods and computational modeling</li>
-                        </ul>
-                    </div>
-
-                    <div class="social-links">
-                        <a href="https://nicholas-thomas.com" class="social-link website" target="_blank">
-                            <i class="fas fa-globe"></i> Website
-                        </a>
-                        <a href="https://linkedin.com/in/yourprofile" class="social-link linkedin" target="_blank">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/yourprofile" class="social-link github" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                        <a href="https://twitter.com/yourhandle" class="social-link twitter" target="_blank">
-                            <i class="fab fa-x-twitter"></i> X
-                        </a>
-                    </div>
-                </div>
-
-                <div class="founder-right">
-                    <div class="founder-info">
-                        <h3>Nicholas Thomas</h3>
-                        <p class="founder-title">Founder & Research Lead</p>
-                    </div>
-                    
-                    <p>
-                        Economics graduate with a passion for applying complexity theory to financial systems. I combine rigorous quantitative training with programming skills to tackle questions about market dynamics, systemic risk, and network effects in economics.
-                    </p>
-
-                    <p>
-                        My work sits at the intersection of academic rigor and practical application. I'm particularly interested in how network structures shape financial contagion, how agent-based models can reveal emergent market behaviors, and how complexity theory helps us understand phenomena that traditional economic models miss.
-                    </p>
-
-                    <p>
-                        Beyond complexity economics, I maintain an active interest in corporate finance, M&A analytics, and computational social science. I'm excited about how new data sources and computational methods are transforming our ability to understand economic systems—from market microstructure to systemic risk propagation.
-                    </p>
-
-                    <p>
-                        I'm currently seeking opportunities where I can apply these skills to real-world challenges in finance, risk management, or economic research. Whether it's analyzing deal structures, modeling market dynamics, or building analytical tools, I'm passionate about turning complex data into actionable insights.
-                    </p>
-                </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-users"></i></div>
+                <h3>Agent-Based Models</h3>
+                <p>Simulating emergent behavior to test strategies in risk-free synthetic environments.</p>
             </div>
-        </section>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>Data Science</h3>
+                <p>Moving beyond linear regression to capture non-linear dynamics and feedback loops.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3>Systemic Risk</h3>
+                <p>Quantifying tail risks that standard VaR (Value at Risk) models systematically ignore.</p>
+            </div>
+        </div>
+    </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <h2>Let's Work Together</h2>
-            <p>
-                Interested in collaboration, consulting opportunities, or discussing complexity economics? 
-                I'm open to projects that apply these methods to real-world challenges.
-            </p>
-            <div class="cta-buttons">
-                <a href="/#contact" class="cta-button">
-                    <i class="fas fa-envelope"></i> Get in Touch
+    <section class="founder-section">
+        <div class="founder-grid">
+            
+            <aside class="founder-sidebar">
+                <div class="profile-photo">
+                    <i class="fas fa-user"></i> </div>
+                
+                <a href="#" class="resume-btn">
+                    <i class="fas fa-file-download"></i> Download Resume
                 </a>
-                <a href="/projects/" class="cta-button secondary">
-                    <i class="fas fa-folder-open"></i> View Projects
-                </a>
-            </div>
-        </section>
 
-    </div>
+                <div class="quick-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">Role</span>
+                        <span class="spec-value">Founder & Principal</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Location</span>
+                        <span class="spec-value">Washington, DC</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Education</span>
+                        <span class="spec-value">Economics (B.S.)</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">Core Stack</span>
+                        <span class="spec-value">Python, R, SQL, NetworkX</span>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="founder-bio">
+                <h2>Nicholas Thomas</h2>
+                <span class="founder-role">Research Lead & Founder</span>
+
+                <p>
+                    I am an economics graduate and researcher focused on the intersection of <strong>complexity science</strong> and <strong>financial markets</strong>. My work challenges the static assumptions of traditional economics by applying computational methods to real-world data.
+                </p>
+                <p>
+                    During my studies, I became frustrated with the gap between textbook models and market reality. The 2008 financial crisis wasn't just a "black swan"—it was a failure of models that assumed independence in a deeply interconnected system.
+                </p>
+                <p>
+                    I founded <strong>Complexity Insights</strong> to bridge that gap. This firm serves as both a consultancy and a research laboratory, applying Agent-Based Modeling (ABM) and Network Theory to solve strategic problems in finance and risk management.
+                </p>
+                <p>
+                    I am currently available for full-time roles in <strong>Economic Research</strong>, <strong>Data Analysis</strong>, and <strong>Financial Modeling</strong>, where I can apply these rigorous quantitative methods to drive business value.
+                </p>
+
+                <div class="social-row">
+                    <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="social-pill">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="#" target="_blank" class="social-pill">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="origin-section">
+        <h2>Our Philosophy</h2>
+        <div class="origin-text">
+            <p>
+                Most consulting firms tell you what happened yesterday. We try to understand the dynamics that will shape tomorrow.
+            </p>
+            <div class="highlight">
+                "The map is not the territory. Our models are useful simplifications, but we shouldn't mistake their mathematical elegance for reality."
+            </div>
+            <p>
+                We believe that the future of economic analysis lies in <strong>simulation</strong>. By building "digital twins" of markets and supply chains, we can stress-test strategies against thousands of potential futures, not just the one we hope for. This approach—moving from prediction to adaptation—is the core of our value proposition.
+            </p>
+        </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    Applying complexity science to economic and financial challenges.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
-        // Animate sections on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.section, .cta-section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
     </script>
 </body>
 </html>
