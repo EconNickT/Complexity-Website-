@@ -3,344 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Complexity Insights</title>
-    <meta name="description" content="Portfolio of complexity economics research projects and analyses.">
+    <title>Case Studies | Complexity Insights</title>
+    <meta name="description" content="Portfolio of applied economic research, financial modeling, and data analysis projects by Nicholas Thomas.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* * =========================================
+         * BRAND BIBLE V3.2 (Imported for Consistency)
+         * ========================================= */
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #f9fafb;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Navigation (Same as Home) */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+        .logo i { color: var(--accent); }
 
-        .logo i {
-            font-size: 1.3rem;
-        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #2563eb;
-        }
-
-        /* Header */
+        /* Page Header */
         .page-header {
             margin-top: 70px;
-            padding: 4rem 5%;
-            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            padding: 5rem 5% 3rem;
+            background: var(--primary);
             color: white;
             text-align: center;
         }
 
-        .page-header h1 {
-            font-size: 3rem;
+        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
+        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto 2rem; color: #cbd5e1; }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+
+        /* Skills Toolkit Section (Targeting Recruiters) */
+        .toolkit-section {
+            background: white;
+            padding: 2rem 5%;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 3rem;
+        }
+
+        .toolkit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tool-group h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
             margin-bottom: 1rem;
         }
 
-        .page-header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Filter Section */
-        .filter-section {
-            padding: 2rem 5%;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 70px;
-            z-index: 100;
-        }
-
-        .filter-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .tool-list {
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
-            align-items: center;
+            gap: 0.8rem;
         }
 
-        .filter-label {
+        .tool-badge {
+            background: #eff6ff;
+            color: var(--text-dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
             font-weight: 600;
-            color: #1e3a8a;
+            border: 1px solid #dbeafe;
+        }
+
+        /* Filter Bar */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            padding: 0 5%;
         }
 
         .filter-btn {
-            padding: 0.5rem 1.25rem;
-            border: 2px solid #e5e7eb;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid #e2e8f0;
             background: white;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #666;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-light);
         }
 
-        .filter-btn:hover {
-            border-color: #2563eb;
-            color: #2563eb;
-        }
+        .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
 
-        .filter-btn.active {
-            background: #2563eb;
-            border-color: #2563eb;
-            color: white;
-        }
-
-        /* Projects Grid */
+        /* Case Study Grid */
         .projects-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 3rem 5%;
+            padding: 0 5% 6rem;
         }
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2.5rem;
         }
 
         .project-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
             transition: all 0.3s;
+            border: 1px solid #f1f5f9;
             display: flex;
             flex-direction: column;
         }
 
         .project-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+            border-color: #e2e8f0;
         }
 
-        .project-image {
-            width: 100%;
-            height: 220px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Card Image Area */
+        .card-header {
+            height: 200px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 3.5rem;
-            position: relative;
-            overflow: hidden;
+            color: var(--text-light);
         }
 
-        .project-image.network {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+        .card-header.finance { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: white; }
+        .card-header.strategy { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); color: white; }
+        .card-header.data { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; }
 
-        .project-image.abm {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        }
+        .card-icon { font-size: 4rem; opacity: 0.9; }
 
-        .project-image.data {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        }
-
-        .project-image.risk {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-        }
-
-        .project-status {
+        .status-badge {
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: rgba(255,255,255,0.95);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            background: rgba(255,255,255,0.9);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-transform: uppercase;
         }
 
-        .status-complete {
-            color: #059669;
-        }
+        /* Card Body */
+        .card-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
 
-        .status-progress {
-            color: #d97706;
-        }
-
-        .project-content {
-            padding: 1.75rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-content h3 {
-            color: #1e3a8a;
-            margin-bottom: 0.75rem;
-            font-size: 1.4rem;
-        }
-
-        .project-content h3 a {
-            color: #1e3a8a;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .project-content h3 a:hover {
-            color: #2563eb;
-        }
-
-        .project-date {
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-description {
-            color: #666;
-            margin-bottom: 1.25rem;
-            line-height: 1.7;
-            flex: 1;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.25rem;
-        }
-
-        .tag {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 0.35rem 0.85rem;
-            border-radius: 15px;
+        .card-meta {
             font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .project-link {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .project-link:hover {
-            color: #1e40af;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: #666;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: #cbd5e0;
-            margin-bottom: 1rem;
-        }
-
-        .empty-state h3 {
-            color: #1e3a8a;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 0.5rem;
         }
 
+        .card-body h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--primary); line-height: 1.3; }
+        
+        .card-body h3 a { text-decoration: none; color: inherit; transition: color 0.2s; }
+        .card-body h3 a:hover { color: var(--accent); }
+
+        .card-body p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem; flex: 1; }
+
+        /* Technical Stack in Card (Recruiter Candy) */
+        .tech-stack-mini {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .tech-tag {
+            font-size: 0.8rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: var(--text-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+        }
+
+        .card-link {
+            color: var(--primary);
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s;
+        }
+
+        .card-link:hover { gap: 0.8rem; color: var(--accent); }
+
         /* Footer */
         footer {
-            background: #2d3748;
-            color: white;
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-bottom {
             text-align: center;
-            padding: 2rem 5%;
-            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
+            margin-top: 3rem;
         }
 
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .page-header h1 {
-                font-size: 2rem;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                font-size: 0.9rem;
-            }
-
-            .filter-container {
-                justify-content: center;
-            }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .page-header h1 { font-size: 2.5rem; }
+            .header-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -350,141 +303,125 @@
             <i class="fas fa-project-diagram"></i>
             Complexity Insights
         </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#research">Research</a></li>
-            <li><a href="/projects/" class="active">Projects</a></li>
-            <li><a href="/blog/">Blog</a></li>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/" class="active">Case Studies</a></li>
+            <li><a href="/blog/">Insights</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
     <header class="page-header">
-        <h1>Project Portfolio</h1>
-        <p>Applied research in complexity economics, network science, and financial systems analysis</p>
+        <h1>Applied Research &<br>Strategic Analysis</h1>
+        <p>Bridging the gap between academic theory and business reality. A portfolio of financial modeling, data science, and economic research.</p>
+        <div class="header-actions">
+            <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="btn-outline">
+                <i class="fab fa-linkedin"></i> Connect on LinkedIn
+            </a>
+            <a href="#" class="btn-outline">
+                <i class="fas fa-file-download"></i> Download Resume
+            </a>
+        </div>
     </header>
 
-    <section class="filter-section">
-        <div class="filter-container">
-            <span class="filter-label">Filter:</span>
-            <button class="filter-btn active" onclick="filterProjects('all')">All Projects</button>
-            <button class="filter-btn" onclick="filterProjects('network')">Network Analysis</button>
-            <button class="filter-btn" onclick="filterProjects('abm')">Agent-Based Models</button>
-            <button class="filter-btn" onclick="filterProjects('data')">Data Analysis</button>
-            <button class="filter-btn" onclick="filterProjects('risk')">Risk Analysis</button>
+    <section class="toolkit-section">
+        <div class="toolkit-grid">
+            <div class="tool-group">
+                <h4>Financial Analysis</h4>
+                <div class="tool-list">
+                    <span class="tool-badge">Financial Modeling</span>
+                    <span class="tool-badge">Risk Assessment</span>
+                    <span class="tool-badge">Valuation</span>
+                </div>
+            </div>
+            <div class="tool-group">
+                <h4>Data Science</h4>
+                <div class="tool-list">
+                    <span class="tool-badge">Python (Pandas/NumPy)</span>
+                    <span class="tool-badge">SQL</span>
+                    <span class="tool-badge">Data Visualization</span>
+                </div>
+            </div>
+            <div class="tool-group">
+                <h4>Research Methods</h4>
+                <div class="tool-list">
+                    <span class="tool-badge">Econometrics</span>
+                    <span class="tool-badge">Network Science</span>
+                    <span class="tool-badge">Agent-Based Modeling</span>
+                </div>
+            </div>
         </div>
     </section>
 
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterProjects('all')">All Cases</button>
+        <button class="filter-btn" onclick="filterProjects('finance')">Finance & Risk</button>
+        <button class="filter-btn" onclick="filterProjects('data')">Data Analytics</button>
+        <button class="filter-btn" onclick="filterProjects('strategy')">Market Strategy</button>
+    </div>
+
     <div class="projects-container">
         <div class="projects-grid" id="projectsGrid">
-            
-            <!-- PROJECT CARD TEMPLATE - Copy this block to add new projects -->
-            <!-- 
-            <div class="project-card" data-category="network">
-                <div class="project-image network">
-                    <i class="fas fa-project-diagram"></i>
-                    <div class="project-status status-complete">Complete</div>
-                </div>
-                <div class="project-content">
-                    <h3><a href="/projects/project-name.html">Project Title Here</a></h3>
-                    <div class="project-date">Month Year</div>
-                    <p class="project-description">
-                        Brief description of your project. What problem did you solve? What methods did you use?
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">NetworkX</span>
-                        <span class="tag">Visualization</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="/projects/project-name.html" class="project-link">
-                            <i class="fas fa-arrow-right"></i> View Project
-                        </a>
-                        <a href="#" class="project-link" target="_blank">
-                            <i class="fab fa-github"></i> Code
-                        </a>
-                    </div>
-                </div>
-            </div>
-            -->
 
-            <!-- Example Project 1 - Network Analysis -->
-            <div class="project-card" data-category="network">
-                <div class="project-image network">
-                    <i class="fas fa-project-diagram"></i>
-                    <div class="project-status status-complete">Complete</div>
+            <div class="project-card" data-category="finance">
+                <div class="card-header finance">
+                    <div class="status-badge">Completed</div>
+                    <i class="fas fa-project-diagram card-icon"></i>
                 </div>
-                <div class="project-content">
-                    <h3><a href="/projects/example-network-analysis.html">Financial Network Analysis</a></h3>
-                    <div class="project-date">October 2025</div>
-                    <p class="project-description">
-                        Analysis of S&P 500 stock correlation networks to identify market structure and systemic risk indicators during periods of market stress.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">NetworkX</span>
-                        <span class="tag">Pandas</span>
-                        <span class="tag">Network Science</span>
+                <div class="card-body">
+                    <span class="card-meta">Risk Analytics</span>
+                    <h3><a href="/projects/example-network-analysis.html">S&P 500 Systemic Risk Analysis</a></h3>
+                    <p>Analyzing 5 years of stock correlation data to identify sector vulnerabilities and diversification breakdowns during market stress.</p>
+                    
+                    <div class="tech-stack-mini">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">NetworkX</span>
+                        <span class="tech-tag">Market Microstructure</span>
                     </div>
-                    <div class="project-links">
-                        <a href="/projects/example-network-analysis.html" class="project-link">
-                            <i class="fas fa-arrow-right"></i> View Project
-                        </a>
-                        <a href="#" class="project-link" target="_blank">
-                            <i class="fab fa-github"></i> Code
-                        </a>
-                    </div>
+
+                    <a href="/projects/example-network-analysis.html" class="card-link">View Analysis <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <!-- Example Project 2 - Coming Soon -->
-            <div class="project-card" data-category="abm">
-                <div class="project-image abm">
-                    <i class="fas fa-users"></i>
-                    <div class="project-status status-progress">In Progress</div>
+            <div class="project-card" data-category="strategy">
+                <div class="card-header strategy">
+                    <div class="status-badge">In Progress</div>
+                    <i class="fas fa-chess-board card-icon"></i>
                 </div>
-                <div class="project-content">
-                    <h3><a href="#">Market Microstructure ABM</a></h3>
-                    <div class="project-date">November 2025</div>
-                    <p class="project-description">
-                        Agent-based simulation exploring how different trader types and strategies affect market liquidity and price formation.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Mesa</span>
-                        <span class="tag">Simulation</span>
+                <div class="card-body">
+                    <span class="card-meta">Market Simulation</span>
+                    <h3><a href="#">Algorithmic Liquidity Spiral Model</a></h3>
+                    <p>An Agent-Based Model (ABM) simulating how high-frequency trading strategies interact to create flash crash conditions.</p>
+                    
+                    <div class="tech-stack-mini">
+                        <span class="tech-tag">Python (Mesa)</span>
+                        <span class="tech-tag">Monte Carlo</span>
+                        <span class="tech-tag">Simulation</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link" style="color: #999; cursor: not-allowed;">
-                            <i class="fas fa-clock"></i> Coming Soon
-                        </a>
-                    </div>
+
+                    <a href="#" class="card-link" style="opacity: 0.6; cursor: default;">Coming Soon</a>
                 </div>
             </div>
 
-            <!-- Example Project 3 - Coming Soon -->
             <div class="project-card" data-category="data">
-                <div class="project-image data">
-                    <i class="fas fa-chart-line"></i>
-                    <div class="project-status status-progress">In Progress</div>
+                <div class="card-header data">
+                    <div class="status-badge">Planned</div>
+                    <i class="fas fa-chart-bar card-icon"></i>
                 </div>
-                <div class="project-content">
-                    <h3><a href="#">Economic Complexity Analysis</a></h3>
-                    <div class="project-date">December 2025</div>
-                    <p class="project-description">
-                        Examining economic complexity index trends across countries to understand development patterns and export diversification.
-                    </p>
-                    <div class="project-tags">
-                        <span class="tag">R</span>
-                        <span class="tag">Data Analysis</span>
-                        <span class="tag">Visualization</span>
+                <div class="card-body">
+                    <span class="card-meta">Economic Research</span>
+                    <h3><a href="#">Global Economic Complexity Index</a></h3>
+                    <p>Comparative analysis of export diversification patterns across developing economies to forecast GDP growth potential.</p>
+                    
+                    <div class="tech-stack-mini">
+                        <span class="tech-tag">R</span>
+                        <span class="tech-tag">Regression Analysis</span>
+                        <span class="tech-tag">Macroeconomics</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link" style="color: #999; cursor: not-allowed;">
-                            <i class="fas fa-clock"></i> Coming Soon
-                        </a>
-                    </div>
+
+                    <a href="#" class="card-link" style="opacity: 0.6; cursor: default;">Coming Soon</a>
                 </div>
             </div>
 
@@ -492,19 +429,24 @@
     </div>
 
     <footer>
-        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+        <div style="text-align: center; color: rgba(255,255,255,0.6);">
+            <h4 style="color: white; margin-bottom: 1rem;">Complexity Insights</h4>
+            <p>Nicholas Thomas | Portfolio & Consulting</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
+        // Filter Logic
         function filterProjects(category) {
             const cards = document.querySelectorAll('.project-card');
             const buttons = document.querySelectorAll('.filter-btn');
             
-            // Update button states
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Filter cards
             cards.forEach(card => {
                 if (category === 'all' || card.dataset.category === category) {
                     card.style.display = 'flex';
@@ -514,22 +456,23 @@
             });
         }
 
-        // Animate cards on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(card);
-        });
+        // Mobile Menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
     </script>
 </body>
 </html>
