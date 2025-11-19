@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ title }} | Complexity Insights</title>
+    <meta name="description" content="{{ description }}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo i { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+        /* --- ARTICLE HEADER --- */
+        .article-header {
+            margin-top: 100px;
+            text-align: center;
+            padding: 0 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .category-tag {
+            background: #eff6ff;
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-header h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .article-header p.subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* --- META BAR (V3.8 Clean Style) --- */
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1rem 0;
+            margin-bottom: 4rem;
+            max-width: 100%;
+        }
+
+        .author-block { display: flex; align-items: center; gap: 0.5rem; text-align: left; }
+        .author-info h5 { margin: 0; color: var(--primary); font-size: 0.95rem; font-weight: 700; }
+        .author-info span { font-size: 0.85rem; color: var(--text-light); display: block; line-height: 1.2;}
+
+        .meta-right { display: flex; gap: 1.5rem; align-items: center; }
+        .meta-stat { font-size: 0.85rem; color: var(--text-light); display: flex; align-items: center; gap: 0.4rem; font-weight: 500; }
+
+        /* --- MAIN CONTENT LAYOUT --- */
+        .article-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 740px 1fr; /* Centered reading column */
+            gap: 2rem;
+            padding: 0 5% 6rem;
+        }
+
+        /* Table of Contents */
+        .toc-sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            padding-right: 2rem;
+        }
+
+        .toc-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        /* Article Body Formatting */
+        .article-body {
+            grid-column: 2;
+            font-size: 1.15rem;
+        }
+
+        .article-body p { margin-bottom: 2rem; }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-body ul, .article-body ol {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            color: var(--text-dark);
+        }
+        
+        .article-body li { margin-bottom: 0.8rem; }
+
+        .article-body img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+
+        .article-body blockquote {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+            color: #475569;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        /* Code Blocks */
+        .article-body pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .article-container { grid-template-columns: 1fr; max-width: 800px; }
+            .toc-sidebar { display: none; } 
+            .article-body { grid-column: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .article-header h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .meta-bar { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/">Case Studies</a></li>
+            <li><a href="/blog/">Insights</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="article-header">
+        <span class="category-tag">{{ category }}</span>
+        <h1>{{ title }}</h1>
+        <p class="subtitle">{{ subtitle }}</p>
+        
+        <div class="meta-bar">
+            <div class="author-block">
+                <div class="author-info">
+                    <h5>{{ author }}</h5>
+                    <span>{{ role }}</span>
+                </div>
+            </div>
+            <div class="meta-right">
+                <div class="meta-stat"><i class="far fa-calendar"></i> {{ date }}</div>
+                <div class="meta-stat"><i class="far fa-clock"></i> {{ read_time }} min read</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="article-container">
+        
+        <aside class="toc-sidebar">
+            <div class="toc-header">In this Article</div>
+            <ul class="toc-list" style="list-style: none; border-left: 2px solid #f1f5f9;">
+                <li><a href="#" style="display:block; padding:0.4rem 0 0.4rem 1.5rem; color:var(--accent); font-weight:600; text-decoration:none; border-left:2px solid var(--accent); margin-left:-2px;">Overview</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-body">
+            {{ content_html | safe }}
+        </article>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    Applying complexity science to economic and financial challenges.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
+    </script>
+</body>
+</html> 
