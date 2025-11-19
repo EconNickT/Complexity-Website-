@@ -3,314 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why Traditional Economic Models Miss Systemic Risk - Complexity Insights</title>
+    
+    <title>Why Traditional Economic Models Miss Systemic Risk | Complexity Insights</title>
     <meta name="description" content="Exploring how complexity theory and network science reveal systemic risks that traditional economic models overlook.">
+    <meta property="og:title" content="The Failure of Equilibrium Models in Crisis">
+    <meta property="og:type" content="article">
+    
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* * =========================================
+         * BRAND BIBLE V3.2 (Imported)
+         * ========================================= */
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f9fafb;
+            line-height: 1.8; /* Increased for readability */
+            color: var(--text-dark);
+            background-color: var(--white); /* Editorial white background */
+            overflow-x: hidden;
         }
 
+        /* --- NAVIGATION (Unified) --- */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        .post-header {
-            margin-top: 70px;
-            padding: 3rem 5% 2rem;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .post-header-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #2563eb;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .post-header h1 {
-            font-size: 2.5rem;
-            color: #1e3a8a;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .post-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .post-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .post-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 5%;
-        }
-
-        .post-body {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .post-body h2 {
-            color: #1e3a8a;
-            font-size: 1.8rem;
-            margin: 2.5rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e0e7ff;
-        }
-
-        .post-body h2:first-child {
-            margin-top: 0;
-        }
-
-        .post-body h3 {
-            color: #2563eb;
             font-size: 1.4rem;
-            margin: 2rem 0 1rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo i { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+        /* --- ARTICLE HEADER --- */
+        .article-header {
+            margin-top: 100px;
+            text-align: center;
+            padding: 0 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .post-body p {
-            color: #555;
-            line-height: 1.9;
+        .category-tag {
+            background: #eff6ff;
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
         }
 
-        .post-body ul, .post-body ol {
-            margin-left: 2rem;
+        .article-header h1 {
+            font-size: 3.5rem; /* Big, Bold, Editorial */
+            line-height: 1.2;
+            color: var(--primary);
             margin-bottom: 1.5rem;
+            letter-spacing: -1px;
         }
 
-        .post-body li {
-            color: #555;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-            font-size: 1.05rem;
+        .article-header p.subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
         }
 
-        .post-body blockquote {
-            border-left: 4px solid #2563eb;
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            color: #666;
-            font-style: italic;
+        /* Author & Meta Bar */
+        .meta-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1.5rem 0;
+            margin-bottom: 4rem;
         }
 
-        .post-body strong {
-            color: #1e3a8a;
+        .author-block { display: flex; align-items: center; gap: 1rem; text-align: left; }
+        .author-img { width: 50px; height: 50px; border-radius: 50%; background: #e2e8f0; } /* Placeholder */
+        .author-info h5 { margin: 0; color: var(--primary); font-size: 1rem; }
+        .author-info span { font-size: 0.85rem; color: var(--text-light); }
+
+        .meta-stat { font-size: 0.9rem; color: var(--text-light); display: flex; align-items: center; gap: 0.5rem; }
+
+        /* --- MAIN LAYOUT (The "HBR" Look) --- */
+        .article-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 740px 1fr; /* Centered column of 740px is optimal for reading */
+            gap: 2rem;
+            padding: 0 5% 6rem;
+        }
+
+        /* Sticky Table of Contents (Left) */
+        .toc-sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            padding-right: 2rem;
+        }
+
+        .toc-header {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .toc-list { list-style: none; border-left: 2px solid #f1f5f9; }
+        
+        .toc-list li a {
+            display: block;
+            padding: 0.5rem 0 0.5rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            margin-left: -2px;
+        }
+
+        .toc-list li a:hover, .toc-list li a.active {
+            color: var(--accent);
+            border-left-color: var(--accent);
             font-weight: 600;
         }
+
+        /* Article Body */
+        .article-body {
+            grid-column: 2; /* Lock to center */
+            font-size: 1.15rem; /* Slightly larger for reading comfort */
+        }
+
+        .article-body p { margin-bottom: 2rem; }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Editorial Elements */
+        .highlight-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+            color: #475569;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .key-takeaway {
+            background: #eff6ff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border: 1px solid #dbeafe;
+        }
+
+        .key-takeaway h4 { color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .key-takeaway p { margin-bottom: 0; font-size: 1rem; }
 
         .code-block {
             background: #1e293b;
             color: #e2e8f0;
             padding: 1.5rem;
             border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .callout {
-            padding: 1.5rem;
+            overflow-x: auto;
             margin: 2rem 0;
-            border-radius: 8px;
-            border-left: 4px solid;
         }
 
-        .callout.info {
-            background: #eff6ff;
-            border-color: #2563eb;
-        }
+        /* Images */
+        .post-image { margin: 3rem -3rem; /* Break out of column slightly */ text-align: center; }
+        .post-image img { width: 100%; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .image-caption { font-size: 0.9rem; color: var(--text-light); margin-top: 1rem; }
 
-        .callout.warning {
-            background: #fef3c7;
-            border-color: #f59e0b;
-        }
-
-        .callout h4 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .callout.info h4 {
-            color: #1e40af;
-        }
-
-        .callout.warning h4 {
-            color: #d97706;
-        }
-
-        .callout p {
-            margin-bottom: 0;
-        }
-
-        .post-image {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .post-image img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .image-caption {
-            margin-top: 0.75rem;
-            color: #666;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
-
-        .post-footer {
-            max-width: 800px;
-            margin: 3rem auto 0;
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-
-        .footer-nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: white;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #2563eb;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-
-        .footer-nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
+        /* --- FOOTER (Unified) --- */
         footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 2rem 5%;
-            margin-top: 4rem;
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
         }
 
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1100px) {
+            .article-container { grid-template-columns: 1fr; max-width: 800px; }
+            .toc-sidebar { display: none; } /* Hide TOC on smaller screens */
+            .article-body { grid-column: 1; }
+            .post-image { margin: 2rem 0; }
         }
 
         @media (max-width: 768px) {
-            .post-header h1 {
-                font-size: 2rem;
-            }
-
-            .post-body {
-                padding: 2rem 1.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .post-footer {
+            .article-header h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .meta-bar { flex-direction: column; gap: 1rem; text-align: center; }
+            .author-block { flex-direction: column; text-align: center; }
+            
+            .nav-links.active {
+                display: flex;
                 flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
         }
     </style>
@@ -321,51 +302,49 @@
             <i class="fas fa-project-diagram"></i>
             Complexity Insights
         </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#research">Research</a></li>
-            <li><a href="/projects/">Projects</a></li>
-            <li><a href="/blog/">Blog</a></li>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/">Case Studies</a></li>
+            <li><a href="/blog/" class="active">Insights</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
-    <header class="post-header">
-        <div class="post-header-content">
-            <a href="/blog/" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Blog
-            </a>
-
-            <h1>Why Traditional Economic Models Miss Systemic Risk</h1>
-
-            <div class="post-meta">
-                <div class="meta-item">
-                    <i class="fas fa-calendar"></i>
-                    <span>October 2, 2025</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-clock"></i>
-                    <span>8 min read</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-tag"></i>
-                    <span>Complexity Economics</span>
+    <header class="article-header">
+        <span class="category-tag">Complexity Economics</span>
+        <h1>Why Traditional Economic Models Miss Systemic Risk</h1>
+        <p class="subtitle">Standard equilibrium models assume independence. Real markets are interconnected networks where small shocks cascade. It's time for a new framework.</p>
+        
+        <div class="meta-bar">
+            <div class="author-block">
+                <div class="author-img" style="background-image: url('/path/to/your-photo.jpg'); background-size: cover;"></div> 
+                <div class="author-info">
+                    <h5>Nicholas Thomas</h5>
+                    <span>Founder, Complexity Insights</span>
                 </div>
             </div>
-
-            <div class="post-tags">
-                <span class="tag">Complexity Economics</span>
-                <span class="tag">Systemic Risk</span>
-                <span class="tag">Network Theory</span>
-            </div>
+            <div class="meta-stat"><i class="far fa-calendar"></i> October 2, 2025</div>
+            <div class="meta-stat"><i class="far fa-clock"></i> 8 min read</div>
         </div>
     </header>
 
-    <div class="post-content">
-        <article class="post-body">
-            
-            <p>
+    <div class="article-container">
+        
+        <aside class="toc-sidebar">
+            <div class="toc-header">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#equilibrium">The Equilibrium Assumption</a></li>
+                <li><a href="#independence">The Independence Problem</a></li>
+                <li><a href="#complexity">A Complexity Perspective</a></li>
+                <li><a href="#measuring">Measuring Systemic Risk</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </aside>
+
+        <article class="article-body">
+            <p class="lead">
                 The 2008 financial crisis caught most economists off guard. Standard risk models suggested everything was fine—right up until it wasn't. The problem wasn't just bad luck or isolated failures. It was a fundamental limitation in how we model economic systems.
             </p>
 
@@ -373,86 +352,53 @@
                 Traditional economic models assume that markets operate in equilibrium, that agents are independent, and that risks follow predictable distributions. But real financial systems are <strong>complex adaptive systems</strong>—networks of interconnected institutions where small shocks can cascade into systemic crises.
             </p>
 
-            <h2>The Equilibrium Assumption</h2>
+            <h2 id="equilibrium">The Equilibrium Assumption</h2>
             
             <p>
                 Most economic models are built on the assumption that markets tend toward equilibrium—a stable state where supply equals demand and prices reflect all available information. This framework, rooted in physics analogies from the 19th century, gives us clean mathematical solutions and clear predictions.
             </p>
 
-            <div class="callout info">
-                <h4><i class="fas fa-info-circle"></i> What is Equilibrium?</h4>
-                <p>In economic theory, equilibrium is a state where all market forces are balanced. No participant has an incentive to change their behavior, and the system remains stable unless hit by external shocks.</p>
+            <div class="highlight-box">
+                "In economic theory, equilibrium is a state where all market forces are balanced. However, financial markets are dynamic, constantly adapting systems where feedback loops dominate."
             </div>
 
             <p>
-                But financial markets don't actually operate this way. They're dynamic, constantly adapting systems where:
+                But financial markets don't actually operate this way. They're dynamic where:
             </p>
 
             <ul>
-                <li><strong>Feedback loops dominate:</strong> Price changes trigger trading strategies that further move prices</li>
-                <li><strong>Regime shifts occur:</strong> Market behavior can fundamentally change, not just oscillate around equilibrium</li>
-                <li><strong>Emergence matters:</strong> System-level behaviors arise that can't be predicted from individual components</li>
+                <li><strong>Feedback loops dominate:</strong> Price changes trigger trading strategies that further move prices.</li>
+                <li><strong>Regime shifts occur:</strong> Market behavior can fundamentally change, not just oscillate around equilibrium.</li>
+                <li><strong>Emergence matters:</strong> System-level behaviors arise that can't be predicted from individual components.</li>
             </ul>
 
-            <h2>The Independence Problem</h2>
+            <h2 id="independence">The Independence Problem</h2>
             
             <p>
-                Traditional risk models often assume that individual failures are independent events. If Bank A fails, standard models might calculate the probability of Bank B failing separately, then combine these probabilities to assess systemic risk.
+                Traditional risk models often assume that individual failures are independent events. If Bank A fails, standard models might calculate the probability of Bank B failing separately. This fundamentally misunderstands how financial systems work. Banks aren't isolated entities—they're nodes in a dense network of counterparty relationships.
             </p>
 
-            <p>
-                This fundamentally misunderstands how financial systems work. Banks aren't isolated entities—they're nodes in a dense network of counterparty relationships, shared exposures, and correlated strategies.
-            </p>
-
-            <h3>Network Contagion</h3>
-
-            <p>
-                When one institution fails in an interconnected financial system, the effects ripple outward through multiple channels:
-            </p>
-
-            <ol>
-                <li><strong>Direct counterparty exposure:</strong> If Bank A owes Bank B money and fails, Bank B takes a loss</li>
-                <li><strong>Fire sales:</strong> The failed institution's assets flood the market, depressing prices for similar assets held by others</li>
-                <li><strong>Information contagion:</strong> Failure signals potential weakness in similar institutions, causing credit freezes</li>
-                <li><strong>Liquidity spirals:</strong> As institutions hoard cash, lending dries up across the system</li>
-            </ol>
-
-            <div class="callout warning">
-                <h4><i class="fas fa-exclamation-triangle"></i> The Fallacy of Composition</h4>
-                <p>What's safe for one institution can be dangerous for all. If everyone follows the same "safe" strategy (like holding AAA-rated mortgage bonds), individual rationality creates systemic fragility.</p>
+            <div class="post-image">
+                <img src="https://via.placeholder.com/800x450/f1f5f9/94a3b8?text=Network+Contagion+Visual" alt="Network Contagion Diagram">
+                <p class="image-caption">Figure 1: Visualizing contagion pathways in a banking network.</p>
             </div>
 
-            <h2>A Complexity Perspective</h2>
+            <h2 id="complexity">A Complexity Perspective</h2>
 
             <p>
-                Complexity economics offers a different framework for understanding financial systems. Instead of seeking equilibrium, it studies how systems evolve. Instead of assuming independence, it maps the networks that connect economic agents.
+                Complexity economics offers a different framework. Instead of seeking equilibrium, it studies how systems evolve. Instead of assuming independence, it maps the networks that connect economic agents.
             </p>
 
-            <h3>Key Insights from Complexity Theory</h3>
+            <div class="key-takeaway">
+                <h4><i class="fas fa-lightbulb"></i> Key Insight: Phase Transitions</h4>
+                <p>Systems can appear stable for long periods, then suddenly shift to a crisis state. These aren't gradual changes—they're regime shifts where the rules of the game fundamentally change.</p>
+            </div>
+
+            <h2 id="measuring">Measuring Systemic Risk</h2>
 
             <p>
-                <strong>1. Phase transitions exist.</strong> Systems can appear stable for long periods, then suddenly shift to a crisis state. These aren't gradual changes—they're regime shifts where the rules of the game fundamentally change.
+                So how do we actually measure risk in complex financial networks? Several approaches have emerged from complexity research, particularly <strong>Network Centrality Measures</strong>.
             </p>
-
-            <p>
-                <strong>2. Network structure matters.</strong> The pattern of connections between institutions determines how shocks propagate. A system with many interconnections isn't necessarily more fragile—it depends on the specific network topology.
-            </p>
-
-            <p>
-                <strong>3. Heterogeneity is crucial.</strong> Not all banks are alike. Diversity in strategies, risk appetites, and balance sheet structures can either stabilize or destabilize the system, depending on how these differences interact.
-            </p>
-
-            <p>
-                <strong>4. Adaptation drives dynamics.</strong> Market participants constantly adjust their strategies based on experience and expectations. This adaptation process itself becomes a source of instability.
-            </p>
-
-            <h2>Measuring Systemic Risk</h2>
-
-            <p>
-                So how do we actually measure risk in complex financial networks? Several approaches have emerged from complexity research:
-            </p>
-
-            <h3>Network Centrality Measures</h3>
 
             <p>
                 Network science provides tools to identify systemically important institutions:
@@ -465,54 +411,19 @@
             </ul>
 
             <div class="code-block">
+# Example: Calculating Network Centrality in Python
 import networkx as nx
-import pandas as pd
 
 # Build financial network from exposure data
-G = nx.from_pandas_edgelist(exposures_df, 
-                             source='lender',
-                             target='borrower', 
-                             edge_attr='amount')
+G = nx.from_pandas_edgelist(df, source='lender', target='borrower')
 
-# Calculate centrality measures
-degree_cent = nx.degree_centrality(G)
-between_cent = nx.betweenness_centrality(G)
-eigen_cent = nx.eigenvector_centrality(G)
+# Calculate centrality to identify systemic nodes
+centrality = nx.eigenvector_centrality(G)
 
-# Identify systemically important institutions
-systemic_importance = pd.DataFrame({
-    'degree': degree_cent,
-    'betweenness': between_cent,
-    'eigenvector': eigen_cent
-})
+print(f"Systemic Risk Score: {centrality['Bank_A']}")
             </div>
 
-            <h3>Stress Testing Through Simulation</h3>
-
-            <p>
-                Rather than assuming smooth probability distributions, agent-based models simulate how crises actually unfold. We can shock the system, watch contagion spread, and measure the resulting damage under different network configurations.
-            </p>
-
-            <h2>Practical Implications</h2>
-
-            <p>
-                These insights aren't just theoretical—they have real implications for risk management and policy:
-            </p>
-
-            <div class="callout info">
-                <h4><i class="fas fa-lightbulb"></i> For Regulators</h4>
-                <p>Capital requirements should account for network position, not just individual risk metrics. Systemically important institutions need extra buffers because their failure has outsized effects.</p>
-            </div>
-
-            <p>
-                <strong>For risk managers:</strong> Traditional Value-at-Risk models dramatically underestimate tail risk in interconnected systems. Stress testing needs to account for feedback loops and contagion effects.
-            </p>
-
-            <p>
-                <strong>For researchers:</strong> We need better data on the actual network structure of financial systems. Many connections remain hidden in over-the-counter derivatives markets and shadow banking.
-            </p>
-
-            <h2>Conclusion</h2>
+            <h2 id="conclusion">Conclusion</h2>
 
             <p>
                 Traditional economic models aren't wrong—they're incomplete. They work well for analyzing marginal changes around stable equilibria. But they systematically miss the network effects, feedback loops, and emergent phenomena that drive systemic crises.
@@ -522,26 +433,67 @@ systemic_importance = pd.DataFrame({
                 Complexity economics doesn't replace traditional models; it complements them. By treating financial systems as complex adaptive networks rather than collections of independent agents, we gain new tools for understanding and managing systemic risk.
             </p>
 
-            <blockquote>
-                "The map is not the territory. Our models are useful simplifications, but we shouldn't mistake their mathematical elegance for complete descriptions of reality."
-            </blockquote>
-
-            <p>
-                The next time someone tells you a model shows everything is fine, ask them: does your model account for network effects? Does it capture feedback loops? Can it explain phase transitions? If not, you're probably missing the most important risks.
-            </p>
-
         </article>
-
-        <div class="post-footer">
-            <a href="/blog/" class="footer-nav-btn">
-                <i class="fas fa-arrow-left"></i> All Posts
-            </a>
-        </div>
     </div>
 
     <footer>
-        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    A specialized consultancy applying complexity science to economic and financial challenges. Based in Washington, DC.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
     </footer>
 
+    <script>
+        // Mobile Menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
+    </script>
 </body>
 </html>
