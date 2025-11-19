@@ -3,64 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Complexity Insights | Strategic Economic Consulting</title>
-    <meta name="description" content="We help businesses navigate market uncertainty using complexity economics, agent-based modeling, and network science.">
+    <meta name="description" content="Nicholas Thomas applies complexity economics, agent-based modeling, and network science to solve strategic business challenges.">
+    <meta property="og:title" content="Complexity Insights | Economics & Data Science">
+    <meta property="og:description" content="Portfolio and consultancy of Nicholas Thomas. Applied complexity economics and computational modeling.">
+    <meta property="og:type" content="website">
+    
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* * =========================================
-         * COMPLEXITY INSIGHTS - BRAND BIBLE (V3)
-         * =========================================
-         * * 1. COLOR PALETTE
-         * ----------------
-         * Primary (Dark Slate)   : #0f172a  -> Headers, Hero Backgrounds, Footer
-         * Accent (Royal Blue)    : #2563eb  -> Primary Buttons, Icons, Links, Highlights
-         * Accent Hover (Darker)  : #1d4ed8  -> Button Hover States
-         * Secondary (Light Blue) : #93c5fd  -> Sub-highlights, Tags, faint text
-         * Text Dark              : #334155  -> Main Body Text
-         * Text Light             : #64748b  -> Subtitles, Descriptions
-         * Background Light       : #f8fafc  -> Main Page Background
-         * White                  : #ffffff  -> Card Backgrounds, Text on Dark
+        /* * =================================================================
+         * COMPLEXITY INSIGHTS - BRAND BIBLE (V3.2)
+         * =================================================================
+         * Use these variables for all future pages to ensure consistency.
+         *
+         * 1. CORE PALETTE
+         * ---------------
+         * --primary     : #0f172a  (Slate 900) -> The "Suit" color. Professional, deep, academic.
+         * --accent      : #2563eb  (Blue 600)  -> The "Action" color. Buttons, links, icons.
+         * --accent-dark : #1d4ed8  (Blue 700)  -> Hover states.
+         * --text-main   : #334155  (Slate 700) -> Readable body text.
+         * --text-muted  : #64748b  (Slate 500) -> Subtitles, captions.
+         * --bg-surface  : #ffffff  (White)     -> Cards, modals.
+         * --bg-canvas   : #f8fafc  (Slate 50)  -> Page background.
          *
          * 2. TYPOGRAPHY
          * -------------
-         * Font Family : 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-         * H1 Size     : 3.75rem (Desktop), 2.5rem (Mobile) | Weight: 800
-         * H2 Size     : 2.5rem  | Weight: 800 | Letter-spacing: -0.5px
-         * Body Size   : 1rem to 1.1rem | Line-height: 1.6
-         * * 3. UI ELEMENTS
-         * --------------
-         * Radius      : 6px (Buttons), 12px (Cards), 20px (Large Containers)
-         * Shadows     : 0 4px 20px rgba(0,0,0,0.05) (Subtle depth)
-         * Gradients   : linear-gradient(135deg, #0f172a 0%, #1e293b 100%) (Hero)
+         * Family    : 'Segoe UI', system-ui, sans-serif
+         * Heads     : Weight 800, Letter-spacing -0.5px
+         * Body      : Weight 400, Line-height 1.6
+         *
+         * 3. SHAPES & EFFECTS
+         * -------------------
+         * Radius    : 8px (Small), 16px (Cards)
+         * Shadow    : 0 4px 20px rgba(15, 23, 42, 0.08)
+         * Gradient  : linear-gradient(135deg, #0f172a 0%, #1e293b 100%)
+         * =================================================================
          */
 
         :root {
             --primary: #0f172a;
             --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-dark: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
+            --accent-dark: #1d4ed8;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --bg-surface: #ffffff;
+            --bg-canvas: #f8fafc;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: var(--text-dark);
+            color: var(--text-main);
+            background-color: var(--bg-canvas);
             overflow-x: hidden;
-            background-color: var(--bg-light);
         }
 
-        /* Navigation */
+        /* --- NAVIGATION --- */
         .nav {
             position: fixed;
             top: 0;
@@ -92,9 +95,7 @@
             letter-spacing: -0.5px;
         }
 
-        .logo i {
-            color: var(--accent);
-        }
+        .logo i { color: var(--accent); }
 
         .nav-links {
             display: flex;
@@ -105,15 +106,13 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-dark);
+            color: var(--text-main);
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
+        .nav-links a:hover { color: var(--accent); }
 
         .nav-btn {
             padding: 0.6rem 1.2rem;
@@ -135,7 +134,7 @@
             color: var(--primary);
         }
 
-        /* Hero Section */
+        /* --- HERO SECTION --- */
         .hero {
             margin-top: 70px;
             min-height: 85vh;
@@ -153,7 +152,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.5; 
+            opacity: 0.4; /* Slightly clearer nodes */
         }
 
         .hero-content {
@@ -217,7 +216,7 @@
         }
 
         .cta-button:hover {
-            background: var(--accent-hover);
+            background: var(--accent-dark);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
@@ -237,7 +236,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Trusted By / Methods Bar */
+        /* --- TRUST / METHODS BAR --- */
         .trust-bar {
             background: white;
             padding: 2.5rem 5%;
@@ -268,7 +267,7 @@
             align-items: center;
             gap: 0.5rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: var(--text-main);
             font-size: 1.1rem;
             transition: transform 0.3s;
             cursor: default;
@@ -279,11 +278,9 @@
             color: var(--accent);
         }
 
-        .method-badge i {
-            color: var(--accent);
-        }
+        .method-badge i { color: var(--accent); }
 
-        /* Sections General */
+        /* --- SECTIONS GENERAL --- */
         .section {
             padding: 6rem 5%;
             max-width: 1200px;
@@ -305,11 +302,11 @@
         }
 
         .section-header p {
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 1.15rem;
         }
 
-        /* Solutions Grid */
+        /* --- SOLUTIONS GRID --- */
         .solutions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
@@ -317,9 +314,9 @@
         }
 
         .solution-card {
-            background: white;
+            background: var(--bg-surface);
             padding: 2.5rem;
-            border-radius: 12px;
+            border-radius: 16px;
             border: 1px solid #e2e8f0;
             transition: all 0.3s;
         }
@@ -341,10 +338,7 @@
             margin-bottom: 1.5rem;
         }
 
-        .icon-box i {
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
+        .icon-box i { font-size: 1.5rem; color: var(--accent); }
 
         .solution-card h3 {
             font-size: 1.35rem;
@@ -353,7 +347,7 @@
         }
 
         .solution-card p {
-            color: var(--text-light);
+            color: var(--text-muted);
             font-size: 1rem;
             margin-bottom: 1.5rem;
         }
@@ -367,11 +361,9 @@
             gap: 0.3rem;
         }
 
-        .learn-link:hover gap {
-            gap: 0.6rem;
-        }
+        .learn-link:hover gap { gap: 0.6rem; }
 
-        /* Featured Projects Strip */
+        /* --- PROJECTS STRIP --- */
         .projects-section {
             background: var(--primary);
             color: white;
@@ -408,18 +400,10 @@
             display: block;
         }
 
-        .project-mini-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-        }
+        .project-mini-card h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+        .project-mini-card p { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem; }
 
-        .project-mini-card p {
-            color: #cbd5e1;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        /* About / Founder */
+        /* --- ABOUT / FOUNDER --- */
         .about-split {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -435,7 +419,7 @@
         }
 
         .about-text p {
-            color: var(--text-light);
+            color: var(--text-muted);
             margin-bottom: 1.5rem;
             font-size: 1.1rem;
         }
@@ -448,17 +432,8 @@
             border-top: 1px solid #e2e8f0;
         }
 
-        .stat h4 {
-            font-size: 2rem;
-            color: var(--accent);
-            font-weight: 800;
-        }
-
-        .stat span {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 600;
-        }
+        .stat h4 { font-size: 2rem; color: var(--accent); font-weight: 800; }
+        .stat span { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
 
         .about-visual {
             background: #eff6ff;
@@ -480,61 +455,124 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.1);
         }
 
-        /* CTA Box */
-        .cta-section {
-            padding: 4rem 5%;
-            text-align: center;
+        /* --- CONTACT SECTION (SECURE) --- */
+        .contact-section {
+            background: white;
+            padding: 6rem 5%;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .cta-box {
-            background: var(--accent);
-            border-radius: 20px;
-            padding: 4rem 2rem;
-            color: white;
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             max-width: 1000px;
             margin: 0 auto;
-            position: relative;
-            overflow: hidden;
+            align-items: start;
         }
 
-        .cta-box h2 {
+        .contact-info h2 {
             font-size: 2.5rem;
+            color: var(--primary);
             margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
         }
 
-        .cta-box p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+        .contact-info p {
+            color: var(--text-muted);
             margin-bottom: 2rem;
-            position: relative;
-            z-index: 2;
+            font-size: 1.1rem;
         }
 
-        .cta-box .btn-white {
-            background: white;
-            color: var(--accent);
-            padding: 1rem 2.5rem;
-            border-radius: 6px;
+        .contact-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
             text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .contact-card:hover {
+            border-color: var(--accent);
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: #eff6ff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* Secure Form */
+        .secure-form {
+            background: #f8fafc;
+            padding: 2.5rem;
+            border-radius: 16px;
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
             font-weight: 700;
-            display: inline-block;
-            transition: transform 0.3s;
-            position: relative;
-            z-index: 2;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        .cta-box .btn-white:hover {
-            transform: scale(1.05);
-        }
+        .submit-btn:hover { background: var(--accent); }
 
-        /* Footer */
+        /* --- FOOTER --- */
         footer {
             background: var(--primary);
             color: #94a3b8;
             padding: 4rem 5% 2rem;
-            margin-top: 4rem;
         }
 
         .footer-grid {
@@ -546,28 +584,18 @@
             margin-bottom: 3rem;
         }
 
-        .footer-col h4 {
-            color: white;
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
 
-        .footer-col ul {
-            list-style: none;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-col a {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-col a:hover {
-            color: white;
+        .tech-stack {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #64748b;
         }
 
         .footer-bottom {
@@ -580,7 +608,7 @@
         /* Responsive */
         @media (max-width: 900px) {
             .hero h1 { font-size: 2.5rem; }
-            .about-split { grid-template-columns: 1fr; }
+            .about-split, .contact-grid { grid-template-columns: 1fr; }
             .footer-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
@@ -609,11 +637,11 @@
             <i class="fas fa-bars"></i>
         </div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="#solutions">Solutions</a></li>
             <li><a href="/projects/">Case Studies</a></li>
             <li><a href="/blog/">Insights</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="#contact" class="nav-btn">Consulting Inquiries</a></li>
+            <li><a href="#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
@@ -737,11 +765,49 @@
         </div>
     </section>
 
-    <section class="cta-section" id="contact">
-        <div class="cta-box">
-            <h2>Ready to see the whole picture?</h2>
-            <p>Stop relying on models that assume the world is simple. Let's model the complexity.</p>
-            <a href="mailto:your-email@example.com" class="btn-white">Schedule a Discovery Call</a>
+    <section class="contact-section" id="contact">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Let's Start a Conversation</h2>
+                <p>Interested in seeing how complexity economics can apply to your specific challenges? We are currently accepting new projects and collaborations.</p>
+                
+                <div class="contact-options">
+                    <a href="YOUR_CALENDLY_LINK" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fas fa-calendar-check"></i></div>
+                        <div>
+                            <h4 style="margin-bottom:0.2rem;">Schedule a Discovery Call</h4>
+                            <span style="font-size:0.9rem; color:var(--text-muted);">Directly via Calendly</span>
+                        </div>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="contact-card">
+                        <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+                        <div>
+                            <h4 style="margin-bottom:0.2rem;">Connect on LinkedIn</h4>
+                            <span style="font-size:0.9rem; color:var(--text-muted);">Professional Network</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="secure-form">
+                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Send a Message</h3>
+                <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required placeholder="Your email address">
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" rows="4" required placeholder="How can we help?"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -752,8 +818,12 @@
                     <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
                 </h4>
                 <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    A specialized consultancy applying complexity science to economic and financial challenges. Based in Washington, DC.
+                    Applying complexity science to economic and financial challenges.
                 </p>
+                <div class="tech-stack">
+                    <span><i class="fab fa-python"></i> Python</span>
+                    <span><i class="fas fa-project-diagram"></i> NetworkX</span>
+                </div>
             </div>
             <div class="footer-col">
                 <h4>Solutions</h4>
@@ -776,7 +846,6 @@
                 <ul>
                     <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
                     <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
                 </ul>
             </div>
         </div>
@@ -786,7 +855,7 @@
     </footer>
 
     <script>
-        // INTERACTIVE NETWORK ANIMATION (RESTORED V2 PHYSICS)
+        // INTERACTIVE NETWORK ANIMATION (V2 PHYSICS - GENTLE FLOAT)
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
         let nodes = [];
@@ -802,14 +871,12 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                // Slower, constant drift
-                this.vx = (Math.random() - 0.5) * 0.5; 
+                this.vx = (Math.random() - 0.5) * 0.5; // Constant drift
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 1.5 + 1;
             }
 
             update() {
-                // Basic movement
                 this.x += this.vx;
                 this.y += this.vy;
 
@@ -817,16 +884,17 @@
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-                // Mouse Interaction (V2 Logic: Displacement, NOT Acceleration)
+                // Mouse Interaction: DISPLACEMENT (V2 Style)
+                // Nodes gently move away/towards mouse but don't accelerate indefinitely
                 if (mouse.x !== null && mouse.y !== null) {
                     const dx = mouse.x - this.x;
                     const dy = mouse.y - this.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    const maxDistance = 150;
+                    const maxDistance = 150; // Interaction radius
 
                     if (distance < maxDistance) {
                         const force = (maxDistance - distance) / maxDistance;
-                        // Direct position modification, not velocity addition
+                        // This creates the "floaty" magnetic feel without rocket speed
                         this.x += dx * force * 0.03;
                         this.y += dy * force * 0.03;
                     }
@@ -843,8 +911,8 @@
 
         function initNodes() {
             nodes = [];
-            // High density
-            const nodeCount = Math.floor((canvas.width * canvas.height) / 9000); 
+            // Slightly more numerous as requested (Density factor 6000 instead of 9000)
+            const nodeCount = Math.floor((canvas.width * canvas.height) / 6000); 
             for (let i = 0; i < nodeCount; i++) {
                 nodes.push(new Node());
             }
