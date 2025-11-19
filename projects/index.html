@@ -78,7 +78,7 @@
         .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
         .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
 
-        /* Skills Toolkit Section (Targeting Recruiters) */
+        /* Skills Toolkit Section */
         .toolkit-section {
             background: white;
             padding: 3rem 5%;
@@ -214,7 +214,7 @@
 
         .card-body p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem; flex: 1; }
 
-        /* Technical Stack in Card (Recruiter Candy) */
+        /* Technical Stack in Card */
         .tech-stack-mini {
             display: flex;
             gap: 0.5rem;
@@ -245,12 +245,28 @@
 
         .card-link:hover { gap: 0.8rem; color: var(--accent); }
 
-        /* Footer */
+        /* Footer (Unified) */
         footer {
             background: var(--primary);
             color: #94a3b8;
             padding: 4rem 5% 2rem;
+            margin-top: 4rem;
         }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
 
         .footer-bottom {
             text-align: center;
@@ -263,6 +279,12 @@
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             .page-header h1 { font-size: 2.5rem; }
+            
+            /* Unified Mobile Footer Stack */
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            
+            /* Hide Toolkit on Mobile as requested */
+            .toolkit-section { display: none; }
         }
     </style>
 </head>
@@ -319,7 +341,7 @@
     <div class="projects-container">
         <div class="projects-grid" id="projectsGrid">
 
-            <div class="project-card" data-category="finance">
+            <div class="project-card">
                 <div class="card-header finance">
                     <div class="status-badge">Completed</div>
                     <i class="fas fa-project-diagram card-icon"></i>
@@ -339,7 +361,7 @@
                 </div>
             </div>
 
-            <div class="project-card" data-category="strategy">
+            <div class="project-card">
                 <div class="card-header strategy">
                     <div class="status-badge">In Progress</div>
                     <i class="fas fa-chess-board card-icon"></i>
@@ -359,7 +381,7 @@
                 </div>
             </div>
 
-            <div class="project-card" data-category="data">
+            <div class="project-card">
                 <div class="card-header data">
                     <div class="status-badge">Planned</div>
                     <i class="fas fa-chart-bar card-icon"></i>
@@ -383,9 +405,39 @@
     </div>
 
     <footer>
-        <div style="text-align: center; color: rgba(255,255,255,0.6);">
-            <h4 style="color: white; margin-bottom: 1rem;">Complexity Insights</h4>
-            <p>Nicholas Thomas | Portfolio & Consulting</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    A specialized consultancy applying complexity science to economic and financial challenges. Based in Washington, DC.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
         </div>
         <div class="footer-bottom">
             <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
@@ -420,10 +472,9 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry, index) => {
                 if (entry.isIntersecting) {
-                    // Add delay based on index for staggered effect
                     setTimeout(() => {
                         entry.target.classList.add('visible');
-                    }, index * 100); // 100ms delay between each card
+                    }, index * 100); 
                     observer.unobserve(entry.target);
                 }
             });
