@@ -9,12 +9,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
+        /* * =========================================
+         * COMPLEXITY INSIGHTS - BRAND BIBLE (V3)
+         * =========================================
+         * * 1. COLOR PALETTE
+         * ----------------
+         * Primary (Dark Slate)   : #0f172a  -> Headers, Hero Backgrounds, Footer
+         * Accent (Royal Blue)    : #2563eb  -> Primary Buttons, Icons, Links, Highlights
+         * Accent Hover (Darker)  : #1d4ed8  -> Button Hover States
+         * Secondary (Light Blue) : #93c5fd  -> Sub-highlights, Tags, faint text
+         * Text Dark              : #334155  -> Main Body Text
+         * Text Light             : #64748b  -> Subtitles, Descriptions
+         * Background Light       : #f8fafc  -> Main Page Background
+         * White                  : #ffffff  -> Card Backgrounds, Text on Dark
+         *
+         * 2. TYPOGRAPHY
+         * -------------
+         * Font Family : 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+         * H1 Size     : 3.75rem (Desktop), 2.5rem (Mobile) | Weight: 800
+         * H2 Size     : 2.5rem  | Weight: 800 | Letter-spacing: -0.5px
+         * Body Size   : 1rem to 1.1rem | Line-height: 1.6
+         * * 3. UI ELEMENTS
+         * --------------
+         * Radius      : 6px (Buttons), 12px (Cards), 20px (Large Containers)
+         * Shadows     : 0 4px 20px rgba(0,0,0,0.05) (Subtle depth)
+         * Gradients   : linear-gradient(135deg, #0f172a 0%, #1e293b 100%) (Hero)
+         */
+
         :root {
-            --primary: #0f172a;   /* Dark Slate */
-            --accent: #2563eb;    /* Royal Blue */
-            --text-dark: #334155; /* Slate 700 */
-            --text-light: #64748b;/* Slate 500 */
-            --bg-light: #f8fafc;  /* Slate 50 */
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
             --white: #ffffff;
         }
 
@@ -125,7 +153,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.3;
+            /* Higher opacity to see the nodes clearly on dark bg */
+            opacity: 0.5; 
         }
 
         .hero-content {
@@ -189,7 +218,7 @@
         }
 
         .cta-button:hover {
-            background: #1d4ed8;
+            background: var(--accent-hover);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
@@ -232,7 +261,7 @@
             justify-content: center;
             gap: 3rem;
             flex-wrap: wrap;
-            opacity: 0.7;
+            opacity: 0.8;
         }
 
         .method-badge {
@@ -242,6 +271,13 @@
             font-weight: 600;
             color: var(--text-dark);
             font-size: 1.1rem;
+            transition: transform 0.3s;
+            cursor: default;
+        }
+
+        .method-badge:hover {
+            transform: translateY(-2px);
+            color: var(--accent);
         }
 
         .method-badge i {
@@ -550,7 +586,6 @@
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             
-            /* Mobile Menu Styles (Added functionality via JS) */
             .nav-links.active {
                 display: flex;
                 flex-direction: column;
@@ -630,7 +665,7 @@
             <div class="solution-card">
                 <div class="icon-box"><i class="fas fa-search-dollar"></i></div>
                 <h3>Systemic Risk Detection</h3>
-                <p>Traditional risk models fail during crises. Our complexity-based indicators provide early warning signals for phase transitions and market shifts.</p>
+                <p>Traditional risk models fail during crises. Our complexity-based indicators provide early warning signals for phase transitions.</p>
                 <a href="/projects/" class="learn-link">Explore Risk Models <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
@@ -639,7 +674,7 @@
     <section class="projects-section">
         <div class="section-header" style="color: white;">
             <h2 style="color: white;">Recent Intelligence</h2>
-            <p style="color: #cbd5e1;">Applied research and analysis from our desk.</p>
+            <p style="color: #cbd5e1;">Applied research and technical analysis.</p>
         </div>
 
         <div class="project-preview-grid">
@@ -668,8 +703,8 @@
         <div class="about-split">
             <div class="about-text">
                 <h2>Bridging Theory & Practice</h2>
-                <p>Complexity economics has long been trapped in academia. Complexity Insights was founded to bring these powerful tools to the real world.</p>
-                <p>We combine rigorous quantitative backgrounds with modern data science to tackle problems that standard econometrics cannot solve—specifically those involving feedback loops, behavioral adaption, and network effects.</p>
+                <p>Complexity economics has long been trapped in academia. Complexity Insights demonstrates the practical application of these powerful tools.</p>
+                <p>Founded by Nicholas Thomas, we combine rigorous economic theory with advanced <strong>computational modeling</strong> and <strong>data science</strong>. We tackle problems standard econometrics cannot solve—specifically those involving feedback loops, behavioral adaption, and network effects.</p>
                 
                 <div class="stat-row">
                     <div class="stat">
@@ -677,8 +712,8 @@
                         <span>Data-Driven</span>
                     </div>
                     <div class="stat">
-                        <h4>24/7</h4>
-                        <span>System Monitoring</span>
+                        <h4>Python</h4>
+                        <span>Native Analysis</span>
                     </div>
                 </div>
                 <br>
@@ -752,7 +787,7 @@
     </footer>
 
     <script>
-        // Interactive Network Background (Optimized)
+        // INTERACTIVE NETWORK ANIMATION (V3)
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
         let nodes = [];
@@ -768,30 +803,54 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.3; // Slower, more elegant
-                this.vy = (Math.random() - 0.5) * 0.3;
-                this.radius = Math.random() * 2 + 1;
+                this.vx = (Math.random() - 0.5) * 0.4; 
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = Math.random() * 1.5 + 1;
             }
 
             update() {
+                // Basic movement
                 this.x += this.vx;
                 this.y += this.vy;
 
+                // Bounce off walls
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                // Mouse Attraction Logic (The "Interactive" part)
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    const maxDistance = 200; // Attraction range
+
+                    if (distance < maxDistance) {
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        // The closer you are, the stronger the pull
+                        const force = (maxDistance - distance) / maxDistance;
+                        
+                        // Gentle pull factor
+                        const pullStrength = 0.8; 
+                        
+                        this.vx += forceDirectionX * force * pullStrength * 0.05;
+                        this.vy += forceDirectionY * force * pullStrength * 0.05;
+                    }
+                }
             }
 
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; // Brighter nodes
                 ctx.fill();
             }
         }
 
         function initNodes() {
             nodes = [];
-            const nodeCount = Math.floor((canvas.width * canvas.height) / 15000); // Fewer nodes for cleaner look
+            // High density: (Area / 9000) gives a good swarm feel
+            const nodeCount = Math.floor((canvas.width * canvas.height) / 9000); 
             for (let i = 0; i < nodeCount; i++) {
                 nodes.push(new Node());
             }
@@ -804,12 +863,14 @@
                     const dy = nodes[i].y - nodes[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    if (distance < 120) {
+                    // Draw lines if close enough
+                    if (distance < 100) {
                         ctx.beginPath();
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - distance / 120)})`;
-                        ctx.lineWidth = 1;
+                        // Fade out as they get further apart
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (1 - distance / 100)})`;
+                        ctx.lineWidth = 0.8;
                         ctx.stroke();
                     }
                 }
@@ -825,6 +886,19 @@
             });
             requestAnimationFrame(animate);
         }
+
+        // Track mouse position
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        // Reset mouse when leaving canvas
+        canvas.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
 
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
