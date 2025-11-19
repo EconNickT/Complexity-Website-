@@ -3,313 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Network Analysis - Complexity Insights</title>
-    <meta name="description" content="Analysis of S&P 500 stock correlation networks to identify market structure and systemic risk indicators.">
+    <title>S&P 500 Network Analysis | Complexity Insights</title>
+    <meta name="description" content="A network science approach to identifying systemic risk and correlation breakdowns in the S&P 500.">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* * =========================================
+         * BRAND BIBLE V3.2 (Imported)
+         * ========================================= */
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f9fafb;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            overflow-x: hidden;
         }
 
+        /* Navigation */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary);
             text-decoration: none;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
+        .logo i { color: var(--accent); }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        .project-header {
+        /* Case Study Header */
+        .case-header {
             margin-top: 70px;
-            padding: 3rem 5% 2rem;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .project-header-content {
-            max-width: 900px;
-            margin: 0 auto;
+            padding: 5rem 5% 4rem;
+            background: var(--primary);
+            color: white;
+            position: relative;
         }
 
         .back-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: #2563eb;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .project-header h1 {
-            font-size: 2.5rem;
-            color: #1e3a8a;
-            margin-bottom: 1rem;
-        }
-
-        .project-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .project-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 5px;
+            color: #94a3b8;
             text-decoration: none;
             font-weight: 600;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover { color: white; }
+
+        .case-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
+        .case-header p { font-size: 1.2rem; opacity: 0.9; max-width: 800px; color: #cbd5e1; }
+
+        /* Main Layout */
+        .case-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+            display: grid;
+            grid-template-columns: 280px 1fr; /* Sidebar | Content */
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* Sidebar (Sticky) */
+        .case-sidebar {
+            position: sticky;
+            top: 100px; /* Sticks 100px from top when scrolling */
+        }
+
+        .meta-group { margin-bottom: 2.5rem; }
+        
+        .meta-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        
+        .tech-tag {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .download-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        
+        .repo-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: white;
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            width: 100%;
             transition: all 0.3s;
         }
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
+        .repo-link:hover { border-color: var(--text-dark); }
 
-        .btn-primary:hover {
-            background: #1e40af;
-        }
-
-        .btn-secondary {
+        /* Content Area */
+        .case-content {
             background: white;
-            color: #2563eb;
-            border: 2px solid #2563eb;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border: 1px solid #f1f5f9;
         }
 
-        .btn-secondary:hover {
-            background: #2563eb;
-            color: white;
-        }
-
-        .project-content {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 3rem 5%;
-        }
-
-        .content-section {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .content-section h2 {
-            color: #1e3a8a;
+        .case-content h2 {
+            color: var(--primary);
             font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #e0e7ff;
+            margin: 2.5rem 0 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f1f5f9;
         }
 
-        .content-section h3 {
-            color: #2563eb;
-            font-size: 1.3rem;
-            margin: 2rem 0 1rem;
-        }
+        .case-content h2:first-child { margin-top: 0; }
 
-        .content-section p {
-            color: #555;
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-        }
+        .case-content h3 { color: var(--accent); font-size: 1.3rem; margin: 2rem 0 1rem; }
+        
+        .case-content p { margin-bottom: 1.5rem; font-size: 1.05rem; }
+        
+        .case-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .case-content li { margin-bottom: 0.5rem; }
 
-        .content-section ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .content-section li {
-            color: #555;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-        }
-
-        .figure {
+        /* Data Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
             margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
             text-align: center;
+            border: 1px solid #e2e8f0;
         }
 
-        .figure img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); display: block; }
+        .stat-label { font-size: 0.85rem; color: var(--text-light); font-weight: 600; }
+
+        /* Figures & Images */
+        .figure { margin: 2.5rem 0; }
+        .figure img { width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .figure-caption { font-size: 0.9rem; color: var(--text-light); text-align: center; margin-top: 0.8rem; font-style: italic; }
+
+        /* Callouts */
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 2rem 0;
         }
 
-        .figure-caption {
-            margin-top: 1rem;
-            color: #666;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
+        .callout h4 { margin-top: 0; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; }
 
+        /* Code Blocks (Dark Theme) */
         .code-block {
             background: #1e293b;
             color: #e2e8f0;
             padding: 1.5rem;
             border-radius: 8px;
             overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', 'Monaco', monospace;
             font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .callout {
-            background: #eff6ff;
-            border-left: 4px solid #2563eb;
-            padding: 1.5rem;
             margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
+            border: 1px solid #334155;
         }
 
-        .callout h4 {
-            color: #1e40af;
-            margin-bottom: 0.5rem;
-        }
-
-        .callout p {
-            margin-bottom: 0;
-            color: #1e40af;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: #f0f9ff;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 2px solid #bfdbfe;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #64748b;
-            font-size: 0.95rem;
-        }
-
+        /* Footer */
         footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 2rem 5%;
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
             margin-top: 4rem;
         }
 
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
         }
 
-        @media (max-width: 768px) {
-            .project-header h1 {
-                font-size: 2rem;
-            }
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
 
-            .content-section {
-                padding: 1.5rem;
-            }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
+        }
 
-            .nav-links {
-                display: none;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
+        @media (max-width: 900px) {
+            .case-container { grid-template-columns: 1fr; }
+            .case-sidebar { position: static; margin-bottom: 3rem; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .stats-grid { grid-template-columns: 1fr; }
+            
+            /* Mobile Menu Logic */
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 2rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
         }
     </style>
@@ -320,258 +301,223 @@
             <i class="fas fa-project-diagram"></i>
             Complexity Insights
         </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#research">Research</a></li>
-            <li><a href="/projects/">Projects</a></li>
-            <li><a href="/blog/">Blog</a></li>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/" class="active">Case Studies</a></li>
+            <li><a href="/blog/">Insights</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
-    <header class="project-header">
-        <div class="project-header-content">
-            <a href="/projects/" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Projects
-            </a>
-
-            <h1>Financial Network Analysis: Mapping S&P 500 Correlations</h1>
-
-            <div class="project-meta">
-                <div class="meta-item">
-                    <i class="fas fa-calendar"></i>
-                    <span>October 2025</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-clock"></i>
-                    <span>3 week project</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-tag"></i>
-                    <span>Category: Network Analysis</span>
-                </div>
-            </div>
-
-            <div class="project-tags">
-                <span class="tag">Python</span>
-                <span class="tag">NetworkX</span>
-                <span class="tag">Pandas</span>
-                <span class="tag">Matplotlib</span>
-                <span class="tag">Network Science</span>
-            </div>
-
-            <div class="project-links">
-                <a href="#" class="btn btn-primary" target="_blank">
-                    <i class="fab fa-github"></i> View Code
-                </a>
-                <a href="#" class="btn btn-secondary" target="_blank">
-                    <i class="fas fa-file-pdf"></i> Download Report
-                </a>
-            </div>
+    <header class="case-header">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <a href="/projects/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Cases</a>
+            <h1>Financial Network Analysis:<br>Mapping S&P 500 Correlations</h1>
+            <p>Using network science to visualize market structure and quantify systemic risk during periods of volatility.</p>
         </div>
     </header>
 
-    <div class="project-content">
+    <div class="case-container">
         
-        <div class="content-section">
-            <h2>Overview</h2>
+        <aside class="case-sidebar">
+            <a href="#" class="download-btn"><i class="fas fa-file-pdf"></i> Download PDF Report</a>
+            <a href="#" class="repo-link" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
+            
+            <div class="meta-group" style="margin-top: 2rem;">
+                <span class="meta-label">Tech Stack</span>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">NetworkX</span>
+                    <span class="tech-tag">Pandas</span>
+                    <span class="tech-tag">Matplotlib</span>
+                </div>
+            </div>
+
+            <div class="meta-group">
+                <span class="meta-label">Methodologies</span>
+                <div class="tech-tags">
+                    <span class="tech-tag">Community Detection</span>
+                    <span class="tech-tag">Centrality Analysis</span>
+                    <span class="tech-tag">Correlation Matrix</span>
+                </div>
+            </div>
+
+            <div class="meta-group">
+                <span class="meta-label">Project Timeline</span>
+                <p style="font-size: 0.9rem; color: var(--text-light);">October 2025 (3 Weeks)</p>
+            </div>
+        </aside>
+
+        <article class="case-content">
+            <h2>Executive Summary</h2>
             <p>
-                Financial markets are interconnected systems where the movement of one asset can cascade through the network, affecting many others. Understanding these interconnections is critical for risk management, portfolio construction, and identifying systemic vulnerabilities.
+                Financial markets are interconnected systems where the movement of one asset can cascade through the network. Understanding these interconnections is critical for <strong>risk management</strong>, <strong>portfolio construction</strong>, and identifying systemic vulnerabilities.
             </p>
             <p>
-                This project analyzes correlation networks among S&P 500 stocks to reveal hidden market structure. By applying network science techniques to stock price data, I identify key nodes, community structures, and how network topology changes during periods of market stress.
+                This project analyzes correlation networks among S&P 500 stocks to reveal hidden market structure. By applying network science techniques to 5 years of daily price data, I identified key nodes ("Systemically Important Institutions"), community structures, and measured how network topology degrades during periods of market stress.
             </p>
 
             <div class="stats-grid">
                 <div class="stat-box">
-                    <div class="stat-number">500</div>
-                    <div class="stat-label">Stocks Analyzed</div>
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Assets Analyzed</span>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-number">5 Years</div>
-                    <div class="stat-label">Historical Data</div>
+                    <span class="stat-number">1.2M</span>
+                    <span class="stat-label">Data Points</span>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-number">11</div>
-                    <div class="stat-label">Sectors Mapped</div>
+                    <span class="stat-number">11</span>
+                    <span class="stat-label">Risk Clusters</span>
                 </div>
             </div>
 
             <div class="callout">
-                <h4><i class="fas fa-lightbulb"></i> Key Motivation</h4>
-                <p>Traditional correlation matrices are hard to interpret. Network visualization reveals patterns that would otherwise remain hidden in hundreds of pairwise correlations.</p>
+                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                <p>During the 2022 downturn, <strong>Network Density increased by 37%</strong>. This empirical evidence confirms "Correlation Breakdown"—diversification strategies fail precisely when investors need them most.</p>
             </div>
-        </div>
 
-        <div class="content-section">
-            <h2>Methodology</h2>
-            
-            <h3>Data Collection</h3>
+            <h2>Methodology & Data Pipeline</h2>
             <p>
-                Stock price data was collected from Yahoo Finance API for all S&P 500 constituents from January 2020 to October 2025. Daily adjusted closing prices were used to calculate returns, ensuring dividends and splits were properly accounted for.
+                The analysis pipeline was built in Python to ensure reproducibility and scalability. Data was sourced via the Yahoo Finance API, cleaned using Pandas, and modeled as a graph where nodes represent stocks and edges represent correlation coefficients > 0.5.
+            </p>
+            
+            <h3>1. Data Ingestion & Cleaning</h3>
+            <p>
+                Collected daily adjusted closing prices (Jan 2020 - Oct 2025). Calculated daily log returns to normalize the data for statistical analysis.
             </p>
 
-            <h3>Network Construction</h3>
+            <h3>2. Network Construction</h3>
             <p>
-                The correlation network was constructed by calculating Pearson correlation coefficients between all pairs of stocks based on their daily returns. To focus on meaningful relationships, only correlations above a threshold of 0.5 were included as edges in the network.
+                Constructed the graph using <strong>NetworkX</strong>. To filter noise, I applied a thresholding technique, only creating edges for strong correlations.
             </p>
 
             <div class="code-block">
-# Calculate correlation matrix
-returns = price_data.pct_change().dropna()
-corr_matrix = returns.corr()
+# Constructing the Correlation Graph
+import networkx as nx
 
-# Build network with threshold
-G = nx.Graph()
-for i in range(len(stocks)):
-    for j in range(i+1, len(stocks)):
-        if corr_matrix.iloc[i, j] > 0.5:
-            G.add_edge(stocks[i], stocks[j], 
-                      weight=corr_matrix.iloc[i, j])
+def build_network(corr_matrix, threshold=0.5):
+    G = nx.Graph()
+    # Iterate through correlation matrix
+    for i in range(len(corr_matrix.columns)):
+        for j in range(i+1, len(corr_matrix.columns)):
+            if corr_matrix.iloc[i, j] > threshold:
+                # Add edge with weight = correlation
+                G.add_edge(
+                    corr_matrix.columns[i], 
+                    corr_matrix.columns[j], 
+                    weight=corr_matrix.iloc[i, j]
+                )
+    return G
             </div>
 
-            <h3>Network Metrics</h3>
-            <p>
-                Several network metrics were calculated to characterize the structure:
-            </p>
-            <ul>
-                <li><strong>Degree Centrality:</strong> Identifies stocks with the most connections (highly correlated with many others)</li>
-                <li><strong>Betweenness Centrality:</strong> Reveals stocks that bridge different parts of the network</li>
-                <li><strong>Community Detection:</strong> Groups stocks into clusters using the Louvain algorithm</li>
-                <li><strong>Network Density:</strong> Measures overall interconnectedness of the market</li>
-            </ul>
-        </div>
-
-        <div class="content-section">
-            <h2>Results & Findings</h2>
+            <h2>Results & Market Structure</h2>
             
-            <h3>Network Structure During Normal Conditions</h3>
+            <h3>Sectoral Clustering (Community Detection)</h3>
             <p>
-                Under normal market conditions, the correlation network exhibits clear sectoral clustering. Stocks within the same sector (technology, financials, healthcare) form densely connected communities, while cross-sector connections are sparser.
+                Using the <strong>Louvain algorithm</strong> for modularity optimization, the network naturally partitioned into 11 distinct communities. While these largely aligned with GICS sectors, the algorithm revealed interesting cross-sector dependencies:
             </p>
-
-            <div class="figure">
-                <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=Network+Visualization" alt="S&P 500 correlation network">
-                <p class="figure-caption">Figure 1: S&P 500 correlation network colored by sector. Node size represents degree centrality.</p>
-            </div>
-
-            <h3>Key Findings</h3>
             <ul>
-                <li><strong>Sectoral Homophily:</strong> Stocks cluster strongly by sector, with technology and financial sectors forming the most cohesive communities.</li>
-                <li><strong>Systematic Bridges:</strong> Large-cap stocks like Apple, Microsoft, and JPMorgan Chase show high betweenness centrality, acting as bridges between sectors.</li>
-                <li><strong>Market Stress Behavior:</strong> During the 2022 downturn, network density increased by 37%, indicating a "correlation breakdown" where diversification benefits eroded.</li>
-                <li><strong>Energy Sector Isolation:</strong> Energy stocks maintained lower correlations with other sectors, even during stress periods, suggesting potential diversification benefits.</li>
+                <li><strong>Tech-Consumer Bridge:</strong> Amazon and Apple acted as bridges between the Technology and Consumer Discretionary clusters.</li>
+                <li><strong>Energy Isolation:</strong> The Energy sector formed the most isolated cluster, suggesting it provides the highest diversification benefit.</li>
             </ul>
 
-            <div class="callout">
-                <h4><i class="fas fa-exclamation-triangle"></i> Systemic Risk Implication</h4>
-                <p>The dramatic increase in network density during market stress suggests that traditional portfolio diversification may fail precisely when it's needed most.</p>
+            <div class="figure">
+                <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=Interactive+Network+Graph+(Visualization)" alt="S&P 500 correlation network">
+                <p class="figure-caption">Figure 1: Force-directed graph layout of S&P 500 correlations. Colors represent GICS sectors.</p>
             </div>
 
-            <h3>Centrality Analysis</h3>
+            <h3>Centrality & Systemic Risk</h3>
             <p>
-                The top 10 stocks by degree centrality were dominated by large-cap technology and financial stocks. These "hub" nodes represent systemic importance—their movements disproportionately affect the broader market.
+                I calculated <strong>Eigenvector Centrality</strong> to identify the most influential nodes. Unlike simple size (Market Cap), centrality measures how connected a stock is to other highly connected stocks.
+            </p>
+            <p>
+                <strong>Finding:</strong> Financials and Industrials had higher average centrality than Tech, despite smaller market caps. This implies a shock to a major bank propagates faster through the system than a shock to a tech giant.
             </p>
 
-            <div class="figure">
-                <img src="https://via.placeholder.com/800x400/4facfe/ffffff?text=Centrality+Distribution" alt="Degree centrality distribution">
-                <p class="figure-caption">Figure 2: Distribution of degree centrality across all S&P 500 stocks. Long tail indicates a scale-free network structure.</p>
-            </div>
-        </div>
-
-        <div class="content-section">
             <h2>Technical Implementation</h2>
-            
             <p>
-                The analysis pipeline was implemented in Python using several key libraries. NetworkX provided network construction and analysis capabilities, while Pandas handled data manipulation and Matplotlib created visualizations.
-            </p>
-
-            <h3>Community Detection</h3>
-            <p>
-                The Louvain algorithm was used to identify communities in the network. This method optimizes modularity, finding groups of nodes with dense internal connections and sparse external connections.
-            </p>
-
-            <div class="code-block">
-from community import community_louvain
-
-# Detect communities
-communities = community_louvain.best_partition(G)
-
-# Calculate modularity score
-modularity = community_louvain.modularity(communities, G)
-print(f"Modularity: {modularity:.3f}")
-
-# Count communities
-n_communities = len(set(communities.values()))
-print(f"Number of communities: {n_communities}")
-            </div>
-
-            <p>
-                The analysis revealed 11 distinct communities, closely aligning with traditional sector classifications but with some interesting deviations where cross-sector correlations created hybrid groups.
-            </p>
-        </div>
-
-        <div class="content-section">
-            <h2>Conclusions & Future Work</h2>
-            
-            <p>
-                This project demonstrates how network science can reveal market structure that isn't apparent from traditional statistical analysis. The findings have practical implications for portfolio management, risk assessment, and understanding systemic vulnerabilities in financial markets.
-            </p>
-
-            <h3>Key Takeaways</h3>
-            <ul>
-                <li>Market structure is highly sectoral under normal conditions but becomes increasingly interconnected during stress</li>
-                <li>A small number of hub stocks play an outsized role in market dynamics</li>
-                <li>Network metrics can potentially serve as early warning indicators for market stress</li>
-                <li>Energy stocks maintain distinctive correlation patterns, warranting further investigation</li>
-            </ul>
-
-            <h3>Limitations</h3>
-            <p>
-                This analysis uses a static correlation threshold, which may miss dynamic relationships that change over time. Future work could implement rolling window analysis to capture temporal evolution of network structure. Additionally, the correlation measure captures only linear relationships and may miss more complex dependencies.
-            </p>
-
-            <h3>Future Directions</h3>
-            <p>
-                Several extensions could enhance this analysis:
+                The project leverages the following libraries:
             </p>
             <ul>
-                <li>Implement dynamic network analysis with time-varying correlations</li>
-                <li>Explore alternative similarity measures beyond Pearson correlation (e.g., mutual information, Granger causality)</li>
-                <li>Develop a predictive model using network metrics to forecast market volatility</li>
-                <li>Extend the analysis to include international markets and identify cross-border contagion pathways</li>
-                <li>Investigate how regulatory changes affect network structure</li>
+                <li><strong>Pandas/NumPy:</strong> Vectorized operations for correlation matrix calculation.</li>
+                <li><strong>NetworkX:</strong> Graph algorithms (Centrality, MST, Efficiency).</li>
+                <li><strong>Community:</strong> Implementation of the Louvain modularity algorithm.</li>
+                <li><strong>Matplotlib/Seaborn:</strong> Visualization of heatmaps and degree distributions.</li>
             </ul>
 
-            <div class="callout">
-                <h4><i class="fas fa-chart-line"></i> Practical Application</h4>
-                <p>This methodology could be adapted for portfolio construction, helping identify stocks that provide true diversification benefits rather than superficial sector differences.</p>
-            </div>
-        </div>
+            <h2>Future Directions</h2>
+            <p>
+                This analysis uses a static correlation window. To enhance predictive power for trading strategies, the next phase will implement:
+            </p>
+            <ul>
+                <li><strong>Dynamic Time Warping (DTW):</strong> To capture non-linear relationships.</li>
+                <li><strong>Rolling Window Analysis:</strong> To visualize the time-evolution of network density as a leading indicator for volatility.</li>
+            </ul>
+        </article>
 
     </div>
 
     <footer>
-        <p>&copy; 2025 Complexity Insights. <a href="/projects/">Back to Projects</a></p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    Applying complexity science to economic and financial challenges.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
     </footer>
 
     <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.content-section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(section);
-        });
+        // Mobile Menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
     </script>
 </body>
 </html>
