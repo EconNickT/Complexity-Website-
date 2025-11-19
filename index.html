@@ -153,7 +153,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Higher opacity to see the nodes clearly on dark bg */
             opacity: 0.5; 
         }
 
@@ -787,7 +786,7 @@
     </footer>
 
     <script>
-        // INTERACTIVE NETWORK ANIMATION (V3)
+        // INTERACTIVE NETWORK ANIMATION (RESTORED V2 PHYSICS)
         const canvas = document.getElementById('networkCanvas');
         const ctx = canvas.getContext('2d');
         let nodes = [];
@@ -803,8 +802,9 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.4; 
-                this.vy = (Math.random() - 0.5) * 0.4;
+                // Slower, constant drift
+                this.vx = (Math.random() - 0.5) * 0.5; 
+                this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 1.5 + 1;
             }
 
@@ -817,24 +817,18 @@
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
 
-                // Mouse Attraction Logic (The "Interactive" part)
+                // Mouse Interaction (V2 Logic: Displacement, NOT Acceleration)
                 if (mouse.x !== null && mouse.y !== null) {
                     const dx = mouse.x - this.x;
                     const dy = mouse.y - this.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    const maxDistance = 200; // Attraction range
+                    const maxDistance = 150;
 
                     if (distance < maxDistance) {
-                        const forceDirectionX = dx / distance;
-                        const forceDirectionY = dy / distance;
-                        // The closer you are, the stronger the pull
                         const force = (maxDistance - distance) / maxDistance;
-                        
-                        // Gentle pull factor
-                        const pullStrength = 0.8; 
-                        
-                        this.vx += forceDirectionX * force * pullStrength * 0.05;
-                        this.vy += forceDirectionY * force * pullStrength * 0.05;
+                        // Direct position modification, not velocity addition
+                        this.x += dx * force * 0.03;
+                        this.y += dy * force * 0.03;
                     }
                 }
             }
@@ -842,14 +836,14 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; // Brighter nodes
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; 
                 ctx.fill();
             }
         }
 
         function initNodes() {
             nodes = [];
-            // High density: (Area / 9000) gives a good swarm feel
+            // High density
             const nodeCount = Math.floor((canvas.width * canvas.height) / 9000); 
             for (let i = 0; i < nodeCount; i++) {
                 nodes.push(new Node());
@@ -863,12 +857,10 @@
                     const dy = nodes[i].y - nodes[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
-                    // Draw lines if close enough
                     if (distance < 100) {
                         ctx.beginPath();
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
-                        // Fade out as they get further apart
                         ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (1 - distance / 100)})`;
                         ctx.lineWidth = 0.8;
                         ctx.stroke();
@@ -887,14 +879,12 @@
             requestAnimationFrame(animate);
         }
 
-        // Track mouse position
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             mouse.x = e.clientX - rect.left;
             mouse.y = e.clientY - rect.top;
         });
 
-        // Reset mouse when leaving canvas
         canvas.addEventListener('mouseleave', () => {
             mouse.x = null;
             mouse.y = null;
