@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About the Firm | Complexity Insights</title>
     <meta name="description" content="Bridging academic complexity economics with real-world business strategy. Founded by Nicholas Thomas.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -96,7 +96,7 @@
 
         .values-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
@@ -120,7 +120,7 @@
         .value-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary); }
         .value-card p { font-size: 0.95rem; color: var(--text-light); }
 
-        /* --- FOUNDER PROFILE (The Resume Booster) --- */
+        /* --- FOUNDER PROFILE --- */
         .founder-section {
             background: white;
             padding: 5rem 5%;
@@ -136,26 +136,41 @@
             gap: 4rem;
         }
 
-        /* Founder Sidebar (Photo + Quick Stats) */
+        /* Founder Sidebar */
         .founder-sidebar {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
 
-        .profile-photo {
+        .profile-photo-container {
             width: 100%;
             aspect-ratio: 1/1;
-            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+            background: #f1f5f9;
             border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Image Placeholder - Replace src with real image */
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Fallback icon if no image yet */
+        .profile-placeholder {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
-            color: white;
-            /* Replace with actual <img> later */
-            background-image: url('/path/to/your-photo.jpg'); /* Optional */
-            background-size: cover;
+            font-size: 4rem;
+            color: #cbd5e1;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
 
         .resume-btn {
@@ -195,8 +210,9 @@
 
         .social-row {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .social-pill {
@@ -211,34 +227,45 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.3s;
+            background: white;
         }
 
-        .social-pill:hover { border-color: var(--accent); color: var(--accent); background: white; }
+        .social-pill:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
 
-        /* --- ORIGIN STORY (Editorial Style) --- */
-        .origin-section {
+        /* --- TALENT & PARTNERSHIP FORM --- */
+        .join-section {
             padding: 5rem 5%;
-            max-width: 800px;
+            background: var(--bg-light);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .join-container {
+            max-width: 700px;
             margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
 
-        .origin-section h2 {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            text-align: center;
+        .join-header { text-align: center; margin-bottom: 2rem; }
+        .join-header h2 { font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .join-header p { color: var(--text-light); }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1rem; transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .origin-text p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.8; }
-        
-        .highlight {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary);
-            border-left: 4px solid var(--accent);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
+        .submit-btn {
+            width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.3s; font-size: 1rem;
         }
+        .submit-btn:hover { background: var(--accent); }
 
         /* --- FOOTER --- */
         footer {
@@ -275,6 +302,7 @@
             .founder-grid { grid-template-columns: 1fr; gap: 2rem; }
             .footer-grid { grid-template-columns: 1fr; }
             .intro-text { text-align: left; }
+            .values-grid { grid-template-columns: 1fr; }
             
             /* Mobile Menu */
             .nav-links.active {
@@ -340,6 +368,16 @@
                 <h3>Systemic Risk</h3>
                 <p>Quantifying tail risks that standard VaR (Value at Risk) models systematically ignore.</p>
             </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-handshake"></i></div>
+                <h3>M&A & Strategy</h3>
+                <p>Applying network theory to deal sourcing, synergy modeling, and post-merger integration risks.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fas fa-chart-pie"></i></div>
+                <h3>Corporate Finance</h3>
+                <p>Bridging the gap between complexity science and traditional valuation, capital allocation, and FP&A.</p>
+            </div>
         </div>
     </section>
 
@@ -347,8 +385,12 @@
         <div class="founder-grid">
             
             <aside class="founder-sidebar">
-                <div class="profile-photo">
-                    <i class="fas fa-user"></i> </div>
+                <div class="profile-photo-container">
+                    <img src="path/to/your-headshot.jpg" alt="Nicholas Thomas" class="profile-img" onerror="this.style.display='none'; document.getElementById('ph-icon').style.display='flex';">
+                    <div id="ph-icon" class="profile-placeholder" style="display:none;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
                 
                 <a href="#" class="resume-btn">
                     <i class="fas fa-file-download"></i> Download Resume
@@ -398,23 +440,55 @@
                     <a href="#" target="_blank" class="social-pill">
                         <i class="fab fa-github"></i> GitHub
                     </a>
+                    <a href="https://x.com/YOUR_HANDLE" target="_blank" class="social-pill">
+                        <i class="fab fa-x-twitter"></i> X (Twitter)
+                    </a>
+                    <a href="https://substack.com/@YOUR_HANDLE" target="_blank" class="social-pill">
+                        <i class="fas fa-envelope-open-text"></i> Substack
+                    </a>
+                    <a href="https://nicholas-thomas.com" target="_blank" class="social-pill">
+                        <i class="fas fa-globe"></i> Personal Site
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="origin-section">
-        <h2>Our Philosophy</h2>
-        <div class="origin-text">
-            <p>
-                Most consulting firms tell you what happened yesterday. We try to understand the dynamics that will shape tomorrow.
-            </p>
-            <div class="highlight">
-                "The map is not the territory. Our models are useful simplifications, but we shouldn't mistake their mathematical elegance for reality."
+    <section class="join-section" id="join">
+        <div class="join-container">
+            <div class="join-header">
+                <h2>Join Our Network</h2>
+                <p>Interested in collaborating, hiring, or commissioning research?</p>
             </div>
-            <p>
-                We believe that the future of economic analysis lies in <strong>simulation</strong>. By building "digital twins" of markets and supply chains, we can stress-test strategies against thousands of potential futures, not just the one we hope for. This approach—moving from prediction to adaptation—is the core of our value proposition.
-            </p>
+            
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>I am interested in...</label>
+                    <select name="interest">
+                        <option value="client">Hiring Complexity Insights (Consulting)</option>
+                        <option value="hiring">Recruiting Nicholas Thomas (Full-time Role)</option>
+                        <option value="collab">Research Collaboration</option>
+                        <option value="other">Other Inquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="4" required placeholder="Tell us about your project or opportunity..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
         </div>
     </section>
 
