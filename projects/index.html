@@ -32,7 +32,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation (Same as Home) */
+        /* Navigation */
         .nav {
             position: fixed;
             top: 0;
@@ -76,35 +76,15 @@
         }
 
         .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
-        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto 2rem; color: #cbd5e1; }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn-outline {
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
+        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
 
         /* Skills Toolkit Section (Targeting Recruiters) */
         .toolkit-section {
             background: white;
-            padding: 2rem 5%;
+            padding: 3rem 5%;
             border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
 
         .toolkit-grid {
@@ -137,32 +117,15 @@
             font-size: 0.9rem;
             font-weight: 600;
             border: 1px solid #dbeafe;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: default;
         }
 
-        /* Filter Bar */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-            padding: 0 5%;
+        .tool-badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            color: var(--accent);
         }
-
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid #e2e8f0;
-            background: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
 
         /* Case Study Grid */
         .projects-container {
@@ -173,7 +136,7 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2.5rem;
         }
 
@@ -182,10 +145,17 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid #f1f5f9;
             display: flex;
             flex-direction: column;
+            opacity: 0; /* Hidden initially for animation */
+            transform: translateY(20px);
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card:hover {
@@ -222,6 +192,7 @@
             font-weight: 700;
             color: var(--text-dark);
             text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         /* Card Body */
@@ -286,14 +257,12 @@
             padding-top: 2rem;
             border-top: 1px solid #334155;
             font-size: 0.9rem;
-            margin-top: 3rem;
         }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
             .page-header h1 { font-size: 2.5rem; }
-            .header-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -316,14 +285,6 @@
     <header class="page-header">
         <h1>Applied Research &<br>Strategic Analysis</h1>
         <p>Bridging the gap between academic theory and business reality. A portfolio of financial modeling, data science, and economic research.</p>
-        <div class="header-actions">
-            <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="btn-outline">
-                <i class="fab fa-linkedin"></i> Connect on LinkedIn
-            </a>
-            <a href="#" class="btn-outline">
-                <i class="fas fa-file-download"></i> Download Resume
-            </a>
-        </div>
     </header>
 
     <section class="toolkit-section">
@@ -354,13 +315,6 @@
             </div>
         </div>
     </section>
-
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filterProjects('all')">All Cases</button>
-        <button class="filter-btn" onclick="filterProjects('finance')">Finance & Risk</button>
-        <button class="filter-btn" onclick="filterProjects('data')">Data Analytics</button>
-        <button class="filter-btn" onclick="filterProjects('strategy')">Market Strategy</button>
-    </div>
 
     <div class="projects-container">
         <div class="projects-grid" id="projectsGrid">
@@ -439,23 +393,6 @@
     </footer>
 
     <script>
-        // Filter Logic
-        function filterProjects(category) {
-            const cards = document.querySelectorAll('.project-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
         // Mobile Menu
         function toggleMenu() {
             const navLinks = document.getElementById('navLinks');
@@ -473,6 +410,28 @@
                 navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
             }
         }
+
+        // Staggered Animation for Cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Add delay based on index for staggered effect
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100); // 100ms delay between each card
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
+        });
     </script>
 </body>
 </html>
