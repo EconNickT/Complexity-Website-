@@ -4,335 +4,292 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- EDIT THESE -->
-    <title>Your Post Title - Complexity Insights</title>
-    <meta name="description" content="Brief description of your blog post for search engines">
+    <title>Post Title Goes Here | Complexity Insights</title>
+    <meta name="description" content="Brief description of the article for search engines and social previews.">
+    <meta property="og:title" content="Post Title Goes Here">
+    <meta property="og:type" content="article">
     
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* * =========================================
+         * BRAND BIBLE V3.2 (Imported)
+         * ========================================= */
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f9fafb;
+            line-height: 1.8;
+            color: var(--text-dark);
+            background-color: var(--white);
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* --- NAVIGATION --- */
         .nav {
             position: fixed;
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e3a8a;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        /* Post Header */
-        .post-header {
-            margin-top: 70px;
-            padding: 3rem 5% 2rem;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .post-header-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #2563eb;
-            text-decoration: none;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
-
-        .post-header h1 {
-            font-size: 2.5rem;
-            color: #1e3a8a;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .post-meta {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            color: #666;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .post-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Post Content */
-        .post-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 5%;
-        }
-
-        .post-body {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .post-body h2 {
-            color: #1e3a8a;
-            font-size: 1.8rem;
-            margin: 2.5rem 0 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #e0e7ff;
-        }
-
-        .post-body h2:first-child {
-            margin-top: 0;
-        }
-
-        .post-body h3 {
-            color: #2563eb;
             font-size: 1.4rem;
-            margin: 2rem 0 1rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo i { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
+        
+        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+
+        /* --- ARTICLE HEADER --- */
+        .article-header {
+            margin-top: 100px;
+            text-align: center;
+            padding: 0 5%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .post-body p {
-            color: #555;
-            line-height: 1.9;
+        .category-tag {
+            background: #eff6ff;
+            color: var(--accent);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
         }
 
-        .post-body ul, .post-body ol {
-            margin-left: 2rem;
+        .article-header h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            color: var(--primary);
             margin-bottom: 1.5rem;
+            letter-spacing: -1px;
         }
 
-        .post-body li {
-            color: #555;
-            margin-bottom: 0.75rem;
-            line-height: 1.8;
-            font-size: 1.05rem;
+        .article-header p.subtitle {
+            font-size: 1.4rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 3rem;
+            font-weight: 300;
         }
 
-        .post-body blockquote {
-            border-left: 4px solid #2563eb;
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            color: #666;
-            font-style: italic;
+        /* Meta Bar */
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
+            padding: 1rem 0;
+            margin-bottom: 4rem;
+            max-width: 100%;
         }
 
-        .post-body strong {
-            color: #1e3a8a;
+        .author-block { display: flex; align-items: center; gap: 0.5rem; text-align: left; }
+        .author-info h5 { margin: 0; color: var(--primary); font-size: 0.95rem; font-weight: 700; }
+        .author-info span { font-size: 0.85rem; color: var(--text-light); display: block; line-height: 1.2;}
+
+        .meta-right { display: flex; gap: 1.5rem; align-items: center; }
+        .meta-stat { font-size: 0.85rem; color: var(--text-light); display: flex; align-items: center; gap: 0.4rem; font-weight: 500; }
+
+        /* --- MAIN LAYOUT --- */
+        .article-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 740px 1fr;
+            gap: 2rem;
+            padding: 0 5% 6rem;
+        }
+
+        /* TOC Sidebar */
+        .toc-sidebar {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            padding-right: 2rem;
+        }
+
+        .toc-header {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .toc-list { list-style: none; border-left: 2px solid #f1f5f9; }
+        
+        .toc-list li a {
+            display: block;
+            padding: 0.4rem 0 0.4rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+            margin-left: -2px;
+        }
+
+        .toc-list li a:hover {
+            color: var(--accent);
+            border-left-color: var(--accent);
             font-weight: 600;
         }
 
-        /* Code Blocks */
+        /* Article Body */
+        .article-body {
+            grid-column: 2;
+            font-size: 1.15rem;
+        }
+
+        .article-body p { margin-bottom: 2rem; }
+
+        .article-body h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        .article-body h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .article-body ul, .article-body ol {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            color: var(--text-dark);
+        }
+        
+        .article-body li { margin-bottom: 0.8rem; }
+
+        .article-body img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+
+        .image-caption { font-size: 0.9rem; color: var(--text-light); margin-top: -1.5rem; margin-bottom: 2rem; text-align: center; font-style: italic; }
+
+        .highlight-box {
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            font-style: italic;
+            color: #475569;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .key-takeaway {
+            background: #eff6ff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            border: 1px solid #dbeafe;
+        }
+
+        .key-takeaway h4 { color: var(--accent); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .key-takeaway p { margin-bottom: 0; font-size: 1rem; }
+
         .code-block {
             background: #1e293b;
             color: #e2e8f0;
             padding: 1.5rem;
             border-radius: 8px;
-            overflow-x: auto;
-            margin: 1.5rem 0;
-            font-family: 'Courier New', monospace;
+            font-family: 'Consolas', monospace;
             font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        /* Callout Boxes */
-        .callout {
-            padding: 1.5rem;
+            overflow-x: auto;
             margin: 2rem 0;
-            border-radius: 8px;
-            border-left: 4px solid;
         }
 
-        .callout.info {
-            background: #eff6ff;
-            border-color: #2563eb;
-        }
-
-        .callout.warning {
-            background: #fef3c7;
-            border-color: #f59e0b;
-        }
-
-        .callout.success {
-            background: #d1fae5;
-            border-color: #10b981;
-        }
-
-        .callout h4 {
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .callout.info h4 {
-            color: #1e40af;
-        }
-
-        .callout.warning h4 {
-            color: #d97706;
-        }
-
-        .callout.success h4 {
-            color: #059669;
-        }
-
-        .callout p {
-            margin-bottom: 0;
-        }
-
-        /* Images */
-        .post-image {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .post-image img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .image-caption {
-            margin-top: 0.75rem;
-            color: #666;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
-
-        /* Footer Navigation */
-        .post-footer {
-            max-width: 800px;
-            margin: 3rem auto 0;
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-
-        .footer-nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: white;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #2563eb;
-            font-weight: 600;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-        }
-
-        .footer-nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        /* Footer */
+        /* --- FOOTER --- */
         footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 2rem 5%;
-            margin-top: 4rem;
+            background: var(--primary);
+            color: #94a3b8;
+            padding: 4rem 5% 2rem;
         }
 
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.8rem; }
+        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
+        .footer-col a:hover { color: white; }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #334155;
+            font-size: 0.9rem;
         }
 
         /* Responsive */
+        @media (max-width: 1100px) {
+            .article-container { grid-template-columns: 1fr; max-width: 800px; }
+            .toc-sidebar { display: none; } 
+            .article-body { grid-column: 1; }
+        }
+
         @media (max-width: 768px) {
-            .post-header h1 {
-                font-size: 2rem;
-            }
-
-            .post-body {
-                padding: 2rem 1.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .post-footer {
-                flex-direction: column;
-            }
+            .article-header h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .meta-bar { flex-direction: column; gap: 1rem; text-align: center; }
         }
     </style>
 </head>
@@ -342,163 +299,156 @@
             <i class="fas fa-project-diagram"></i>
             Complexity Insights
         </a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/#research">Research</a></li>
-            <li><a href="/projects/">Projects</a></li>
-            <li><a href="/blog/">Blog</a></li>
+        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/#solutions">Solutions</a></li>
+            <li><a href="/projects/">Case Studies</a></li>
+            <li><a href="/blog/">Insights</a></li>
             <li><a href="/about/">About</a></li>
-            <li><a href="/#contact">Contact</a></li>
+            <li><a href="/#contact" class="nav-btn">Contact</a></li>
         </ul>
     </nav>
 
-    <header class="post-header">
-        <div class="post-header-content">
-            <a href="/blog/" class="back-link">
-                <i class="fas fa-arrow-left"></i> Back to Blog
-            </a>
-
-            <!-- EDIT: Your post title -->
-            <h1>Your Blog Post Title Goes Here</h1>
-
-            <!-- EDIT: Post metadata -->
-            <div class="post-meta">
-                <div class="meta-item">
-                    <i class="fas fa-calendar"></i>
-                    <span>October 2, 2025</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-clock"></i>
-                    <span>5 min read</span>
-                </div>
-                <div class="meta-item">
-                    <i class="fas fa-tag"></i>
-                    <span>Category Name</span>
+    <header class="article-header">
+        <span class="category-tag">Category Name</span>
+        
+        <h1>Your Post Title Goes Here</h1>
+        
+        <p class="subtitle">A brief, compelling subtitle that summarizes the main argument or insight of the article.</p>
+        
+        <div class="meta-bar">
+            <div class="author-block">
+                <div class="author-info">
+                    <h5>Nicholas Thomas</h5>
+                    <span>Founder, Complexity Insights</span>
                 </div>
             </div>
-
-            <!-- EDIT: Post tags -->
-            <div class="post-tags">
-                <span class="tag">Tag 1</span>
-                <span class="tag">Tag 2</span>
-                <span class="tag">Tag 3</span>
+            <div class="meta-right">
+                <div class="meta-stat"><i class="far fa-calendar"></i> Month DD, YYYY</div>
+                <div class="meta-stat"><i class="far fa-clock"></i> X min read</div>
             </div>
         </div>
     </header>
 
-    <div class="post-content">
-        <article class="post-body">
-            
-            <!-- START YOUR CONTENT HERE -->
-            
-            <p>
-                Start with an engaging opening paragraph. Hook your reader and explain what they'll learn from this post.
-            </p>
-
-            <h2>Main Section Heading</h2>
-            
-            <p>
-                Write your main content here. Break it into digestible paragraphs. Use <strong>bold text</strong> for emphasis when needed.
-            </p>
-
-            <h3>Subsection Heading</h3>
-            
-            <p>
-                Continue your content with subsections as needed. Keep paragraphs focused and readable.
-            </p>
-
-            <!-- Example: Unordered List -->
-            <ul>
-                <li>First key point or item</li>
-                <li>Second key point or item</li>
-                <li>Third key point or item</li>
+    <div class="article-container">
+        
+        <aside class="toc-sidebar">
+            <div class="toc-header">Contents</div>
+            <ul class="toc-list">
+                <li><a href="#section1">Section 1 Title</a></li>
+                <li><a href="#section2">Section 2 Title</a></li>
+                <li><a href="#section3">Section 3 Title</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
             </ul>
+        </aside>
 
-            <!-- Example: Info Callout Box -->
-            <div class="callout info">
-                <h4><i class="fas fa-info-circle"></i> Key Insight</h4>
-                <p>Use callout boxes to highlight important information, insights, or takeaways.</p>
+        <article class="article-body">
+            
+            <p class="lead">
+                Write your opening hook here. This text is slightly larger to grab attention.
+            </p>
+
+            <h2 id="section1">First Major Section</h2>
+            <p>
+                Your content goes here. Standard paragraph text optimized for readability.
+            </p>
+
+            <div class="highlight-box">
+                "Use this box for pull-quotes or key statements that you want to emphasize to the reader."
             </div>
 
-            <!-- Example: Code Block -->
+            <h2 id="section2">Second Major Section</h2>
+            <p>
+                More content here.
+            </p>
+
+            <div class="key-takeaway">
+                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
+                <p>Use this box to summarize complex points or findings. It draws the eye and breaks up the text.</p>
+            </div>
+
+            <div style="margin: 3rem -3rem; text-align: center;">
+                <img src="https://via.placeholder.com/800x450/f1f5f9/94a3b8?text=Placeholder+Image" alt="Description">
+                <p class="image-caption">Figure 1: Caption explaining the visual.</p>
+            </div>
+
+            <h2 id="section3">Technical Implementation</h2>
+            <p>
+                If you are sharing code or technical details:
+            </p>
+
             <div class="code-block">
 # Example Python code
-import pandas as pd
-import numpy as np
-
-# Load data
-data = pd.read_csv('your_data.csv')
-
-# Perform analysis
-result = data.groupby('category').mean()
-print(result)
+import networkx as nx
+G = nx.Graph()
+G.add_edge('A', 'B')
+print(nx.degree_centrality(G))
             </div>
 
-            <!-- Example: Image with Caption -->
-            <div class="post-image">
-                <img src="https://via.placeholder.com/800x400/667eea/ffffff?text=Your+Image+Here" alt="Description of image">
-                <p class="image-caption">Figure 1: Brief description of what this image shows</p>
-            </div>
-
-            <h2>Another Major Section</h2>
-            
+            <h2 id="conclusion">Conclusion</h2>
             <p>
-                Continue building your argument or explanation. Reference figures and code examples as needed.
+                Wrap up your analysis here.
             </p>
-
-            <!-- Example: Blockquote -->
-            <blockquote>
-                "Use blockquotes for memorable quotes or key statements you want to emphasize."
-            </blockquote>
-
-            <!-- Example: Warning Callout -->
-            <div class="callout warning">
-                <h4><i class="fas fa-exclamation-triangle"></i> Important Note</h4>
-                <p>Use warning boxes for caveats, limitations, or important considerations readers should keep in mind.</p>
-            </div>
-
-            <!-- Example: Numbered List -->
-            <h3>Step-by-Step Process</h3>
-            <ol>
-                <li>First step in your process</li>
-                <li>Second step with additional explanation</li>
-                <li>Third step to complete the workflow</li>
-            </ol>
-
-            <!-- Example: Success Callout -->
-            <div class="callout success">
-                <h4><i class="fas fa-check-circle"></i> Key Takeaway</h4>
-                <p>Summarize the main point or successful outcome here.</p>
-            </div>
-
-            <h2>Conclusion</h2>
-            
-            <p>
-                Wrap up your post with a strong conclusion. Summarize the key points and leave readers with something to think about or act on.
-            </p>
-
-            <p>
-                You can also end with a call to action, invitation for discussion, or pointer to related content.
-            </p>
-
-            <!-- END YOUR CONTENT -->
-
-        </article>
-
-        <!-- Optional: Navigation to other posts -->
-        <div class="post-footer">
-            <a href="/blog/" class="footer-nav-btn">
-                <i class="fas fa-arrow-left"></i> All Posts
-            </a>
-            <a href="#" class="footer-nav-btn">
-                Next Post <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
+            </article>
     </div>
 
     <footer>
-        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
+                </h4>
+                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
+                    Applying complexity science to economic and financial challenges.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Market Simulation</a></li>
+                    <li><a href="#">Network Analysis</a></li>
+                    <li><a href="#">Risk Modeling</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/projects/">Case Studies</a></li>
+                    <li><a href="/blog/">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
+        </div>
     </footer>
 
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        }
+    </script>
 </body>
 </html>
