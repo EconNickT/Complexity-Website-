@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Deserts in America - Complexity Insights</title>
+    <meta name="description" content="Interactive bivariate choropleth map analyzing the relationship between FDIC bank branch density and median household income across 3,200+ U.S. counties.">
+    <meta property="og:title" content="Banking Deserts in America - Complexity Insights">
+    <meta property="og:description" content="Interactive map revealing where low bank branch density meets low income across U.S. counties.">
+    <meta property="og:type" content="article">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f9fafb;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .project-header {
+            margin-top: 70px;
+            padding: 3rem 5% 2rem;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .project-header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-header h1 {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .project-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid #2563eb;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Map Embed */
+        .map-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem 5%;
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .map-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-caption {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .map-caption a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .map-caption a:hover {
+            text-decoration: underline;
+        }
+
+        /* Project Content */
+        .project-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 5% 3rem;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .content-section h2 {
+            color: #1e3a8a;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e0e7ff;
+        }
+
+        .content-section h3 {
+            color: #2563eb;
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+        }
+
+        .content-section p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section ul, .content-section ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .content-section li {
+            color: #555;
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .content-section strong {
+            color: #1e3a8a;
+        }
+
+        .callout {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .callout h4 {
+            color: #1e40af;
+            margin-bottom: 0.5rem;
+        }
+
+        .callout p {
+            margin-bottom: 0;
+        }
+
+        .callout.warning {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .callout.warning h4 {
+            color: #d97706;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .project-header h1 {
+                font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .map-frame {
+                height: 50vh;
+                min-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="logo">
+            <i class="fas fa-project-diagram"></i>
+            Complexity Insights
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/#research">Research</a></li>
+            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="project-header">
+        <div class="project-header-content">
+            <a href="/projects/" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+
+            <h1>Banking Deserts in America</h1>
+
+            <div class="project-meta">
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    <span>April 2026</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>3 week project</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-tag"></i>
+                    <span>Category: Data Analysis</span>
+                </div>
+            </div>
+
+            <div class="project-tags">
+                <span class="tag">Leaflet.js</span>
+                <span class="tag">FDIC Data</span>
+                <span class="tag">Census ACS</span>
+                <span class="tag">Geospatial</span>
+                <span class="tag">Bivariate Choropleth</span>
+            </div>
+
+            <div class="project-links">
+                <a href="/projects/banking-deserts/" class="btn btn-primary">
+                    <i class="fas fa-map"></i> Full-Screen Map
+                </a>
+                <!--
+                <a href="#" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+                -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Embedded Map -->
+    <div class="map-container">
+        <div class="map-frame">
+            <iframe src="/projects/banking-deserts/" title="Banking Deserts Interactive Map" loading="lazy"></iframe>
+        </div>
+        <p class="map-caption">
+            Click any county for detailed stats. <a href="/projects/banking-deserts/" target="_blank">Open full-screen map ↗</a>
+        </p>
+    </div>
+
+    <div class="project-content">
+
+        <!-- Overview -->
+        <div class="content-section">
+            <h2>Overview</h2>
+            <p>
+                Banking deserts—areas with minimal access to traditional bank branches—disproportionately affect low-income communities across the United States. This project maps the intersection of two critical variables at the county level: FDIC bank branch density per 10,000 residents and median household income from the Census Bureau's American Community Survey.
+            </p>
+            <p>
+                The result is a bivariate choropleth map covering 3,200+ U.S. counties, revealing geographic patterns of financial exclusion that single-variable maps miss. Counties shown in dark purple/navy represent the most underserved areas: low income <em>and</em> low branch access. Deep green counties are well-served on both dimensions.
+            </p>
+
+            <div class="callout">
+                <h4><i class="fas fa-lightbulb"></i> Why Bivariate?</h4>
+                <p>A standard choropleth can show income or branch density separately. A bivariate approach reveals the <em>relationship</em> between them—identifying where financial exclusion compounds economic disadvantage, which is where policy interventions matter most.</p>
+            </div>
+        </div>
+
+        <!-- Methodology -->
+        <div class="content-section">
+            <h2>Methodology</h2>
+
+            <h3>Data Sources</h3>
+            <ul>
+                <li><strong>Bank branch locations:</strong> FDIC Summary of Deposits data, aggregated to county level and normalized per 10,000 residents</li>
+                <li><strong>Income data:</strong> U.S. Census Bureau American Community Survey (ACS) 2023, median household income by county</li>
+                <li><strong>Geographic boundaries:</strong> U.S. Census Bureau TIGER/Line county shapefiles, simplified for web performance</li>
+            </ul>
+
+            <h3>Classification Approach</h3>
+            <p>
+                Each county is classified along two axes using tercile breaks (low/medium/high), producing a 3×3 bivariate grid with nine possible categories. This approach balances interpretability with analytical nuance—more granular than a simple above/below median split, but not so complex that the visual becomes unreadable.
+            </p>
+            <p>
+                Branch density is calculated as branches per 10,000 residents rather than raw branch counts, which controls for population differences between rural and urban counties. This normalization is critical: a rural county with 3 branches serving 5,000 people has better per-capita access than an urban county with 50 branches serving 500,000.
+            </p>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="content-section">
+            <h2>Key Findings</h2>
+
+            <p>
+                Several patterns emerge from the spatial analysis:
+            </p>
+
+            <h3>Geographic Concentration</h3>
+            <p>
+                Banking deserts cluster in specific regions rather than distributing uniformly. The Deep South, Appalachian region, and parts of the rural West show persistent overlap between low income and low branch density. These aren't random—they reflect decades of demographic and economic patterns including population decline, industry loss, and branch consolidation.
+            </p>
+
+            <h3>The Rural Consolidation Problem</h3>
+            <p>
+                Rural counties face a compounding dynamic: as populations decline, banks close branches due to low profitability, which reduces local financial access, which can accelerate economic decline. This feedback loop is a classic complexity economics pattern—individual rational decisions (closing unprofitable branches) produce collectively harmful outcomes.
+            </p>
+
+            <h3>Urban Exceptions</h3>
+            <p>
+                Not all low-income counties are banking deserts. Urban areas tend to maintain higher branch density even in lower-income neighborhoods, partly because population density makes branches viable and partly because of Community Reinvestment Act requirements. However, branch density alone doesn't capture quality of access—fees, minimum balance requirements, and service hours matter too.
+            </p>
+
+            <div class="callout warning">
+                <h4><i class="fas fa-exclamation-triangle"></i> Limitations</h4>
+                <p>County-level data masks within-county variation. A county with adequate average branch density may still have underserved neighborhoods. Additionally, this analysis doesn't account for credit unions, online banking adoption, or mobile banking access, all of which affect the real-world financial access picture.</p>
+            </div>
+        </div>
+
+        <!-- Complexity Lens -->
+        <div class="content-section">
+            <h2>A Complexity Perspective</h2>
+            <p>
+                Banking deserts aren't simply a resource allocation problem—they're an emergent property of interconnected economic, demographic, and regulatory systems. Several complexity concepts help explain the patterns visible in the map:
+            </p>
+
+            <h3>Feedback Loops</h3>
+            <p>
+                Branch closures and economic decline reinforce each other. When a bank branch closes in a small town, residents must travel further for basic financial services. Some shift to costly alternatives like check-cashing services and payday lenders. The resulting drain on household finances can suppress local economic activity, making the area even less attractive for financial institutions.
+            </p>
+
+            <h3>Path Dependence</h3>
+            <p>
+                Today's banking desert map reflects historical patterns—redlining, industrial shifts, highway construction decisions—that shaped where capital flows and where it doesn't. These aren't easily reversed because the current state of the system constrains future possibilities.
+            </p>
+
+            <h3>Fintech as Partial Solution</h3>
+            <p>
+                Digital banking is often proposed as a solution to banking deserts, but it faces its own complexity challenges. Broadband access is uneven (often worst in the same areas with the fewest branches), digital literacy varies, and many financial services still require in-person interaction. Technology can complement physical infrastructure but doesn't fully substitute for it.
+            </p>
+        </div>
+
+        <!-- Technical Details -->
+        <div class="content-section">
+            <h2>Technical Implementation</h2>
+            <p>
+                The map is built as a static web application with no server-side processing required. County boundaries and merged data are served as GeoJSON files, rendered with Leaflet.js on a CartoDB dark basemap. The bivariate color scheme uses a carefully chosen palette that remains distinguishable across all nine categories.
+            </p>
+            <p>
+                Interactive features include click-to-inspect popups with exact branch density and income figures for each county, plus a bivariate legend that doubles as a visual guide to interpreting the color scheme. The entire application loads client-side, making it suitable for static hosting on Cloudflare Pages.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Complexity Insights. <a href="/">Back to Home</a></p>
+    </footer>
+</body>
+</html>
