@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking Deserts & the Geography of Financial Exclusion</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #1a1a2e; color: #e0e0e0; }
+
+#header {
+  padding: 28px 40px 20px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#header h1 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+#header p {
+  font-size: 14px;
+  color: #9a9ab0;
+  max-width: 800px;
+  line-height: 1.5;
+}
+
+#map { width: 100%; height: calc(100vh - 120px); }
+
+.legend-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #333;
+  line-height: 1;
+}
+.legend-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #222;
+}
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 28px);
+  grid-template-rows: repeat(3, 28px);
+  gap: 2px;
+}
+.legend-cell { border-radius: 2px; }
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #666;
+  margin-top: 4px;
+  width: 88px;
+}
+.legend-y-label {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 4px;
+}
+.legend-nodata {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #666;
+}
+.legend-nodata span {
+  width: 14px;
+  height: 14px;
+  background: #D3D3D3;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.info-popup {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  min-width: 220px;
+}
+.info-popup h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1a1a2e;
+  border-bottom: 2px solid #4EA66A;
+  padding-bottom: 4px;
+}
+.info-popup .stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+}
+.info-popup .stat-label { color: #666; }
+.info-popup .stat-value { font-weight: 600; color: #222; }
+.info-popup .bv-tag {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.loading-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: #1a1a2e;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10000;
+  transition: opacity 0.5s;
+}
+.loading-overlay.hidden { opacity: 0; pointer-events: none; }
+.loading-spinner {
+  width: 40px; height: 40px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: #4EA66A;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { color: #9a9ab0; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Loading 3,200+ counties…</div>
+</div>
+
+<div id="header">
+  <h1>Banking Deserts &amp; the Geography of Financial Exclusion</h1>
+  <p>Bivariate analysis of FDIC branch density and median household income at the U.S. county level. Click any county for details.</p>
+</div>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const COLORS = {
+  '1A': '#3B4F6E', '1B': '#5A8A7A', '1C': '#1B7340',
+  '2A': '#6C5B8A', '2B': '#8E97A0', '2C': '#4EA66A',
+  '3A': '#9E6CA8', '3B': '#C4A5B8', '3C': '#90D4A3',
+};
+const NO_DATA = '#D3D3D3';
+
+const BV_LABELS = {
+  '1A': 'Low density · Low income',
+  '1B': 'Low density · Mid income',
+  '1C': 'Low density · High income',
+  '2A': 'Mid density · Low income',
+  '2B': 'Mid density · Mid income',
+  '2C': 'Mid density · High income',
+  '3A': 'High density · Low income',
+  '3B': 'High density · Mid income',
+  '3C': 'High density · High income',
+};
+
+const map = L.map('map', {
+  center: [39.5, -98.5],
+  zoom: 5,
+  minZoom: 3,
+  maxZoom: 12,
+  zoomControl: true,
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://carto.com/">CARTO</a> | Data: FDIC, U.S. Census Bureau',
+  maxZoom: 19,
+}).addTo(map);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png', {
+  maxZoom: 19,
+  pane: 'overlayPane',
+}).addTo(map);
+
+function styleCounty(feature) {
+  const bv = feature.properties.b;
+  return {
+    fillColor: COLORS[bv] || NO_DATA,
+    weight: 0.3,
+    color: 'rgba(255,255,255,0.15)',
+    fillOpacity: 0.85,
+  };
+}
+
+function formatNum(n) {
+  if (n == null) return 'N/A';
+  return n.toLocaleString();
+}
+
+function formatMoney(n) {
+  if (n == null) return 'N/A';
+  return '$' + Math.round(n).toLocaleString();
+}
+
+function onEachCounty(feature, layer) {
+  const p = feature.properties;
+  const bv = p.b;
+  const color = COLORS[bv] || NO_DATA;
+  const label = BV_LABELS[bv] || 'No data';
+
+  layer.bindPopup(`
+    <div class="info-popup">
+      <h3>${p.n} County, ${p.s}</h3>
+      <div class="stat-row"><span class="stat-label">Branches per 10k</span><span class="stat-value">${p.d}</span></div>
+      <div class="stat-row"><span class="stat-label">Median income</span><span class="stat-value">${formatMoney(p.i)}</span></div>
+      <div class="stat-row"><span class="stat-label">Total branches</span><span class="stat-value">${formatNum(p.c)}</span></div>
+      <div class="stat-row"><span class="stat-label">Population</span><span class="stat-value">${formatNum(p.p)}</span></div>
+      <span class="bv-tag" style="background:${color};">${label}</span>
+    </div>
+  `, { maxWidth: 280 });
+
+  layer.on({
+    mouseover: function(e) {
+      e.target.setStyle({ weight: 2, color: '#fff', fillOpacity: 1 });
+      e.target.bringToFront();
+    },
+    mouseout: function(e) {
+      countyLayer.resetStyle(e.target);
+    }
+  });
+}
+
+let countyLayer;
+
+Promise.all([
+  fetch('counties.json').then(r => r.json()),
+  fetch('states.json').then(r => r.json())
+]).then(([countyData, stateData]) => {
+
+  countyLayer = L.geoJSON(countyData, {
+    style: styleCounty,
+    onEachFeature: onEachCounty,
+  }).addTo(map);
+
+  L.geoJSON(stateData, {
+    style: {
+      fillColor: 'transparent',
+      fillOpacity: 0,
+      weight: 1.2,
+      color: 'rgba(255,255,255,0.35)',
+    },
+    interactive: false,
+  }).addTo(map);
+
+  document.getElementById('loading').classList.add('hidden');
+});
+
+// Bivariate legend
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = function() {
+  const div = L.DomUtil.create('div', 'legend-container');
+  const grid = [
+    ['3A','3B','3C'],
+    ['2A','2B','2C'],
+    ['1A','1B','1C'],
+  ];
+  let html = '<div class="legend-title">Branch density × Income</div>';
+  html += '<div class="legend-y-label">↑ More branches</div>';
+  html += '<div class="legend-grid">';
+  for (const row of grid) {
+    for (const cell of row) {
+      html += `<div class="legend-cell" style="background:${COLORS[cell]};" title="${BV_LABELS[cell]}"></div>`;
+    }
+  }
+  html += '</div>';
+  html += '<div class="legend-labels"><span>Lower income</span><span>Higher →</span></div>';
+  html += '<div class="legend-nodata"><span></span> No data</div>';
+  div.innerHTML = html;
+  return div;
+};
+legend.addTo(map);
+</script>
+</body>
+</html>
