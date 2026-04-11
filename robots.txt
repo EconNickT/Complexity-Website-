@@ -1,0 +1,8 @@
+# Complexity Insights - robots.txt
+# https://complexityinsights.com
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://complexityinsights.com/sitemap.xml
