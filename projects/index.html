@@ -1,509 +1,1293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Studies | Complexity Insights</title>
-    <meta name="description" content="Portfolio of applied economic research, financial modeling, and data analysis projects by Nicholas Thomas.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<title>Projects & Case Studies — Complexity Insights</title>
+<meta name="description" content="A portfolio of applied research in complexity economics, network science, and agent-based modeling." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:       #faf9f6;
+    --paper-2:     #f0ede3;
+    --paper-3:     #fffef8;
+    --ink:         #10100f;
+    --ink-2:       #23231f;
+    --muted:       #6a685f;
+    --rule:        #ddd9cc;
+    --rule-strong: #bfbaa8;
+    --accent:      #1a2a44;   /* navy */
+    --accent-ink:  #12213a;
+    --accent-2:    #1d3a2f;   /* forest */
+    --brass:       #8a6a2a;
+    --brass-2:     #d4b47a;
+    --oxblood:     #6b1f1a;
 
-    <style>
-        /* * =========================================
-         * BRAND BIBLE V3.2 (Imported for Consistency)
-         * ========================================= */
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-dark: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-        }
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--ink); }
+  body { font-family: var(--serif); font-size: 18px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--accent); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Masthead */
+  .masthead {
+    padding: 1.3rem 3vw 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--rule-strong);
+    font-family: var(--sans);
+    gap: 2rem;
+  }
+  .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; color: var(--ink); display: inline-flex; align-items: center; gap: 0.55em; }
+  .wordmark .mark { width: 1.35em; height: 1.35em; display: inline-block; flex-shrink: 0; }
+  .masthead nav { display: flex; gap: 2rem; justify-content: center; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .masthead nav a { color: var(--muted); }
+  .masthead nav a:hover, .masthead nav a.active { color: var(--ink); }
+  .masthead nav a.active { border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .masthead .issue { justify-self: end; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.05em; display: flex; gap: 0.8rem; align-items: center; }
+  .masthead .issue .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: inline-block; box-shadow: 0 0 0 3px rgba(29,58,47,0.25); }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            overflow-x: hidden;
-        }
+  /* HERO — the vanity moment */
+  .hero {
+    background: var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #2a2a24;
+  }
+  .hero-inner {
+    max-width: 1560px; margin: 0 auto;
+    padding: 4rem 3vw 3rem;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero .crossrule {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--brass-2); margin-bottom: 1.4rem;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .hero .crossrule::before, .hero .crossrule::after {
+    content: ""; height: 1px; background: #3a332a; flex: 1;
+  }
+  .hero .crossrule::before { max-width: 60px; }
+  .hero h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.6rem, 5vw, 4.6rem); line-height: 0.98;
+    letter-spacing: -0.02em; margin-bottom: 1.5rem;
+    color: var(--paper); text-wrap: balance;
+  }
+  .hero h1 em { font-style: italic; color: var(--brass-2); font-weight: 400; }
+  .hero .dek {
+    font-family: var(--serif); font-size: 1.2rem; line-height: 1.5;
+    color: #d9d2c2; max-width: 46ch; text-wrap: pretty;
+    margin-bottom: 2rem;
+  }
+  .hero-figure {
+    background: #0a0a09;
+    border: 1px solid #2a2a24;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    padding: 1.4rem;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+  }
+  .hero-figure .fig-caption {
+    font-family: var(--mono); font-size: 10.5px; color: var(--brass-2);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; justify-content: space-between; margin-bottom: 0.9rem;
+  }
+  .hero-figure .fig-caption .live::before {
+    content: "● "; color: var(--accent-2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1 } 50% { opacity: 0.35 } }
+  #heatmap { width: 100%; height: calc(100% - 60px); display: block; }
+  .hero-figure .fig-foot {
+    font-family: var(--mono); font-size: 9.5px; color: #7a7162;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; justify-content: space-between; margin-top: 0.6rem;
+  }
 
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #2a2a24;
+    font-family: var(--sans);
+  }
+  .hero-stats .stat {
+    padding: 1.5rem 3vw 1.8rem;
+    border-right: 1px solid #2a2a24;
+  }
+  .hero-stats .stat:last-child { border-right: none; }
+  .hero-stats .stat-label {
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #7a7162; margin-bottom: 0.5rem;
+  }
+  .hero-stats .stat-value {
+    font-family: var(--serif); font-size: 2.2rem; font-weight: 400;
+    color: var(--paper); letter-spacing: -0.01em; line-height: 1;
+  }
+  .hero-stats .stat-value .suffix {
+    font-family: var(--mono); font-size: 0.95rem; color: var(--brass-2); margin-left: 0.3em;
+  }
+  .hero-stats .stat-sub {
+    font-family: var(--mono); font-size: 10px; color: #7a7162;
+    letter-spacing: 0.05em; margin-top: 0.45rem;
+  }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo i { color: var(--accent); }
+  /* Page head — now comes AFTER hero */
+  .page-head {
+    max-width: 1560px; margin: 0 auto;
+    padding: 4rem 3vw 2.5rem;
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 3rem;
+    align-items: end;
+  }
+  .page-head .label {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+    border-top: 1px solid var(--ink); padding-top: 0.5rem; align-self: start;
+  }
+  .page-head .label .num { font-family: var(--mono); color: var(--accent); margin-right: 0.6em; }
+  .page-head h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1.04;
+    letter-spacing: -0.012em; color: var(--ink); text-wrap: balance;
+  }
+  .page-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-head .dek {
+    font-family: var(--serif); font-size: 1.02rem; color: var(--ink-2);
+    line-height: 1.55; max-width: 36ch; text-wrap: pretty;
+  }
 
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
-        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
-        
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+  /* Toolkit band — more vanity: includes little badges */
+  .toolkit {
+    max-width: 1560px; margin: 0 auto;
+    padding: 2.4rem 3vw 3rem;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    font-family: var(--sans);
+  }
+  .toolkit .tg-label {
+    font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.7rem;
+    border-top: 1px solid var(--rule-strong); padding-top: 0.6rem;
+    display: flex; justify-content: space-between;
+  }
+  .toolkit .tg-label .idx { font-family: var(--mono); color: var(--accent); }
+  .toolkit .tg-list { font-family: var(--serif); font-size: 1rem; color: var(--ink); line-height: 1.5; }
+  .toolkit .tg-list span { display: block; }
+  .toolkit .tg-list em { font-style: italic; color: var(--brass); font-weight: 400; }
+  @media (max-width: 900px) { .toolkit { grid-template-columns: 1fr 1fr; } }
 
-        /* Page Header */
-        .page-header {
-            margin-top: 70px;
-            padding: 5rem 5% 3rem;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-        }
+  /* Projects — editorial entries with FIGURES */
+  .projects {
+    max-width: 1560px; margin: 0 auto;
+    padding: 2rem 3vw 5rem;
+  }
+  .proj-head {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.6rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .proj-head .count { font-family: var(--mono); color: var(--accent); letter-spacing: 0.08em; }
 
-        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
-        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
+  .proj-entry {
+    display: grid;
+    grid-template-columns: 180px 1fr 320px;
+    gap: 2.5rem;
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+    transition: background 0.2s ease;
+  }
+  .proj-entry:hover { background: var(--paper-3); }
 
-        /* Skills Toolkit Section */
-        .toolkit-section {
-            background: white;
-            padding: 3rem 5%;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 4rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        }
+  .proj-meta {
+    font-family: var(--sans); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+    line-height: 1.7;
+    border-left: 2px solid var(--rule);
+    padding-left: 1rem;
+  }
+  .proj-entry[data-cat="geo"] .proj-meta { border-left-color: var(--brass); }
+  .proj-entry[data-cat="network"] .proj-meta { border-left-color: var(--accent-2); }
+  .proj-entry[data-cat="abm"] .proj-meta { border-left-color: var(--accent); }
+  .proj-entry[data-cat="research"] .proj-meta { border-left-color: var(--oxblood); }
 
-        .toolkit-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+  .proj-meta .num {
+    font-family: var(--mono); color: var(--accent); font-size: 11.5px;
+    letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;
+  }
+  .proj-entry[data-cat="geo"] .proj-meta .num { color: var(--brass); }
+  .proj-entry[data-cat="network"] .proj-meta .num { color: var(--accent-2); }
+  .proj-entry[data-cat="research"] .proj-meta .num { color: var(--oxblood); }
 
-        .tool-group h4 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
-            margin-bottom: 1rem;
-        }
+  .proj-meta .cat { color: inherit; display: block; margin-bottom: 0.9rem; font-weight: 600; color: var(--ink); }
+  .proj-meta .status {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    padding: 3px 7px; border: 1px solid currentColor; display: inline-block;
+  }
+  .proj-meta .status.live { color: var(--accent); }
+  .proj-meta .status.prog { color: var(--accent-2); }
+  .proj-meta .status.plan { color: var(--brass); }
 
-        .tool-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
+  .proj-meta .detail { display: block; margin-top: 0.9rem; font-family: var(--mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.04em; line-height: 1.65; text-transform: none; }
 
-        .tool-badge {
-            background: #eff6ff;
-            color: var(--text-dark);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            border: 1px solid #dbeafe;
-            transition: transform 0.2s, border-color 0.2s;
-            cursor: default;
-        }
+  .proj-body h3 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.7rem, 2.6vw, 2.3rem); line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem; text-wrap: balance;
+  }
+  .proj-body h3 a { color: var(--ink); }
+  .proj-body h3 a:hover { color: var(--accent); }
+  .proj-body h3 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .proj-entry[data-cat="geo"] .proj-body h3 em { color: var(--brass); }
+  .proj-entry[data-cat="network"] .proj-body h3 em { color: var(--accent-2); }
+  .proj-entry[data-cat="research"] .proj-body h3 em { color: var(--oxblood); }
 
-        .tool-badge:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-            color: var(--accent);
-        }
+  .proj-body .q {
+    font-family: var(--serif); font-style: italic;
+    font-size: 1.08rem; line-height: 1.5; color: var(--muted);
+    padding-left: 1rem; border-left: 2px solid var(--accent);
+    margin-bottom: 1.4rem;
+  }
+  .proj-body p {
+    font-family: var(--serif); font-size: 1.02rem; line-height: 1.6;
+    color: var(--ink-2); margin-bottom: 1.3rem; text-wrap: pretty;
+    max-width: 60ch;
+  }
 
-        /* Case Study Grid */
-        .projects-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 5% 6rem;
-        }
+  /* Numeric finding strip */
+  .findings {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 1.4rem;
+    max-width: 560px;
+  }
+  .findings .f {
+    background: var(--paper); padding: 0.9rem 1rem;
+    font-family: var(--sans);
+  }
+  .findings .f-num {
+    font-family: var(--serif); font-weight: 400;
+    font-size: 1.5rem; color: var(--accent); line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .proj-entry[data-cat="geo"] .findings .f-num { color: var(--brass); }
+  .proj-entry[data-cat="network"] .findings .f-num { color: var(--accent-2); }
+  .proj-entry[data-cat="research"] .findings .f-num { color: var(--oxblood); }
+  .findings .f-num .unit { font-family: var(--mono); font-size: 0.7em; color: var(--muted); margin-left: 0.1em; }
+  .findings .f-lab {
+    font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.35rem;
+  }
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
+  .proj-body .stack {
+    font-family: var(--mono); font-size: 10.5px; color: var(--muted);
+    letter-spacing: 0.05em; text-transform: uppercase;
+    padding-top: 0.9rem; border-top: 1px solid var(--rule);
+    margin-bottom: 1rem;
+  }
+  .proj-body .stack span { margin-right: 0.9rem; }
+  .proj-body .stack span::before { content: "· "; color: var(--rule-strong); }
+  .proj-body .stack span:first-child::before { content: ""; }
+  .proj-body .actions { display: flex; gap: 1.4rem; align-items: center; }
+  .proj-body .read {
+    font-family: var(--sans); font-size: 13px; letter-spacing: 0.05em;
+    color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px;
+    font-weight: 600;
+  }
+  .proj-body .read:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
+  .proj-body .read.disabled { color: var(--muted); border-color: var(--rule-strong); pointer-events: none; }
+  .proj-body .repo {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .proj-body .repo:hover { color: var(--ink); }
 
-        .project-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #f1f5f9;
-            display: flex;
-            flex-direction: column;
-            opacity: 0; /* Hidden initially for animation */
-            transform: translateY(20px);
-        }
+  /* Project figure (data-viz preview per project) */
+  .proj-figure {
+    background: var(--paper-2);
+    border: 1px solid var(--rule-strong);
+    padding: 1rem;
+    position: relative;
+    aspect-ratio: 4 / 3;
+  }
+  .proj-figure .pf-head {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .proj-figure .pf-head .tag { color: var(--accent); }
+  .proj-entry[data-cat="geo"] .proj-figure .pf-head .tag { color: var(--brass); }
+  .proj-entry[data-cat="network"] .proj-figure .pf-head .tag { color: var(--accent-2); }
+  .proj-entry[data-cat="research"] .proj-figure .pf-head .tag { color: var(--oxblood); }
+  .proj-figure svg { display: block; width: 100%; height: calc(100% - 30px); }
+  .proj-figure .pf-foot {
+    position: absolute; bottom: 6px; left: 1rem; right: 1rem;
+    font-family: var(--mono); font-size: 9px; color: var(--muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    display: flex; justify-content: space-between;
+  }
 
-        .project-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  /* CTA */
+  .cta {
+    background: var(--ink); color: var(--paper);
+    padding: 4rem 3vw;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 30%, rgba(212,180,122,0.08), transparent 50%);
+    pointer-events: none;
+  }
+  .cta-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center;
+    position: relative;
+  }
+  .cta .label { font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brass-2); margin-bottom: 0.7rem; }
+  .cta h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.7rem, 2.6vw, 2.4rem); line-height: 1.08;
+    color: var(--paper); margin-bottom: 0.9rem; max-width: 22ch;
+  }
+  .cta h2 em { font-style: italic; color: var(--brass-2); font-weight: 400; }
+  .cta p { font-family: var(--serif); color: #d9d2c2; max-width: 44ch; line-height: 1.55; }
+  .cta .btn {
+    display: inline-block;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.9rem 1.4rem; background: var(--paper); color: var(--ink);
+    justify-self: end;
+  }
+  .cta .btn:hover { background: var(--brass-2); }
 
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-            border-color: #e2e8f0;
-        }
+  .footline {
+    background: var(--ink); color: #7a7162;
+    padding: 1.4rem 3vw;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+    display: flex; justify-content: space-between;
+    border-top: 1px solid #3a332a;
+  }
+  .footline a { color: var(--brass-2); }
 
-        /* Card Image Area */
-        .card-header {
-            height: 200px;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-light);
-        }
+  /* Tweaks panel */
+  .tweaks {
+    position: fixed; bottom: 1.2rem; right: 1.2rem;
+    width: 280px; z-index: 1000;
+    background: var(--paper); border: 1px solid var(--ink);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    font-family: var(--sans); font-size: 12px; color: var(--ink);
+    display: none;
+  }
+  .tweaks.open { display: block; }
+  .tweaks-head {
+    background: var(--ink); color: var(--paper);
+    padding: 0.7rem 0.9rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  }
+  .tweaks-head .x {
+    cursor: pointer; color: var(--brass-2); font-size: 14px; line-height: 1; padding: 0 4px;
+  }
+  .tweaks-body { padding: 0.9rem; max-height: 70vh; overflow-y: auto; }
+  .tweak-row { margin-bottom: 0.9rem; }
+  .tweak-row:last-child { margin-bottom: 0; }
+  .tweak-row label {
+    display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem;
+  }
+  .tweak-row input[type="text"], .tweak-row select {
+    width: 100%; padding: 0.5rem 0.6rem;
+    border: 1px solid var(--rule-strong); background: var(--paper-3);
+    font-family: var(--serif); font-size: 13px; color: var(--ink);
+  }
+  .tweak-row input[type="text"]:focus, .tweak-row select:focus { outline: 1px solid var(--accent); }
+  .tweak-toggle {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.5rem 0.6rem; border: 1px solid var(--rule-strong);
+    font-family: var(--sans); font-size: 12px; cursor: pointer; user-select: none;
+    background: var(--paper-3);
+  }
+  .tweak-toggle:hover { border-color: var(--ink); }
+  .tweak-toggle .sw {
+    width: 26px; height: 14px; background: var(--rule-strong); position: relative; transition: background 0.15s;
+  }
+  .tweak-toggle .sw::after {
+    content: ""; width: 10px; height: 10px; background: var(--paper);
+    position: absolute; top: 2px; left: 2px; transition: left 0.15s;
+  }
+  .tweak-toggle.on .sw { background: var(--accent); }
+  .tweak-toggle.on .sw::after { left: 14px; }
+  .tweaks-foot {
+    padding: 0.6rem 0.9rem; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.05em;
+  }
+  .tweak-color-row { display: flex; gap: 6px; }
+  .tweak-color-row .sw-color {
+    width: 26px; height: 26px; cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .tweak-color-row .sw-color.active { border-color: var(--ink); }
 
-        .card-header.finance { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); color: white; }
-        .card-header.strategy { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); color: white; }
-        .card-header.data { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; }
-
-        .card-icon { font-size: 4rem; opacity: 0.9; }
-
-        .status-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255,255,255,0.9);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* Card Body */
-        .card-body { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
-
-        .card-meta {
-            font-size: 0.85rem;
-            color: var(--accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-body h3 { font-size: 1.4rem; margin-bottom: 0.8rem; color: var(--primary); line-height: 1.3; }
-        
-        .card-body h3 a { text-decoration: none; color: inherit; transition: color 0.2s; }
-        .card-body h3 a:hover { color: var(--accent); }
-
-        .card-body p { color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem; flex: 1; }
-
-        /* Technical Stack in Card */
-        .tech-stack-mini {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        .tech-tag {
-            font-size: 0.8rem;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            color: var(--text-light);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-        }
-
-        .card-link {
-            color: var(--primary);
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: gap 0.3s;
-        }
-
-        .card-link:hover { gap: 0.8rem; color: var(--accent); }
-
-        /* Footer (Unified) */
-        footer {
-            background: var(--primary);
-            color: #94a3b8;
-            padding: 4rem 5% 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .footer-col a:hover { color: white; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .page-header h1 { font-size: 2.5rem; }
-            
-            /* Unified Mobile Footer Stack */
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-            
-            /* Hide Toolkit on Mobile as requested */
-            .toolkit-section { display: none; }
-        }
-    </style>
+  @media (max-width: 1100px) {
+    .proj-entry { grid-template-columns: 150px 1fr; gap: 2rem; }
+    .proj-figure { grid-column: 1 / -1; max-width: 520px; aspect-ratio: 16/10; }
+  }
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr auto; }
+    .masthead nav { display: none; }
+    .hero-inner, .page-head, .cta-inner { grid-template-columns: 1fr; gap: 1.8rem; }
+    .hero-stats { grid-template-columns: 1fr 1fr; }
+    .hero-stats .stat:nth-child(2) { border-right: none; }
+    .hero-stats .stat:nth-child(-n+2) { border-bottom: 1px solid #2a2a24; }
+    .proj-entry { grid-template-columns: 1fr; gap: 1.4rem; padding: 2rem 0; }
+    .findings { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo">
-            <i class="fas fa-project-diagram"></i>
-            Complexity Insights
-        </a>
-        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/#solutions">Solutions</a></li>
-            <li><a href="/projects/" class="active">Case Studies</a></li>
-            <li><a href="/blog/">Insights</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/#contact" class="nav-btn">Contact</a></li>
-        </ul>
-    </nav>
 
-    <header class="page-header">
-        <h1>Applied Research &<br>Strategic Analysis</h1>
-        <p>Bridging the gap between academic theory and business reality. A portfolio of financial modeling, data science, and economic research.</p>
-    </header>
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav>
+    <a href="/projects/" class="active">Projects</a>
+    <a href="/blog/">Writing</a>
+    <a href="/about/">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  <div class="issue">
+    <span class="dot"></span>
+    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
+  </div>
+</header>
 
-    <section class="toolkit-section">
-        <div class="toolkit-grid">
-            <div class="tool-group">
-                <h4>Financial Analysis</h4>
-                <div class="tool-list">
-                    <span class="tool-badge">Financial Modeling</span>
-                    <span class="tool-badge">Risk Assessment</span>
-                    <span class="tool-badge">Valuation</span>
-                </div>
-            </div>
-            <div class="tool-group">
-                <h4>Data Science</h4>
-                <div class="tool-list">
-                    <span class="tool-badge">Python (Pandas/NumPy)</span>
-                    <span class="tool-badge">SQL</span>
-                    <span class="tool-badge">Data Visualization</span>
-                </div>
-            </div>
-            <div class="tool-group">
-                <h4>Research Methods</h4>
-                <div class="tool-list">
-                    <span class="tool-badge">Econometrics</span>
-                    <span class="tool-badge">Network Science</span>
-                    <span class="tool-badge">Agent-Based Modeling</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="projects-container">
-        <div class="projects-grid" id="projectsGrid">
-
-            <!-- Banking Deserts Project -->
-<div class="project-card">
-    <div class="card-header data">
-        <div class="status-badge">Completed</div>
-        <i class="fas fa-map-marked-alt card-icon"></i>
+<!-- HERO w/ live heatmap -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="crossrule">§ III — The Portfolio</div>
+      <h1>Applied research,<br/><em>working models.</em></h1>
+      <p class="dek">Four projects that turn complexity-economics theory into code you can run. Each is a question, the data brought to bear, and the result — reproducible and open.</p>
+      <div style="font-family: var(--mono); font-size: 11px; color: var(--brass-2); letter-spacing: 0.08em;">
+        ↓ SCROLL FOR THE INDEX
+      </div>
     </div>
-    <div class="card-body">
-        <span class="card-meta">Geospatial Analysis</span>
-        <h3><a href="/projects/banking-deserts.html">Banking Deserts in America</a></h3>
-        <p>Interactive bivariate choropleth map analyzing FDIC bank branch density vs. median household income across 3,200+ U.S. counties, revealing patterns of financial exclusion.</p>
 
-        <div class="tech-stack-mini">
-            <span class="tech-tag">Leaflet.js</span>
-            <span class="tech-tag">FDIC Data</span>
-            <span class="tech-tag">Geospatial</span>
-            <span class="tech-tag">Census ACS</span>
-        </div>
+    <figure class="hero-figure">
+      <div class="fig-caption">
+        <span>FIG. 01 · CORR-MAT Σ · 11 SECTORS</span>
+        <span class="live">STREAMING</span>
+      </div>
+      <canvas id="heatmap"></canvas>
+      <div class="fig-foot">
+        <span>ρ ∈ [-1, +1]</span>
+        <span>WINDOW · 60-DAY ROLL</span>
+      </div>
+    </figure>
+  </div>
 
-        <a href="/projects/banking-deserts.html" class="card-link">View Analysis <i class="fas fa-arrow-right"></i></a>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-label">Projects shipped</div>
+      <div class="stat-value" data-count="4">0</div>
+      <div class="stat-sub">Across 3 methodological domains</div>
     </div>
+    <div class="stat">
+      <div class="stat-label">Observations analyzed</div>
+      <div class="stat-value" data-count="2.4"><span class="suffix">M</span></div>
+      <div class="stat-sub">County · ticker · agent-step</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Lines of research code</div>
+      <div class="stat-value" data-count="18.7"><span class="suffix">K</span></div>
+      <div class="stat-sub">Python · R · JavaScript</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Public GitHub repos</div>
+      <div class="stat-value" data-count="6"></div>
+      <div class="stat-sub">Fully reproducible</div>
+    </div>
+  </div>
+</section>
+
+<section class="page-head">
+  <div class="label"><span class="num">III.A</span>The Toolkit</div>
+  <h2>Methods, languages, <em>taste.</em></h2>
+  <div class="dek">The same stack across every project — no black boxes, everything on GitHub.</div>
+</section>
+
+<!-- TOOLKIT -->
+<section class="toolkit">
+  <div>
+    <div class="tg-label"><span>Financial analysis</span><span class="idx">01</span></div>
+    <div class="tg-list">
+      <span>Financial modeling</span>
+      <span>Risk assessment</span>
+      <span>Valuation &amp; <em>synergy modeling</em></span>
+    </div>
+  </div>
+  <div>
+    <div class="tg-label"><span>Data science</span><span class="idx">02</span></div>
+    <div class="tg-list">
+      <span>Python · Pandas · NumPy</span>
+      <span>SQL &amp; <em>time-series</em></span>
+      <span>Reproducible notebooks</span>
+    </div>
+  </div>
+  <div>
+    <div class="tg-label"><span>Research methods</span><span class="idx">03</span></div>
+    <div class="tg-list">
+      <span>Econometrics</span>
+      <span>Network science</span>
+      <span><em>Agent-based modeling</em></span>
+    </div>
+  </div>
+  <div>
+    <div class="tg-label"><span>Specialty</span><span class="idx">04</span></div>
+    <div class="tg-list">
+      <span>Non-linear dynamics</span>
+      <span>Correlation structure</span>
+      <span><em>Complexity economics</em></span>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects">
+  <div class="proj-head">
+    <span>§ III.B — The Portfolio</span>
+    <span class="count">04 ENTRIES · 2 LIVE · 1 IN PROGRESS · 1 PLANNED</span>
+  </div>
+
+  <!-- 1. Banking Deserts -->
+  <article class="proj-entry" data-cat="geo">
+    <div class="proj-meta">
+      <span class="num">№ 001</span>
+      <span class="cat">Geospatial analysis</span>
+      <span class="status live">● LIVE</span>
+      <span class="detail">BNK · COMPLETED 2025<br/>~3,200 U.S. COUNTIES<br/>BIVARIATE CHOROPLETH</span>
+    </div>
+    <div class="proj-body">
+      <h3><a href="/projects/banking-deserts.html">Banking deserts in <em>America.</em></a></h3>
+      <div class="q">Where does the formal financial system end — and what does it correlate with when it does?</div>
+      <p>Interactive bivariate choropleth mapping FDIC branch density against median household income across ~3,200 U.S. counties. Surfaces the geography of financial exclusion and the demographic patterns that accompany it.</p>
+      <div class="findings">
+        <div class="f"><div class="f-num">3,243</div><div class="f-lab">Counties mapped</div></div>
+        <div class="f"><div class="f-num">81<span class="unit">K+</span></div><div class="f-lab">FDIC branches</div></div>
+        <div class="f"><div class="f-num">4.2<span class="unit">%</span></div><div class="f-lab">Unbanked desert</div></div>
+      </div>
+      <div class="stack"><span>Leaflet.js</span><span>FDIC data</span><span>Census ACS</span><span>Geospatial</span></div>
+      <div class="actions">
+        <a href="/projects/banking-deserts.html" class="read">View the analysis →</a>
+        <a href="https://github.com/EconNickT" class="repo">[ github ↗ ]</a>
+      </div>
+    </div>
+    <figure class="proj-figure">
+      <div class="pf-head"><span class="tag">FIG · BIVARIATE</span><span>3×3 LEGEND</span></div>
+      <svg viewBox="0 0 200 150" preserveAspectRatio="none">
+        <defs>
+          <pattern id="bivGrid" width="14" height="14" patternUnits="userSpaceOnUse">
+            <rect width="14" height="14" fill="#f0ede3"/>
+          </pattern>
+        </defs>
+        <rect width="200" height="150" fill="url(#bivGrid)"/>
+        <!-- Map-like abstract county shapes as a bivariate palette -->
+        <g id="bivMap"></g>
+        <!-- 3x3 legend bottom right -->
+        <g transform="translate(150,100)">
+          <rect x="0" y="0" width="12" height="12" fill="#e8e2cf"/>
+          <rect x="12" y="0" width="12" height="12" fill="#c8b888"/>
+          <rect x="24" y="0" width="12" height="12" fill="#8a6a2a"/>
+          <rect x="0" y="12" width="12" height="12" fill="#bfcac3"/>
+          <rect x="12" y="12" width="12" height="12" fill="#8aa298"/>
+          <rect x="24" y="12" width="12" height="12" fill="#456854"/>
+          <rect x="0" y="24" width="12" height="12" fill="#7a8a9a"/>
+          <rect x="12" y="24" width="12" height="12" fill="#3e5671"/>
+          <rect x="24" y="24" width="12" height="12" fill="#1a2a44"/>
+        </g>
+      </svg>
+      <div class="pf-foot"><span>DATA · FDIC + ACS</span><span>N = 3,243</span></div>
+    </figure>
+  </article>
+
+  <!-- 2. S&P 500 Correlation -->
+  <article class="proj-entry" data-cat="network">
+    <div class="proj-meta">
+      <span class="num">№ 002</span>
+      <span class="cat">Network analysis</span>
+      <span class="status live">● LIVE</span>
+      <span class="detail">CORR · 5-YEAR WINDOW<br/>N = 500 TICKERS<br/>1.2M DATAPOINTS</span>
+    </div>
+    <div class="proj-body">
+      <h3><a href="/projects/example-network-analysis.html">S&amp;P 500 <em>systemic-risk</em> analysis.</a></h3>
+      <div class="q">When diversification stops working, what does the correlation graph look like just before it fails?</div>
+      <p>Five years of daily returns, rolled into a weighted correlation graph and tracked through regime changes. Surfaces the sector clusters that tighten before volatility spikes and the ones that come apart.</p>
+      <div class="findings">
+        <div class="f"><div class="f-num">0.71</div><div class="f-lab">Mean ρ, crisis regime</div></div>
+        <div class="f"><div class="f-num">11</div><div class="f-lab">Sector communities</div></div>
+        <div class="f"><div class="f-num">+38<span class="unit">%</span></div><div class="f-lab">Edge density shift</div></div>
+      </div>
+      <div class="stack"><span>Python</span><span>NetworkX</span><span>Correlation structure</span><span>Microstructure</span></div>
+      <div class="actions">
+        <a href="/projects/example-network-analysis.html" class="read">View the analysis →</a>
+        <a href="https://github.com/EconNickT" class="repo">[ github ↗ ]</a>
+      </div>
+    </div>
+    <figure class="proj-figure">
+      <div class="pf-head"><span class="tag">FIG · FORCE-DIRECTED</span><span>G(500, ρ&gt;0.4)</span></div>
+      <svg id="netSvg" viewBox="0 0 300 220"></svg>
+      <div class="pf-foot"><span>COMMUNITIES · LOUVAIN</span><span>|V|=500</span></div>
+    </figure>
+  </article>
+
+  <!-- 3. Liquidity Spiral ABM -->
+  <article class="proj-entry" data-cat="abm">
+    <div class="proj-meta">
+      <span class="num">№ 003</span>
+      <span class="cat">Agent-based model</span>
+      <span class="status prog">● IN PROGRESS</span>
+      <span class="detail">LIQ · Q2 2026<br/>N ≈ 200 AGENTS<br/>3 POPULATIONS</span>
+    </div>
+    <div class="proj-body">
+      <h3><a href="#">Algorithmic <em>liquidity-spiral</em> model.</a></h3>
+      <div class="q">Under what population mix do fast strategies stop providing liquidity and start consuming it?</div>
+      <p>Agent-based simulation of price formation with heterogeneous trading rules — fundamentalist, chartist, and noise populations — calibrated against flash-crash microstructure. An extension of the front-page Lab demo toward a publishable model.</p>
+      <div class="findings">
+        <div class="f"><div class="f-num">200</div><div class="f-lab">Heterogeneous agents</div></div>
+        <div class="f"><div class="f-num">10<span class="unit">K</span></div><div class="f-lab">Monte-Carlo runs</div></div>
+        <div class="f"><div class="f-num">σ · 4.1×</div><div class="f-lab">Vol amplification</div></div>
+      </div>
+      <div class="stack"><span>Python · Mesa</span><span>Monte Carlo</span><span>Microstructure</span><span>ABM</span></div>
+      <div class="actions">
+        <a href="#" class="read disabled">In progress — Q2 2026</a>
+        <a href="https://github.com/EconNickT" class="repo">[ preview repo ↗ ]</a>
+      </div>
+    </div>
+    <figure class="proj-figure">
+      <div class="pf-head"><span class="tag">FIG · PRICE PATH</span><span>T = 500 STEPS</span></div>
+      <svg id="abmSvg" viewBox="0 0 300 180"></svg>
+      <div class="pf-foot"><span>FUND · CHART · NOISE</span><span>μ=100 σ=σ(t)</span></div>
+    </figure>
+  </article>
+
+  <!-- 4. Economic Complexity Index -->
+  <article class="proj-entry" data-cat="research">
+    <div class="proj-meta">
+      <span class="num">№ 004</span>
+      <span class="cat">Economic research</span>
+      <span class="status plan">● PLANNED</span>
+      <span class="detail">ECI · 2026<br/>~120 COUNTRIES<br/>HIDALGO–HAUSMANN</span>
+    </div>
+    <div class="proj-body">
+      <h3><a href="#">A global <em>economic-complexity</em> index.</a></h3>
+      <div class="q">What does the diversity and sophistication of a country's export basket forecast about its growth?</div>
+      <p>Comparative analysis of export diversification across developing economies. Reproduces and extends the Hidalgo–Hausmann framework, then tests its predictive power on GDP trajectories since the original publication.</p>
+      <div class="findings">
+        <div class="f"><div class="f-num">~120</div><div class="f-lab">Countries</div></div>
+        <div class="f"><div class="f-num">24<span class="unit">yrs</span></div><div class="f-lab">Panel horizon</div></div>
+        <div class="f"><div class="f-num">R² · ?</div><div class="f-lab">To be determined</div></div>
+      </div>
+      <div class="stack"><span>R</span><span>Regression analysis</span><span>Macroeconomics</span><span>Trade data</span></div>
+      <div class="actions">
+        <a href="#" class="read disabled">Planned — 2026</a>
+        <a href="/blog/" class="repo">[ read the working notes → ]</a>
+      </div>
+    </div>
+    <figure class="proj-figure">
+      <div class="pf-head"><span class="tag">FIG · ECI vs GDP</span><span>SCATTER · LOG-LOG</span></div>
+      <svg id="eciSvg" viewBox="0 0 300 200"></svg>
+      <div class="pf-foot"><span>n ≈ 120</span><span>HARVARD ATLAS</span></div>
+    </figure>
+  </article>
+
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <div>
+      <div class="label">Commission a project</div>
+      <h2>Have a problem that deserves <em>a proper model?</em></h2>
+      <p>Contract engagements for firms, research groups, and hiring pipelines — scoped to the question, priced to the scope.</p>
+    </div>
+    <a class="btn" href="/#contact">Start a conversation →</a>
+  </div>
+</section>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+  <span><a href="/">← Return home</a></span>
 </div>
-            <div class="project-card">
-                <div class="card-header finance">
-                    <div class="status-badge">Completed</div>
-                    <i class="fas fa-project-diagram card-icon"></i>
-                </div>
-                <div class="card-body">
-                    <span class="card-meta">Risk Analytics</span>
-                    <h3><a href="/projects/example-network-analysis.html">S&P 500 Systemic Risk Analysis</a></h3>
-                    <p>Analyzing 5 years of stock correlation data to identify sector vulnerabilities and diversification breakdowns during market stress.</p>
-                    
-                    <div class="tech-stack-mini">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">NetworkX</span>
-                        <span class="tech-tag">Market Microstructure</span>
-                    </div>
 
-                    <a href="/projects/example-network-analysis.html" class="card-link">View Analysis <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
+<script>
+// ======================================================================
+// TWEAKS
+// ======================================================================
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#1d3a2f",
+  "heroHeadline": "Applied research, \u003cem>working models.\u003c\/em>",
+  "heroDek": "Four projects that turn complexity-economics theory into code you can run. Each is a question, the data brought to bear, and the result — reproducible and open.",
+  "showHeatmap": true,
+  "showStats": true,
+  "showToolkit": true,
+  "showFigures": true,
+  "density": "compact",
+  "ctaMode": "commission"
+}/*EDITMODE-END*/;
 
-            <div class="project-card">
-                <div class="card-header strategy">
-                    <div class="status-badge">In Progress</div>
-                    <i class="fas fa-chess-board card-icon"></i>
-                </div>
-                <div class="card-body">
-                    <span class="card-meta">Market Simulation</span>
-                    <h3><a href="#">Algorithmic Liquidity Spiral Model</a></h3>
-                    <p>An Agent-Based Model (ABM) simulating how high-frequency trading strategies interact to create flash crash conditions.</p>
-                    
-                    <div class="tech-stack-mini">
-                        <span class="tech-tag">Python (Mesa)</span>
-                        <span class="tech-tag">Monte Carlo</span>
-                        <span class="tech-tag">Simulation</span>
-                    </div>
+const TWEAK_STATE = { ...TWEAK_DEFAULTS };
 
-                    <a href="#" class="card-link" style="opacity: 0.6; cursor: default;">Coming Soon</a>
-                </div>
-            </div>
+const CTA_COPY = {
+  commission: {
+    label: "Commission a project",
+    heading: "Have a problem that deserves <em>a proper model?</em>",
+    body:   "Contract engagements for firms, research groups, and hiring pipelines \u2014 scoped to the question, priced to the scope.",
+    btn:    "Start a conversation \u2192"
+  },
+  hire: {
+    label: "Currently on the job market",
+    heading: "Looking for a <em>full-time role</em> that takes complexity seriously.",
+    body:   "Open to analyst, research, and quant roles \u2014 economic consulting, policy research, financial services. Based in Washington, D.C., will relocate for the right team.",
+    btn:    "See my CV \u2192"
+  },
+  collab: {
+    label: "Open to collaboration",
+    heading: "Working on something <em>in this neighborhood?</em>",
+    body:   "Always glad to compare notes, co-author, or contribute to open research \u2014 especially on network methods, ABMs, and market microstructure.",
+    btn:    "Say hello \u2192"
+  }
+};
 
-            <div class="project-card">
-                <div class="card-header data">
-                    <div class="status-badge">Planned</div>
-                    <i class="fas fa-chart-bar card-icon"></i>
-                </div>
-                <div class="card-body">
-                    <span class="card-meta">Economic Research</span>
-                    <h3><a href="#">Global Economic Complexity Index</a></h3>
-                    <p>Comparative analysis of export diversification patterns across developing economies to forecast GDP growth potential.</p>
-                    
-                    <div class="tech-stack-mini">
-                        <span class="tech-tag">R</span>
-                        <span class="tech-tag">Regression Analysis</span>
-                        <span class="tech-tag">Macroeconomics</span>
-                    </div>
+function applyTweaks(){
+  // Accent color
+  document.documentElement.style.setProperty('--accent', TWEAK_STATE.accentColor);
 
-                    <a href="#" class="card-link" style="opacity: 0.6; cursor: default;">Coming Soon</a>
-                </div>
-            </div>
+  // Hero copy
+  const h1 = document.querySelector('.hero h1');
+  if (h1) h1.innerHTML = TWEAK_STATE.heroHeadline;
+  const dek = document.querySelector('.hero .dek');
+  if (dek) dek.textContent = TWEAK_STATE.heroDek;
 
-        </div>
+  // Toggles
+  document.querySelector('.hero-figure').style.display = TWEAK_STATE.showHeatmap ? '' : 'none';
+  document.querySelector('.hero-inner').style.gridTemplateColumns = TWEAK_STATE.showHeatmap ? '' : '1fr';
+  document.querySelector('.hero-stats').style.display = TWEAK_STATE.showStats ? '' : 'none';
+  document.querySelector('.toolkit').style.display = TWEAK_STATE.showToolkit ? '' : 'none';
+  // Also hide toolkit's page-head
+  const toolkitHead = document.querySelectorAll('.page-head')[0];
+  if (toolkitHead) toolkitHead.style.display = TWEAK_STATE.showToolkit ? '' : 'none';
+
+  document.querySelectorAll('.proj-figure').forEach(f => {
+    f.style.display = TWEAK_STATE.showFigures ? '' : 'none';
+  });
+  document.querySelectorAll('.proj-entry').forEach(e => {
+    e.style.gridTemplateColumns = TWEAK_STATE.showFigures
+      ? ''
+      : '180px 1fr';
+  });
+
+  // Density
+  document.querySelectorAll('.proj-entry').forEach(e => {
+    e.style.padding = TWEAK_STATE.density === 'compact' ? '1.5rem 0' : '';
+  });
+  document.querySelectorAll('.findings').forEach(f => {
+    f.style.display = TWEAK_STATE.density === 'compact' ? 'none' : '';
+  });
+
+  // CTA
+  const cta = document.querySelector('.cta');
+  if (cta) {
+    if (TWEAK_STATE.ctaMode === 'hidden') {
+      cta.style.display = 'none';
+    } else {
+      cta.style.display = '';
+      const c = CTA_COPY[TWEAK_STATE.ctaMode] || CTA_COPY.commission;
+      const lab = cta.querySelector('.label');
+      const h2 = cta.querySelector('h2');
+      const p  = cta.querySelector('p');
+      const btn = cta.querySelector('.btn');
+      if (lab) lab.textContent = c.label;
+      if (h2)  h2.innerHTML = c.heading;
+      if (p)   p.textContent = c.body;
+      if (btn) btn.textContent = c.btn;
+    }
+  }
+}
+
+function wireTweaks(){
+  // Headline / dek
+  const headline = document.getElementById('tweakHeadline');
+  const dek      = document.getElementById('tweakDek');
+  headline.value = TWEAK_STATE.heroHeadline;
+  dek.value      = TWEAK_STATE.heroDek;
+  headline.addEventListener('input', () => { TWEAK_STATE.heroHeadline = headline.value; applyTweaks(); persist({heroHeadline: headline.value}); });
+  dek.addEventListener('input', () => { TWEAK_STATE.heroDek = dek.value; applyTweaks(); persist({heroDek: dek.value}); });
+
+  // Accent swatches
+  const swatches = document.querySelectorAll('#accentSwatches .sw-color');
+  function syncSwatches() {
+    swatches.forEach(s => s.classList.toggle('active', s.dataset.accent === TWEAK_STATE.accentColor));
+  }
+  swatches.forEach(s => s.addEventListener('click', () => {
+    TWEAK_STATE.accentColor = s.dataset.accent;
+    syncSwatches(); applyTweaks(); persist({accentColor: s.dataset.accent});
+  }));
+  syncSwatches();
+
+  // Toggles
+  const toggles = [
+    ['tweakHeatmap', 'showHeatmap'],
+    ['tweakStats',   'showStats'],
+    ['tweakToolkit', 'showToolkit'],
+    ['tweakFigures', 'showFigures']
+  ];
+  toggles.forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('on', TWEAK_STATE[key]);
+    el.addEventListener('click', () => {
+      TWEAK_STATE[key] = !TWEAK_STATE[key];
+      el.classList.toggle('on', TWEAK_STATE[key]);
+      applyTweaks();
+      persist({[key]: TWEAK_STATE[key]});
+    });
+  });
+
+  // Selects
+  const dens = document.getElementById('tweakDensity');
+  dens.value = TWEAK_STATE.density;
+  dens.addEventListener('change', () => { TWEAK_STATE.density = dens.value; applyTweaks(); persist({density: dens.value}); });
+
+  const cta = document.getElementById('tweakCta');
+  cta.value = TWEAK_STATE.ctaMode;
+  cta.addEventListener('change', () => { TWEAK_STATE.ctaMode = cta.value; applyTweaks(); persist({ctaMode: cta.value}); });
+
+  // Close
+  document.getElementById('tweaksClose').addEventListener('click', () => {
+    document.getElementById('tweaksPanel').classList.remove('open');
+  });
+}
+
+function persist(edits){
+  try { window.parent.postMessage({type: '__edit_mode_set_keys', edits}, '*'); } catch(e){}
+}
+
+// Edit-mode protocol — register listener BEFORE announcing availability
+window.addEventListener('message', (e) => {
+  const d = e.data || {};
+  if (d.type === '__activate_edit_mode')   document.getElementById('tweaksPanel').classList.add('open');
+  if (d.type === '__deactivate_edit_mode') document.getElementById('tweaksPanel').classList.remove('open');
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  wireTweaks();
+  applyTweaks();
+  try { window.parent.postMessage({type: '__edit_mode_available'}, '*'); } catch(e){}
+});
+
+// ---------- Date
+(function(){
+  const el = document.getElementById('today'); if (!el) return;
+  const d = new Date();
+  const m = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  el.textContent = m[d.getMonth()] + ' ' + d.getFullYear();
+})();
+
+// ---------- Count-up stats
+(function(){
+  const stats = document.querySelectorAll('[data-count]');
+  const io = new IntersectionObserver((ents) => {
+    ents.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseFloat(el.dataset.count);
+      const dec = (el.dataset.count.indexOf('.') > -1) ? 1 : 0;
+      const dur = 1400;
+      const t0 = performance.now();
+      const suffix = el.querySelector('.suffix');
+      const suffixHTML = suffix ? suffix.outerHTML : '';
+      function tick(t){
+        const p = Math.min(1, (t - t0)/dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const v = (target * eased).toFixed(dec);
+        el.innerHTML = v + suffixHTML;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  stats.forEach(s => io.observe(s));
+})();
+
+// ---------- Hero correlation heatmap (live, 11x11)
+(function(){
+  const canvas = document.getElementById('heatmap');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const sectors = ['TECH','FIN','CONS','ENRG','HLTH','UTIL','IND','MAT','COMM','REIT','DISC'];
+  const N = sectors.length;
+  // Base correlation matrix (symmetric, diag=1)
+  const base = [];
+  for (let i=0; i<N; i++){
+    base[i] = [];
+    for (let j=0; j<N; j++){
+      if (i===j) base[i][j] = 1;
+      else if (base[j] && base[j][i] !== undefined) base[i][j] = base[j][i];
+      else base[i][j] = 0.2 + Math.random()*0.55;
+    }
+  }
+  // Noise overlay
+  const noise = base.map(r => r.map(_ => 0));
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    canvas.width = r.width * devicePixelRatio;
+    canvas.height = r.height * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function col(v){
+    // v in [-1,1], map to color. Positive → navy, negative → oxblood, mid → paper
+    const t = (v+1)/2;
+    if (v >= 0) {
+      const k = v; // 0..1
+      // blend paper (#f0ede3) to navy (#1a2a44)
+      const r = Math.round(240 + (26-240)*k);
+      const g = Math.round(237 + (42-237)*k);
+      const b = Math.round(227 + (68-227)*k);
+      return `rgb(${r},${g},${b})`;
+    } else {
+      const k = -v;
+      const r = Math.round(240 + (107-240)*k);
+      const g = Math.round(237 + (31-237)*k);
+      const b = Math.round(227 + (26-227)*k);
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+
+  let hoverI = -1, hoverJ = -1;
+  canvas.addEventListener('mousemove', (e) => {
+    const r = canvas.getBoundingClientRect();
+    const x = e.clientX - r.left, y = e.clientY - r.top;
+    const W = r.width, H = r.height;
+    const pad = 40;
+    const cell = (Math.min(W, H) - pad) / N;
+    const gx = (W - cell*N - pad) / 2 + pad;
+    const gy = (H - cell*N - pad) / 2 + pad;
+    hoverJ = Math.floor((x - gx)/cell);
+    hoverI = Math.floor((y - gy)/cell);
+  });
+  canvas.addEventListener('mouseleave', () => { hoverI = hoverJ = -1; });
+
+  function draw(t){
+    // Update noise slowly
+    for (let i=0;i<N;i++) for (let j=0;j<N;j++){
+      if (i===j) continue;
+      noise[i][j] += (Math.random()-0.5) * 0.008;
+      noise[i][j] = Math.max(-0.25, Math.min(0.25, noise[i][j]));
+    }
+
+    const r = canvas.getBoundingClientRect();
+    const W = r.width, H = r.height;
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0a0a09';
+    ctx.fillRect(0,0,W,H);
+
+    const pad = 40;
+    const cell = (Math.min(W, H) - pad) / N;
+    const gx = (W - cell*N - pad) / 2 + pad;
+    const gy = (H - cell*N - pad) / 2 + pad;
+
+    // Labels
+    ctx.font = '9px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#7a7162';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    for (let i=0;i<N;i++){
+      ctx.fillText(sectors[i], gx - 6, gy + cell*i + cell/2);
+    }
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    for (let j=0;j<N;j++){
+      ctx.save();
+      ctx.translate(gx + cell*j + cell/2, gy + cell*N + 6);
+      ctx.rotate(-Math.PI/4);
+      ctx.fillText(sectors[j], 0, 0);
+      ctx.restore();
+    }
+
+    // Cells
+    for (let i=0;i<N;i++){
+      for (let j=0;j<N;j++){
+        let v = base[i][j] + noise[i][j];
+        if (i===j) v = 1;
+        v = Math.max(-1, Math.min(1, v));
+        ctx.fillStyle = col(v);
+        ctx.fillRect(gx + cell*j, gy + cell*i, cell-1, cell-1);
+
+        if (i === hoverI && j === hoverJ && i !== j) {
+          ctx.strokeStyle = '#d4b47a';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(gx + cell*j + 0.5, gy + cell*i + 0.5, cell-2, cell-2);
+          // Tooltip
+          ctx.fillStyle = '#d4b47a';
+          ctx.font = '10px "JetBrains Mono", monospace';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'top';
+          ctx.fillText(`${sectors[i]}·${sectors[j]} ρ=${v.toFixed(2)}`, 6, 6);
+        }
+      }
+    }
+
+    // Top-left corner marker
+    ctx.fillStyle = '#d4b47a';
+    ctx.font = '9px "JetBrains Mono", monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('Σ', 6, 24);
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+// ---------- Banking deserts abstract map (project 1)
+(function(){
+  const container = document.getElementById('bivMap');
+  if (!container) return;
+  const palette = ['#e8e2cf','#c8b888','#8a6a2a','#bfcac3','#8aa298','#456854','#7a8a9a','#3e5671','#1a2a44'];
+  // Build an abstract pixelated "map" (grid of rects)
+  const cols = 28, rows = 20;
+  const cw = 200/cols, ch = 150/rows;
+  let html = '';
+  for (let r=0; r<rows; r++){
+    for (let c=0; c<cols; c++){
+      // fake a US-ish silhouette
+      const cx = c/cols, cy = r/rows;
+      const d = Math.hypot(cx - 0.5, cy - 0.5);
+      const inUS = d < 0.42 + Math.sin(cy*6)*0.06 && !(cx < 0.15 && cy < 0.35);
+      if (!inUS) continue;
+      // deterministic pseudo-random palette index
+      const k = (Math.sin(c*12.9898 + r*78.233) * 43758.5453) % 1;
+      const idx = Math.floor(Math.abs(k) * palette.length);
+      html += `<rect x="${(c*cw).toFixed(2)}" y="${(r*ch).toFixed(2)}" width="${cw.toFixed(2)}" height="${ch.toFixed(2)}" fill="${palette[idx]}" opacity="0.92"/>`;
+    }
+  }
+  container.innerHTML = html;
+})();
+
+// ---------- Correlation network (project 2)
+(function(){
+  const svg = document.getElementById('netSvg');
+  if (!svg) return;
+  const W = 300, H = 220;
+  const clusters = [
+    { cx: 70,  cy: 70,  n: 14, color: '#1d3a2f' }, // sector A
+    { cx: 220, cy: 60,  n: 12, color: '#1a2a44' },
+    { cx: 90,  cy: 165, n: 10, color: '#8a6a2a' },
+    { cx: 215, cy: 160, n: 11, color: '#6b1f1a' },
+  ];
+  const nodes = [];
+  clusters.forEach((cl, ci) => {
+    for (let i=0;i<cl.n;i++){
+      const a = Math.random()*Math.PI*2;
+      const r = 4 + Math.random()*22;
+      nodes.push({ x: cl.cx + Math.cos(a)*r, y: cl.cy + Math.sin(a)*r, c: cl.color, cluster: ci });
+    }
+  });
+  // Intra-cluster edges + a few inter
+  let edges = '';
+  for (let i=0;i<nodes.length;i++){
+    for (let j=i+1;j<nodes.length;j++){
+      const same = nodes[i].cluster === nodes[j].cluster;
+      const p = same ? 0.18 : 0.012;
+      if (Math.random() < p){
+        edges += `<line x1="${nodes[i].x}" y1="${nodes[i].y}" x2="${nodes[j].x}" y2="${nodes[j].y}" stroke="${same ? nodes[i].c : '#bfbaa8'}" stroke-opacity="${same ? 0.35 : 0.22}" stroke-width="0.6"/>`;
+      }
+    }
+  }
+  const dots = nodes.map(n => `<circle cx="${n.x}" cy="${n.y}" r="2.2" fill="${n.c}" opacity="0.92"/>`).join('');
+  svg.innerHTML = edges + dots;
+})();
+
+// ---------- ABM price path (project 3)
+(function(){
+  const svg = document.getElementById('abmSvg');
+  if (!svg) return;
+  const W = 300, H = 180;
+  const T = 500;
+  const pts = [];
+  let p = 100;
+  for (let t=0;t<T;t++){
+    const regime = t < 260 ? 0 : t < 320 ? 1 : 2;
+    const sigma = regime === 1 ? 2.4 : 0.6;
+    const drift = regime === 1 ? -0.15 : 0.02;
+    p += drift + (Math.random()-0.5)*sigma;
+    pts.push(p);
+  }
+  const pad = 10;
+  const min = Math.min(...pts), max = Math.max(...pts);
+  const xs = t => pad + (W - pad*2) * (t / (T-1));
+  const ys = v => H - pad - (H - pad*2) * ((v - min) / (max - min));
+  let d = 'M' + xs(0) + ' ' + ys(pts[0]);
+  for (let t=1;t<T;t++) d += ' L' + xs(t).toFixed(2) + ' ' + ys(pts[t]).toFixed(2);
+
+  // Regime bands
+  const bands = `
+    <rect x="${xs(0)}" y="${pad}" width="${xs(260)-xs(0)}" height="${H-pad*2}" fill="#1d3a2f" opacity="0.05"/>
+    <rect x="${xs(260)}" y="${pad}" width="${xs(320)-xs(260)}" height="${H-pad*2}" fill="#6b1f1a" opacity="0.09"/>
+    <rect x="${xs(320)}" y="${pad}" width="${xs(T-1)-xs(320)}" height="${H-pad*2}" fill="#1a2a44" opacity="0.05"/>
+  `;
+  // Axis
+  const axis = `
+    <line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#bfbaa8" stroke-width="0.5"/>
+    <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-pad}" stroke="#bfbaa8" stroke-width="0.5"/>
+    <text x="${xs(260)+3}" y="${pad+10}" font-family="JetBrains Mono,monospace" font-size="8" fill="#6b1f1a">CRASH</text>
+    <text x="${pad+3}" y="${pad+10}" font-family="JetBrains Mono,monospace" font-size="8" fill="#1d3a2f">STABLE</text>
+    <text x="${xs(320)+3}" y="${pad+10}" font-family="JetBrains Mono,monospace" font-size="8" fill="#1a2a44">RECOVERY</text>
+  `;
+  svg.innerHTML = bands + axis + `<path d="${d}" fill="none" stroke="#1a2a44" stroke-width="1"/>`;
+})();
+
+// ---------- ECI scatter (project 4)
+(function(){
+  const svg = document.getElementById('eciSvg');
+  if (!svg) return;
+  const W = 300, H = 200;
+  const N = 120;
+  const pad = 18;
+  const pts = [];
+  for (let i=0;i<N;i++){
+    // x = ECI, y = GDP/capita log-log, with positive correlation + noise
+    const eci = -2 + Math.random()*4;
+    const gdp = 7 + eci*0.8 + (Math.random()-0.5)*1.4;
+    pts.push([eci, gdp]);
+  }
+  const xs = e => pad + (W - pad*2) * ((e + 2) / 4);
+  const ys = g => H - pad - (H - pad*2) * ((g - 5) / 6);
+  // OLS
+  const mx = pts.reduce((a,[x])=>a+x,0)/N;
+  const my = pts.reduce((a,[,y])=>a+y,0)/N;
+  const num = pts.reduce((a,[x,y])=>a+(x-mx)*(y-my),0);
+  const den = pts.reduce((a,[x])=>a+(x-mx)**2,0);
+  const slope = num/den;
+  const intercept = my - slope*mx;
+  const ax = [-2, 2];
+  const ay = ax.map(x => intercept + slope*x);
+
+  const dots = pts.map(([x,y]) => `<circle cx="${xs(x).toFixed(1)}" cy="${ys(y).toFixed(1)}" r="1.8" fill="#6b1f1a" opacity="0.55"/>`).join('');
+  const fit  = `<line x1="${xs(ax[0])}" y1="${ys(ay[0])}" x2="${xs(ax[1])}" y2="${ys(ay[1])}" stroke="#1a2a44" stroke-width="1.1" stroke-dasharray="3 2"/>`;
+  const axis = `
+    <line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#bfbaa8" stroke-width="0.5"/>
+    <line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-pad}" stroke="#bfbaa8" stroke-width="0.5"/>
+    <text x="${pad+3}" y="${pad+8}" font-family="JetBrains Mono,monospace" font-size="8" fill="#6a685f">ln GDP/cap</text>
+    <text x="${W-pad-18}" y="${H-pad-4}" font-family="JetBrains Mono,monospace" font-size="8" fill="#6a685f">ECI</text>
+  `;
+  svg.innerHTML = axis + fit + dots;
+})();
+</script>
+<!-- Tweaks panel (hidden until toggled) -->
+<div class="tweaks" id="tweaksPanel">
+  <div class="tweaks-head">
+    <span>Tweaks</span>
+    <span class="x" id="tweaksClose">×</span>
+  </div>
+  <div class="tweaks-body">
+
+    <div class="tweak-row">
+      <label>Accent color</label>
+      <div class="tweak-color-row" id="accentSwatches">
+        <div class="sw-color" data-accent="#1a2a44" style="background:#1a2a44" title="Navy"></div>
+        <div class="sw-color" data-accent="#1d3a2f" style="background:#1d3a2f" title="Forest"></div>
+        <div class="sw-color" data-accent="#6b1f1a" style="background:#6b1f1a" title="Oxblood"></div>
+        <div class="sw-color" data-accent="#8a6a2a" style="background:#8a6a2a" title="Brass"></div>
+        <div class="sw-color" data-accent="#10100f" style="background:#10100f" title="Ink"></div>
+      </div>
     </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
-                </h4>
-                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    A specialized consultancy applying complexity science to economic and financial challenges. Based in Washington, DC.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Market Simulation</a></li>
-                    <li><a href="#">Network Analysis</a></li>
-                    <li><a href="#">Risk Modeling</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/about/">About Us</a></li>
-                    <li><a href="/projects/">Case Studies</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="tweak-row">
+      <label>Hero headline</label>
+      <input type="text" id="tweakHeadline" />
+    </div>
 
-    <script>
-        // Mobile Menu
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '2rem';
-                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-            }
-        }
+    <div class="tweak-row">
+      <label>Hero dek</label>
+      <input type="text" id="tweakDek" />
+    </div>
 
-        // Staggered Animation for Cards
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px'
-        };
+    <div class="tweak-row">
+      <label>Hero figure</label>
+      <div class="tweak-toggle" id="tweakHeatmap">
+        <span>Animated correlation heatmap</span><span class="sw"></span>
+      </div>
+    </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100); 
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
+    <div class="tweak-row">
+      <label>Hero stats strip</label>
+      <div class="tweak-toggle" id="tweakStats">
+        <span>Show count-up stats</span><span class="sw"></span>
+      </div>
+    </div>
 
-        document.querySelectorAll('.project-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
+    <div class="tweak-row">
+      <label>Toolkit section</label>
+      <div class="tweak-toggle" id="tweakToolkit">
+        <span>Show methods · languages</span><span class="sw"></span>
+      </div>
+    </div>
+
+    <div class="tweak-row">
+      <label>Per-project figures</label>
+      <div class="tweak-toggle" id="tweakFigures">
+        <span>Show data-viz previews</span><span class="sw"></span>
+      </div>
+    </div>
+
+    <div class="tweak-row">
+      <label>Entry density</label>
+      <select id="tweakDensity">
+        <option value="roomy">Roomy (default)</option>
+        <option value="compact">Compact</option>
+      </select>
+    </div>
+
+    <div class="tweak-row">
+      <label>Closing CTA</label>
+      <select id="tweakCta">
+        <option value="commission">Commission a project</option>
+        <option value="hire">I'm on the job market</option>
+        <option value="collab">Open to collaboration</option>
+        <option value="hidden">Hide the CTA</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="tweaks-foot">Changes persist to the file.</div>
+</div>
+
 </body>
 </html>
