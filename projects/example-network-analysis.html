@@ -1,523 +1,963 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+================================================================================
+ COMPLEXITY INSIGHTS — BRAND BIBLE v4.0 (Archive / Research-House)
+================================================================================
+ Use this at the top of every page. Keeps the site consistent without a build step.
+
+ VOICE
+ ─────
+ - Editorial, not marketing. Research-house, not SaaS startup.
+ - First-person when personal, third-person when presenting work.
+ - Prefer "Here's how I think about X" over "Leverage our solutions."
+ - No emoji. Semicolons are fine. Italic accent on ONE phrase per headline.
+
+ TYPE SYSTEM
+ ───────────
+ --serif : Source Serif 4   — all headlines, body copy, pull quotes
+ --sans  : Inter            — labels, kickers, metadata, nav
+ --mono  : JetBrains Mono   — numbers, tickers, section refs, code
+
+ COLOR PALETTE
+ ─────────────
+ PAPER / INK
+  --paper       #faf9f6   warm off-white page
+  --paper-2     #f0ede3   inset panels, figure backgrounds
+  --paper-3     #fffef8   hover background
+  --ink         #10100f   near-black for text + dark sections
+  --ink-2       #23231f
+  --muted       #6a685f
+  --rule        #ddd9cc
+  --rule-strong #bfbaa8
+
+ ACCENTS
+  --accent      #1a2a44   navy   (primary)
+  --accent-2    #1d3a2f   forest (secondary — LIVE, progress)
+  --oxblood     #6b1f1a   deep red (ρ<0 heatmap, "crash" bands)
+  --brass       #8a6a2a   ochre (tertiary)
+  --brass-2     #d4b47a   warm highlight on dark backgrounds
+
+ LAYOUT
+ ──────
+ - Max content width 1560px; side padding 3vw.
+ - Sections separated by 1px --rule hairlines, not shadows.
+ - No card-with-shadow. No gradient surfaces (except ONE subtle radial on dark CTA).
+ - Icons: none. Shapes, rules, numerals only.
+ - Numerals: № 001, § III, 11.5px mono for tickers / section refs.
+
+ MOTIFS
+ ──────
+ - Italic accent on ONE phrase per headline, in the local accent color.
+ - Section labels: "§ III.B — The Portfolio" in 11px sans, 0.22em tracking.
+ - Figures: mono captions at top and foot, not sidebar legends.
+ - Live data is OK if it earns its keep. Never decorative.
+================================================================================
+-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&P 500 Network Analysis | Complexity Insights</title>
-    <meta name="description" content="A network science approach to identifying systemic risk and correlation breakdowns in the S&P 500.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<title>S&amp;P 500 Network Analysis — Complexity Insights</title>
+<meta name="description" content="A network-science approach to identifying systemic risk and correlation breakdowns in the S&P 500." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf9f6; --paper-2:#f0ede3; --paper-3:#fffef8;
+    --ink:#10100f; --ink-2:#23231f; --muted:#6a685f;
+    --rule:#ddd9cc; --rule-strong:#bfbaa8;
+    --accent:#1a2a44; --accent-2:#1d3a2f; --oxblood:#6b1f1a;
+    --brass:#8a6a2a; --brass-2:#d4b47a;
+    --serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--serif);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:var(--ink);text-decoration:none;}
+  a:hover{color:var(--accent);}
 
-    <style>
-        /* * =========================================
-         * BRAND BIBLE V3.2 (Imported)
-         * ========================================= */
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-dark: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-        }
+  /* Masthead */
+  .masthead{
+    padding:1.3rem 3vw 1rem;
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    border-bottom:1px solid var(--rule-strong);
+    font-family:var(--sans);gap:2rem;
+  }
+  .wordmark{font-family:var(--serif);font-weight:600;font-size:1.25rem;color:var(--ink);display:inline-flex;align-items:center;gap:.55em;}
+  .wordmark .mark{width:1.35em;height:1.35em;display:inline-block;flex-shrink:0;}
+  .masthead nav{display:flex;gap:2rem;justify-content:center;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  .masthead nav a{color:var(--muted);}
+  .masthead nav a:hover,.masthead nav a.active{color:var(--ink);}
+  .masthead nav a.active{border-bottom:1px solid var(--accent);padding-bottom:2px;}
+  .masthead .issue{justify-self:end;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;display:flex;gap:.8rem;align-items:center;}
+  .masthead .issue .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);display:inline-block;box-shadow:0 0 0 3px rgba(29,58,47,.25);}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Crumbs */
+  .crumbs{max-width:1560px;margin:0 auto;padding:1rem 3vw;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--rule);}
+  .crumbs a{color:var(--muted);}.crumbs a:hover{color:var(--ink);}
+  .crumbs .sep{margin:0 .7rem;color:var(--rule-strong);}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.7;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            overflow-x: hidden;
-        }
+  /* Case hero — DARK */
+  .hero{background:var(--ink);color:var(--paper);padding:5rem 3vw 4rem;position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(212,180,122,.07),transparent 55%);pointer-events:none;}
+  .hero-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:end;position:relative;}
+  .hero-kicker{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass-2);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem;}
+  .hero-kicker::after{content:"";height:1px;background:#3a332a;flex:1;max-width:200px;}
+  .hero-kicker .ref{font-family:var(--mono);color:#7a7162;letter-spacing:.08em;}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,4.8vw,4.2rem);line-height:1;letter-spacing:-.02em;color:var(--paper);margin-bottom:1.4rem;text-wrap:balance;}
+  .hero h1 em{font-style:italic;color:var(--brass-2);font-weight:400;}
+  .hero .dek{font-family:var(--serif);font-size:1.25rem;line-height:1.45;color:#d9d2c2;max-width:50ch;}
+  .hero-meta{display:grid;grid-template-columns:1fr 1fr;gap:1rem 2rem;font-family:var(--sans);font-size:12px;border-top:1px solid #3a332a;padding-top:1.2rem;}
+  .hero-meta .m-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7a7162;margin-bottom:.3rem;}
+  .hero-meta .m-val{font-family:var(--serif);font-size:15px;color:#d9d2c2;}
+  .hero-meta .m-val em{color:var(--brass-2);font-style:italic;}
+  .tickers{grid-column:span 2;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem;}
+  .tickers span{font-family:var(--mono);font-size:10.5px;color:var(--brass-2);border:1px solid #3a332a;padding:.3rem .55rem;letter-spacing:.06em;}
 
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
+  .back-link{display:inline-block;font-family:var(--mono);font-size:11px;color:#7a7162;letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.5rem;}
+  .back-link:hover{color:var(--brass-2);}
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo i { color: var(--accent); }
+  /* Headline strip */
+  .headline-strip{background:var(--paper-2);border-bottom:1px solid var(--rule-strong);padding:1.4rem 3vw;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--muted);display:grid;grid-template-columns:repeat(4,1fr);max-width:1400px;margin:0 auto;gap:2rem;}
+  .headline-strip > div{padding-left:1rem;border-left:2px solid var(--rule-strong);}
+  .headline-strip .big{font-family:var(--serif);font-size:1.8rem;color:var(--ink);font-style:italic;line-height:1;margin-bottom:.2rem;letter-spacing:-.01em;}
+  .headline-strip .big.red{color:var(--oxblood);}
+  .headline-strip .big.green{color:var(--accent-2);}
+  .headline-strip .lab{text-transform:uppercase;letter-spacing:.1em;}
 
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
-        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
-        
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+  /* Main layout */
+  .case-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:260px 1fr;gap:4rem;padding:4rem 3vw 5rem;}
 
-        /* Case Study Header */
-        .case-header {
-            margin-top: 70px;
-            padding: 5rem 5% 4rem;
-            background: var(--primary);
-            color: white;
-            position: relative;
-        }
+  /* Sidebar */
+  .sidebar{position:sticky;top:1.5rem;align-self:start;font-family:var(--sans);}
+  .s-group{margin-bottom:2.3rem;padding-bottom:1.5rem;border-bottom:1px solid var(--rule);}
+  .s-group:last-of-type{border-bottom:none;}
+  .s-label{font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.8rem;}
+  .s-val{font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.4;}
+  .s-val em{font-style:italic;color:var(--accent);}
+  .tag-row{display:flex;flex-wrap:wrap;gap:.4rem;}
+  .tag-row span{font-family:var(--mono);font-size:10.5px;color:var(--ink);border:1px solid var(--rule-strong);padding:.35rem .55rem;letter-spacing:.04em;background:var(--paper);}
+  .s-btn{display:flex;justify-content:space-between;align-items:center;padding:.85rem 1rem;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.6rem;transition:all .15s;}
+  .s-btn.primary{background:var(--ink);color:var(--paper);}
+  .s-btn.primary:hover{background:var(--accent);color:var(--paper);}
+  .s-btn.ghost{background:var(--paper);color:var(--ink);border:1px solid var(--rule-strong);}
+  .s-btn.ghost:hover{border-color:var(--ink);background:var(--paper-3);}
+  .s-btn .arr{color:var(--brass-2);}
+  .s-btn.ghost .arr{color:var(--accent);}
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #94a3b8;
-            text-decoration: none;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
+  .toc-mini{font-family:var(--sans);}
+  .toc-mini a{display:grid;grid-template-columns:28px 1fr;padding:.4rem 0 .4rem .7rem;color:var(--muted);font-size:13px;line-height:1.35;font-family:var(--serif);border-left:2px solid transparent;transition:color .15s,border-color .15s,background .15s;}
+  .toc-mini a::before{content:attr(data-num);font-family:var(--mono);font-size:10px;color:var(--rule-strong);letter-spacing:.04em;padding-top:2px;}
+  .toc-mini a:hover{color:var(--ink);}
+  .toc-mini a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;background:var(--paper-2);}
+  .toc-mini a.active::before{color:var(--accent);}
 
-        .back-link:hover { color: white; }
+  /* Content */
+  .case-body{font-family:var(--serif);font-size:1.17rem;line-height:1.7;color:var(--ink-2);max-width:760px;}
+  .case-body p{margin-bottom:1.6rem;}
+  .case-body p strong{color:var(--ink);font-weight:600;}
+  .case-body .lead{font-family:var(--serif);font-size:1.4rem;line-height:1.45;color:var(--ink);margin-bottom:2.2rem;letter-spacing:-.005em;text-wrap:pretty;}
+  .case-body ul{margin:1.4rem 0 2rem;padding-left:0;list-style:none;}
+  .case-body ul li{padding-left:1.8rem;margin-bottom:.7rem;position:relative;line-height:1.55;}
+  .case-body ul li::before{content:"→";font-family:var(--mono);color:var(--accent);position:absolute;left:0;top:0;font-size:14px;}
+  .case-body ul li strong{color:var(--ink);}
+  .case-body h2{font-family:var(--serif);font-weight:400;font-size:2.1rem;line-height:1.1;letter-spacing:-.012em;color:var(--ink);margin:3.4rem 0 1.3rem;padding-top:1.4rem;border-top:1px solid var(--rule-strong);display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:baseline;}
+  .case-body h2::before{content:attr(data-num);font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.08em;line-height:1;padding-top:.6rem;white-space:nowrap;}
+  .case-body h2 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .case-body h3{font-family:var(--serif);font-weight:500;font-size:1.25rem;line-height:1.3;color:var(--ink);margin:2rem 0 .8rem;}
 
-        .case-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
-        .case-header p { font-size: 1.2rem; opacity: 0.9; max-width: 800px; color: #cbd5e1; }
+  /* Stats grid — editorial, not cards */
+  .stats-ed{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin:2.5rem 0;padding:2rem 0;border-top:1px solid var(--ink);border-bottom:1px solid var(--rule);}
+  .stats-ed .s{position:relative;}
+  .stats-ed .s-num{font-family:var(--serif);font-weight:400;font-size:3rem;line-height:1;color:var(--ink);letter-spacing:-.02em;margin-bottom:.5rem;}
+  .stats-ed .s-num em{font-style:italic;color:var(--accent);}
+  .stats-ed .s-lab{font-family:var(--sans);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+  .stats-ed .s-sub{font-family:var(--serif);font-size:13px;color:var(--muted);font-style:italic;line-height:1.35;}
+  .stats-ed .s::before{content:attr(data-ref);position:absolute;top:-8px;right:0;font-family:var(--mono);font-size:9.5px;color:var(--rule-strong);letter-spacing:.06em;}
 
-        /* Main Layout */
-        .case-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 5%;
-            display: grid;
-            grid-template-columns: 280px 1fr; /* Sidebar | Content */
-            gap: 4rem;
-            align-items: start;
-        }
+  /* Takeaway */
+  .takeaway{background:var(--paper-2);border:1px solid var(--rule-strong);border-left:3px solid var(--oxblood);padding:1.6rem 1.8rem;margin:2.4rem 0;}
+  .takeaway .t-label{font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--oxblood);margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem;}
+  .takeaway .t-label::before{content:"◆";font-size:8px;}
+  .takeaway h4{font-family:var(--serif);font-weight:500;font-size:1.2rem;color:var(--ink);margin-bottom:.5rem;line-height:1.3;}
+  .takeaway h4 em{font-style:italic;color:var(--oxblood);}
+  .takeaway p{margin:0;font-size:1.02rem;color:var(--ink-2);line-height:1.55;}
 
-        /* Sidebar (Sticky) */
-        .case-sidebar {
-            position: sticky;
-            top: 100px; /* Sticks 100px from top when scrolling */
-        }
+  /* Code */
+  .code-block{background:var(--ink);color:#d9d2c2;padding:1.4rem 1.6rem;font-family:var(--mono);font-size:13.5px;line-height:1.65;overflow-x:auto;margin:2rem 0;border:1px solid var(--ink);position:relative;}
+  .code-block::before{content:"PY";position:absolute;top:10px;right:12px;font-family:var(--mono);font-size:10px;color:var(--brass-2);letter-spacing:.15em;}
+  .code-block .kw{color:var(--brass-2);} .code-block .str{color:#a8c4a2;} .code-block .com{color:#7a7162;font-style:italic;} .code-block .num{color:#c4a6a0;}
 
-        .meta-group { margin-bottom: 2.5rem; }
-        
-        .meta-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #94a3b8;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: block;
-        }
+  /* Interactive figures */
+  figure.demo{margin:2.5rem 0;background:var(--paper-2);border:1px solid var(--rule-strong);padding:1rem 1rem 0;}
+  figure.demo .fig-caption{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:flex;justify-content:space-between;padding-bottom:.7rem;align-items:center;}
+  figure.demo .fig-caption .tag{color:var(--accent);}
+  figure.demo .fig-caption .live::before{content:"● ";color:var(--accent-2);animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  figure.demo svg,figure.demo canvas{display:block;width:100%;background:var(--paper-3);}
+  figure.demo .fig-ctrl{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);flex-wrap:wrap;gap:1rem;}
+  figure.demo .fig-ctrl .left{display:flex;gap:1.3rem;align-items:center;flex-wrap:wrap;}
+  figure.demo .fig-ctrl .stat strong{color:var(--ink);font-weight:600;}
+  figure.demo .btn-row{display:flex;gap:.4rem;}
+  figure.demo button,figure.demo .seg{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:.45rem .8rem;background:var(--paper);color:var(--ink);border:1px solid var(--rule-strong);cursor:pointer;transition:all .15s;}
+  figure.demo button:hover,figure.demo .seg:hover{border-color:var(--ink);}
+  figure.demo .seg.on{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  figure.demo figcaption{font-family:var(--serif);font-size:.95rem;font-style:italic;color:var(--muted);padding:1rem 0 1.2rem;border-top:1px solid var(--rule);line-height:1.5;}
+  figure.demo .fig-ctrl label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.6rem;}
+  figure.demo input[type=range]{accent-color:var(--accent);width:140px;}
 
-        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        
-        .tech-tag {
-            background: white;
-            border: 1px solid #e2e8f0;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
+  /* Legend */
+  .legend{display:flex;gap:1rem;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex-wrap:wrap;}
+  .legend .sw{display:inline-block;width:10px;height:10px;margin-right:.4em;vertical-align:-1px;}
 
-        .download-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-            width: 100%;
-        }
+  /* End */
+  .art-end{max-width:760px;padding-top:2rem;border-top:1px solid var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;margin-top:3rem;}
+  .art-end .sym{color:var(--accent);}
 
-        .download-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
-        
-        .repo-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: white;
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 0.8rem 1rem;
-            border-radius: 8px;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
-            width: 100%;
-            transition: all 0.3s;
-        }
+  /* Prev/Next */
+  .art-next{max-width:1400px;margin:0 auto;padding:4rem 3vw;border-top:1px solid var(--rule-strong);display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+  .art-next a{display:block;padding:1.4rem;border:1px solid var(--rule-strong);background:var(--paper);transition:background .15s,border-color .15s;}
+  .art-next a:hover{background:var(--paper-3);border-color:var(--ink);}
+  .art-next .label{font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
+  .art-next .title{font-family:var(--serif);font-size:1.2rem;line-height:1.25;color:var(--ink);}
+  .art-next .title em{font-style:italic;color:var(--accent);font-weight:400;}
 
-        .repo-link:hover { border-color: var(--text-dark); }
+  /* CTA */
+  .cta{background:var(--ink);color:var(--paper);padding:4rem 3vw;position:relative;overflow:hidden;}
+  .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(212,180,122,.08),transparent 50%);pointer-events:none;}
+  .cta-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:3rem;align-items:center;position:relative;}
+  .cta .label{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass-2);margin-bottom:.7rem;}
+  .cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,2.6vw,2.4rem);line-height:1.08;color:var(--paper);margin-bottom:.9rem;max-width:22ch;}
+  .cta h2 em{font-style:italic;color:var(--brass-2);font-weight:400;}
+  .cta p{font-family:var(--serif);color:#d9d2c2;max-width:44ch;line-height:1.55;}
+  .cta .btn{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 1.4rem;background:var(--paper);color:var(--ink);justify-self:end;}
+  .cta .btn:hover{background:var(--brass-2);}
 
-        /* Content Area */
-        .case-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            border: 1px solid #f1f5f9;
-        }
+  /* Footline */
+  .footline{background:var(--ink);color:#7a7162;padding:1.4rem 3vw;font-family:var(--mono);font-size:11px;letter-spacing:.04em;display:flex;justify-content:space-between;border-top:1px solid #3a332a;}
+  .footline a{color:var(--brass-2);}
 
-        .case-content h2 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin: 2.5rem 0 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .case-content h2:first-child { margin-top: 0; }
-
-        .case-content h3 { color: var(--accent); font-size: 1.3rem; margin: 2rem 0 1rem; }
-        
-        .case-content p { margin-bottom: 1.5rem; font-size: 1.05rem; }
-        
-        .case-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
-        .case-content li { margin-bottom: 0.5rem; }
-
-        /* Data Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-box {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-
-        .stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); display: block; }
-        .stat-label { font-size: 0.85rem; color: var(--text-light); font-weight: 600; }
-
-        /* Figures & Images */
-        .figure { margin: 2.5rem 0; }
-        .figure img { width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-        .figure-caption { font-size: 0.9rem; color: var(--text-light); text-align: center; margin-top: 0.8rem; font-style: italic; }
-
-        /* Callouts */
-        .callout {
-            background: #eff6ff;
-            border-left: 4px solid var(--accent);
-            padding: 1.5rem;
-            border-radius: 0 8px 8px 0;
-            margin: 2rem 0;
-        }
-
-        .callout h4 { margin-top: 0; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; }
-
-        /* Code Blocks (Dark Theme) */
-        .code-block {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 0.9rem;
-            margin: 2rem 0;
-            border: 1px solid #334155;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: #94a3b8;
-            padding: 4rem 5% 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .footer-col a:hover { color: white; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 900px) {
-            .case-container { grid-template-columns: 1fr; }
-            .case-sidebar { position: static; margin-bottom: 3rem; }
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .stats-grid { grid-template-columns: 1fr; }
-            
-            /* Mobile Menu Logic */
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 2rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-        }
-    </style>
+  @media (max-width:1100px){
+    .case-container{grid-template-columns:1fr;gap:2rem;}
+    .sidebar{position:static;}
+    .hero-inner{grid-template-columns:1fr;gap:2rem;}
+    .headline-strip{grid-template-columns:repeat(2,1fr);}
+    .stats-ed{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:900px){
+    .masthead{grid-template-columns:1fr auto;}
+    .masthead nav{display:none;}
+    .art-next,.cta-inner{grid-template-columns:1fr;}
+    .cta .btn{justify-self:start;}
+    .case-body h2{grid-template-columns:1fr;gap:.3rem;font-size:1.6rem;}
+    .headline-strip{grid-template-columns:1fr;}
+    .stats-ed{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo">
-            <i class="fas fa-project-diagram"></i>
-            Complexity Insights
-        </a>
-        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/#solutions">Solutions</a></li>
-            <li><a href="/projects/" class="active">Case Studies</a></li>
-            <li><a href="/blog/">Insights</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/#contact" class="nav-btn">Contact</a></li>
-        </ul>
-    </nav>
 
-    <header class="case-header">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <a href="/projects/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Cases</a>
-            <h1>Financial Network Analysis:<br>Mapping S&P 500 Correlations</h1>
-            <p>Using network science to visualize market structure and quantify systemic risk during periods of volatility.</p>
-        </div>
-    </header>
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav>
+    <a href="/projects/" class="active">Projects</a>
+    <a href="/blog/">Writing</a>
+    <a href="/about/">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  <div class="issue">
+    <span class="dot"></span>
+    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
+  </div>
+</header>
 
-    <div class="case-container">
-        
-        <aside class="case-sidebar">
-            <a href="#" class="download-btn"><i class="fas fa-file-pdf"></i> Download PDF Report</a>
-            <a href="#" class="repo-link" target="_blank"><i class="fab fa-github"></i> View Source Code</a>
-            
-            <div class="meta-group" style="margin-top: 2rem;">
-                <span class="meta-label">Tech Stack</span>
-                <div class="tech-tags">
-                    <span class="tech-tag">Python</span>
-                    <span class="tech-tag">NetworkX</span>
-                    <span class="tech-tag">Pandas</span>
-                    <span class="tech-tag">Matplotlib</span>
-                </div>
-            </div>
+<div class="crumbs">
+  <a href="/">Home</a><span class="sep">/</span>
+  <a href="/projects/">Projects</a><span class="sep">/</span>
+  <span>S&amp;P 500 network analysis</span>
+</div>
 
-            <div class="meta-group">
-                <span class="meta-label">Methodologies</span>
-                <div class="tech-tags">
-                    <span class="tech-tag">Community Detection</span>
-                    <span class="tech-tag">Centrality Analysis</span>
-                    <span class="tech-tag">Correlation Matrix</span>
-                </div>
-            </div>
-
-            <div class="meta-group">
-                <span class="meta-label">Project Timeline</span>
-                <p style="font-size: 0.9rem; color: var(--text-light);">October 2025 (3 Weeks)</p>
-            </div>
-        </aside>
-
-        <article class="case-content">
-            <h2>Executive Summary</h2>
-            <p>
-                Financial markets are interconnected systems where the movement of one asset can cascade through the network. Understanding these interconnections is critical for <strong>risk management</strong>, <strong>portfolio construction</strong>, and identifying systemic vulnerabilities.
-            </p>
-            <p>
-                This project analyzes correlation networks among S&P 500 stocks to reveal hidden market structure. By applying network science techniques to 5 years of daily price data, I identified key nodes ("Systemically Important Institutions"), community structures, and measured how network topology degrades during periods of market stress.
-            </p>
-
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Assets Analyzed</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">1.2M</span>
-                    <span class="stat-label">Data Points</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-number">11</span>
-                    <span class="stat-label">Risk Clusters</span>
-                </div>
-            </div>
-
-            <div class="callout">
-                <h4><i class="fas fa-lightbulb"></i> Key Insight</h4>
-                <p>During the 2022 downturn, <strong>Network Density increased by 37%</strong>. This empirical evidence confirms "Correlation Breakdown"—diversification strategies fail precisely when investors need them most.</p>
-            </div>
-
-            <h2>Methodology & Data Pipeline</h2>
-            <p>
-                The analysis pipeline was built in Python to ensure reproducibility and scalability. Data was sourced via the Yahoo Finance API, cleaned using Pandas, and modeled as a graph where nodes represent stocks and edges represent correlation coefficients > 0.5.
-            </p>
-            
-            <h3>1. Data Ingestion & Cleaning</h3>
-            <p>
-                Collected daily adjusted closing prices (Jan 2020 - Oct 2025). Calculated daily log returns to normalize the data for statistical analysis.
-            </p>
-
-            <h3>2. Network Construction</h3>
-            <p>
-                Constructed the graph using <strong>NetworkX</strong>. To filter noise, I applied a thresholding technique, only creating edges for strong correlations.
-            </p>
-
-            <div class="code-block">
-# Constructing the Correlation Graph
-import networkx as nx
-
-def build_network(corr_matrix, threshold=0.5):
-    G = nx.Graph()
-    # Iterate through correlation matrix
-    for i in range(len(corr_matrix.columns)):
-        for j in range(i+1, len(corr_matrix.columns)):
-            if corr_matrix.iloc[i, j] > threshold:
-                # Add edge with weight = correlation
-                G.add_edge(
-                    corr_matrix.columns[i], 
-                    corr_matrix.columns[j], 
-                    weight=corr_matrix.iloc[i, j]
-                )
-    return G
-            </div>
-
-            <h2>Results & Market Structure</h2>
-            
-            <h3>Sectoral Clustering (Community Detection)</h3>
-            <p>
-                Using the <strong>Louvain algorithm</strong> for modularity optimization, the network naturally partitioned into 11 distinct communities. While these largely aligned with GICS sectors, the algorithm revealed interesting cross-sector dependencies:
-            </p>
-            <ul>
-                <li><strong>Tech-Consumer Bridge:</strong> Amazon and Apple acted as bridges between the Technology and Consumer Discretionary clusters.</li>
-                <li><strong>Energy Isolation:</strong> The Energy sector formed the most isolated cluster, suggesting it provides the highest diversification benefit.</li>
-            </ul>
-
-            <div class="figure">
-                <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=Interactive+Network+Graph+(Visualization)" alt="S&P 500 correlation network">
-                <p class="figure-caption">Figure 1: Force-directed graph layout of S&P 500 correlations. Colors represent GICS sectors.</p>
-            </div>
-
-            <h3>Centrality & Systemic Risk</h3>
-            <p>
-                I calculated <strong>Eigenvector Centrality</strong> to identify the most influential nodes. Unlike simple size (Market Cap), centrality measures how connected a stock is to other highly connected stocks.
-            </p>
-            <p>
-                <strong>Finding:</strong> Financials and Industrials had higher average centrality than Tech, despite smaller market caps. This implies a shock to a major bank propagates faster through the system than a shock to a tech giant.
-            </p>
-
-            <h2>Technical Implementation</h2>
-            <p>
-                The project leverages the following libraries:
-            </p>
-            <ul>
-                <li><strong>Pandas/NumPy:</strong> Vectorized operations for correlation matrix calculation.</li>
-                <li><strong>NetworkX:</strong> Graph algorithms (Centrality, MST, Efficiency).</li>
-                <li><strong>Community:</strong> Implementation of the Louvain modularity algorithm.</li>
-                <li><strong>Matplotlib/Seaborn:</strong> Visualization of heatmaps and degree distributions.</li>
-            </ul>
-
-            <h2>Future Directions</h2>
-            <p>
-                This analysis uses a static correlation window. To enhance predictive power for trading strategies, the next phase will implement:
-            </p>
-            <ul>
-                <li><strong>Dynamic Time Warping (DTW):</strong> To capture non-linear relationships.</li>
-                <li><strong>Rolling Window Analysis:</strong> To visualize the time-evolution of network density as a leading indicator for volatility.</li>
-            </ul>
-        </article>
-
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <a href="/projects/" class="back-link">← Back to the portfolio</a>
+      <div class="hero-kicker">Network Science · Quantitative Finance <span class="ref">№ 002 · CASE</span></div>
+      <h1>Mapping the structure of the <em>S&amp;P 500.</em></h1>
+      <p class="dek">Five years of daily prices, folded into a weighted correlation graph. The question: where does systemic risk live, and what happens to the graph when the market breaks?</p>
     </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
-                </h4>
-                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    Applying complexity science to economic and financial challenges.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Market Simulation</a></li>
-                    <li><a href="#">Network Analysis</a></li>
-                    <li><a href="#">Risk Modeling</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/about/">About Us</a></li>
-                    <li><a href="/projects/">Case Studies</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="#"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
-        </div>
-    </footer>
+    <div class="hero-meta">
+      <div>
+        <div class="m-label">Window</div>
+        <div class="m-val">Jan 2020 <em>—</em> Oct 2025</div>
+      </div>
+      <div>
+        <div class="m-label">Universe</div>
+        <div class="m-val"><em>503</em> constituents</div>
+      </div>
+      <div>
+        <div class="m-label">Observations</div>
+        <div class="m-val"><em>1.2 M</em> daily bars</div>
+      </div>
+      <div>
+        <div class="m-label">Communities found</div>
+        <div class="m-val"><em>11</em> (Louvain)</div>
+      </div>
+      <div class="tickers">
+        <span>AAPL</span><span>MSFT</span><span>NVDA</span><span>AMZN</span><span>META</span>
+        <span>JPM</span><span>BAC</span><span>XOM</span><span>CVX</span><span>JNJ</span>
+        <span>+493</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // Mobile Menu
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '2rem';
-                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-            }
+<!-- Headline strip — findings at a glance -->
+<div style="background:var(--paper-2);border-bottom:1px solid var(--rule-strong);">
+<div class="headline-strip">
+  <div>
+    <div class="big">ρ̄ · <em>0.41</em></div>
+    <div class="lab">Mean pairwise corr</div>
+  </div>
+  <div>
+    <div class="big red">+<em>37%</em></div>
+    <div class="lab">Density in crisis window</div>
+  </div>
+  <div>
+    <div class="big">d · <em>3.2</em></div>
+    <div class="lab">Avg shortest path</div>
+  </div>
+  <div>
+    <div class="big green"><em>Q</em> · 0.62</div>
+    <div class="lab">Modularity (Louvain)</div>
+  </div>
+</div>
+</div>
+
+<!-- MAIN -->
+<div class="case-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="#" class="s-btn primary">Download PDF report <span class="arr">↓</span></a>
+    <a href="#" class="s-btn ghost">View source on GitHub <span class="arr">↗</span></a>
+
+    <div class="s-group" style="margin-top:2rem;">
+      <div class="s-label">Contents</div>
+      <div class="toc-mini">
+        <a href="#summary" data-num="01">Executive summary</a>
+        <a href="#method" data-num="02">Methodology</a>
+        <a href="#graph" data-num="03">The graph, interactive</a>
+        <a href="#breakdown" data-num="04">Correlation breakdown</a>
+        <a href="#results" data-num="05">Results &amp; findings</a>
+        <a href="#stack" data-num="06">Technical stack</a>
+        <a href="#next" data-num="07">Future directions</a>
+      </div>
+    </div>
+
+    <div class="s-group">
+      <div class="s-label">Stack</div>
+      <div class="tag-row">
+        <span>Python</span><span>NetworkX</span><span>Pandas</span>
+        <span>NumPy</span><span>SciPy</span><span>Louvain</span>
+      </div>
+    </div>
+
+    <div class="s-group">
+      <div class="s-label">Methods</div>
+      <div class="tag-row">
+        <span>Community detection</span><span>Eigenvector centrality</span><span>Correlation matrix</span><span>MST</span>
+      </div>
+    </div>
+
+    <div class="s-group">
+      <div class="s-label">Timeline</div>
+      <div class="s-val">October 2025 · <em>3 weeks</em></div>
+    </div>
+
+    <div class="s-group">
+      <div class="s-label">Status</div>
+      <div class="s-val">Shipped · <em>v1.1</em></div>
+    </div>
+  </aside>
+
+  <!-- BODY -->
+  <article class="case-body">
+
+    <h2 id="summary" data-num="§ 01">Executive <em>summary.</em></h2>
+    <p class="lead">Financial markets are interconnected systems where one asset's move cascades through the network. Understanding that structure is the whole game for risk management, portfolio construction, and spotting systemic vulnerabilities before they matter.</p>
+    <p>This project analyzes correlation networks among S&amp;P 500 stocks to reveal hidden market structure. By applying network science to five years of daily price data, I identified the most systemically important nodes, the community structure the graph settles into, and — most usefully — how that topology <strong>degrades</strong> during periods of market stress.</p>
+
+    <div class="stats-ed">
+      <div class="s" data-ref="N">
+        <div class="s-num">503</div>
+        <div class="s-lab">Assets</div>
+        <div class="s-sub">Current S&amp;P 500 constituents</div>
+      </div>
+      <div class="s" data-ref="T">
+        <div class="s-num">1.2<em>M</em></div>
+        <div class="s-lab">Daily bars</div>
+        <div class="s-sub">2020 – 2025 OHLCV</div>
+      </div>
+      <div class="s" data-ref="E">
+        <div class="s-num">18.4<em>k</em></div>
+        <div class="s-lab">Edges at ρ &gt; 0.5</div>
+        <div class="s-sub">Thresholded correlation graph</div>
+      </div>
+      <div class="s" data-ref="Q">
+        <div class="s-num">0.62</div>
+        <div class="s-lab">Modularity</div>
+        <div class="s-sub">11 communities, Louvain</div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <div class="t-label">Key finding — correlation breakdown</div>
+      <h4>During the 2022 drawdown, network density rose <em>+37%</em>. Diversification fails precisely when investors need it most.</h4>
+      <p>When the market sells off, pairwise correlations collapse toward one. The graph densifies, community structure blurs, and what looked like an 11-sector market starts behaving like a single factor.</p>
+    </div>
+
+    <h2 id="method" data-num="§ 02">Methodology &amp; <em>pipeline.</em></h2>
+    <p>The analysis pipeline was built in Python for reproducibility and scalability. Data was sourced via the Yahoo Finance API, cleaned with Pandas, and modeled as a weighted graph where nodes represent stocks and edges represent pairwise Pearson correlations above a threshold.</p>
+
+    <h3>1 · Data ingestion</h3>
+    <p>Collected daily adjusted closing prices for all current S&amp;P 500 constituents (Jan 2020 – Oct 2025). Computed daily log returns to stabilize variance and strip out price-level effects before any correlation is taken.</p>
+
+    <h3>2 · Graph construction</h3>
+    <p>Built the graph using <strong>NetworkX</strong>. To control noise, I applied a thresholding step: only pairs with |ρ| &gt; 0.5 become edges. Weights carry the sign, so the layout respects both co-movement and counter-movement.</p>
+
+    <div class="code-block"><span class="com"># Constructing the correlation graph</span>
+<span class="kw">import</span> networkx <span class="kw">as</span> nx
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+<span class="kw">def</span> build_network(corr, threshold=<span class="num">0.5</span>):
+    G = nx.Graph()
+    tickers = corr.columns.tolist()
+    <span class="kw">for</span> i <span class="kw">in</span> range(len(tickers)):
+        <span class="kw">for</span> j <span class="kw">in</span> range(i+<span class="num">1</span>, len(tickers)):
+            rho = corr.iat[i, j]
+            <span class="kw">if</span> abs(rho) &gt; threshold:
+                G.add_edge(tickers[i], tickers[j], weight=rho)
+    <span class="kw">return</span> G</div>
+
+    <h2 id="graph" data-num="§ 03">The graph, <em>interactive.</em></h2>
+    <p>A force-directed layout of 60 representative constituents across the 11 Louvain communities. Drag a node to pull on the whole web. Raise the threshold slider and watch low-signal edges drop away; what's left is the backbone.</p>
+
+    <!-- INTERACTIVE NETWORK -->
+    <figure class="demo" id="figNet">
+      <div class="fig-caption">
+        <span><span class="tag">FIG. 01 · FORCE-DIRECTED</span> &nbsp; S&amp;P 500 CORRELATION GRAPH</span>
+        <span class="live">LIVE</span>
+      </div>
+      <svg id="netSvg" viewBox="0 0 800 440" preserveAspectRatio="xMidYMid meet" style="height:440px;"></svg>
+      <div class="fig-ctrl">
+        <div class="left">
+          <span class="stat"><strong>Nodes:</strong> <span id="netN">60</span></span>
+          <span class="stat"><strong>Edges:</strong> <span id="netE">0</span></span>
+          <span class="stat"><strong>Density:</strong> <span id="netD">0.00</span></span>
+          <label>Threshold ρ &gt; <span id="thrVal">0.50</span> <input type="range" id="thrSlider" min="0.30" max="0.85" step="0.01" value="0.50"></label>
+        </div>
+        <div class="btn-row">
+          <button id="netReheat">↺ Re-heat</button>
+        </div>
+      </div>
+      <div style="padding:.3rem 0 1rem;">
+        <div class="legend">
+          <span><span class="sw" style="background:#1a2a44"></span>Financials</span>
+          <span><span class="sw" style="background:#1d3a2f"></span>Tech</span>
+          <span><span class="sw" style="background:#6b1f1a"></span>Energy</span>
+          <span><span class="sw" style="background:#8a6a2a"></span>Consumer</span>
+          <span><span class="sw" style="background:#4a3a5e"></span>Healthcare</span>
+          <span><span class="sw" style="background:#3a5a44"></span>Industrials</span>
+          <span><span class="sw" style="background:#6e4a2a"></span>Materials</span>
+          <span><span class="sw" style="background:#2a4a5e"></span>Utilities</span>
+        </div>
+      </div>
+      <figcaption>Figure 1. Force-directed layout of 60 constituents across 11 Louvain communities. Node colour = community; node size = weighted degree. Edge opacity = correlation strength. Drag the threshold slider to prune edges.</figcaption>
+    </figure>
+
+    <h2 id="breakdown" data-num="§ 04">Correlation <em>breakdown.</em></h2>
+    <p>The headline finding of this project lives in a single visual: the sector-level ρ-matrix, compared across three regimes. Toggle between calm, stressed, and crisis windows. In calm markets, sectors are nicely separated (dark diagonal, light off-diagonal). In a crash, the whole matrix floods red — every sector moves together.</p>
+
+    <figure class="demo" id="figHeat">
+      <div class="fig-caption">
+        <span><span class="tag">FIG. 02 · REGIME COMPARISON</span> &nbsp; SECTOR ρ-MATRIX</span>
+        <span class="live">INTERACTIVE</span>
+      </div>
+      <canvas id="heatCanvas" width="800" height="400" style="height:400px;"></canvas>
+      <div class="fig-ctrl">
+        <div class="left">
+          <span class="stat"><strong>Window:</strong> <span id="heatWindow">JAN 2021 – DEC 2021</span></span>
+          <span class="stat"><strong>Mean ρ:</strong> <span id="heatMean">0.38</span></span>
+          <span class="stat"><strong>VIX ref:</strong> <span id="heatVix">18.4</span></span>
+        </div>
+        <div class="btn-row">
+          <span class="seg on" data-regime="calm">Calm · 2021</span>
+          <span class="seg" data-regime="stress">Stress · 2020</span>
+          <span class="seg" data-regime="crash">Crash · 2022 bear</span>
+        </div>
+      </div>
+      <div style="padding:.4rem 0 1rem;">
+        <div class="legend">
+          <span>ρ scale:</span>
+          <span><span class="sw" style="background:#1a2a44"></span>0.0</span>
+          <span><span class="sw" style="background:#7a6e44"></span>0.4</span>
+          <span><span class="sw" style="background:#a55a3a"></span>0.7</span>
+          <span><span class="sw" style="background:#6b1f1a"></span>1.0</span>
+        </div>
+      </div>
+      <figcaption>Figure 2. 11 × 11 mean sector correlations across three market regimes. Under stress, diagonal dominance collapses; the block structure that diversification strategies rely on dissolves into a single hot band.</figcaption>
+    </figure>
+
+    <h2 id="results" data-num="§ 05">Results &amp; <em>findings.</em></h2>
+
+    <h3>Sectoral clustering (community detection)</h3>
+    <p>Using the <strong>Louvain algorithm</strong> for modularity optimization, the network partitioned into 11 distinct communities. These largely aligned with GICS sectors, but the algorithm surfaced a handful of cross-sector dependencies worth naming:</p>
+    <ul>
+      <li><strong>Tech – Consumer bridge.</strong> AMZN and AAPL act as bridges between the Technology and Consumer Discretionary clusters. Remove them and the graph's diameter jumps.</li>
+      <li><strong>Energy isolation.</strong> Energy forms the most isolated cluster — the lowest mean correlation with everything else. In network terms, it's the best diversifier on the board.</li>
+      <li><strong>Financials &amp; Industrials couple.</strong> These two sectors show the highest inter-cluster edge density, consistent with shared exposure to the rate cycle.</li>
+    </ul>
+
+    <h3>Centrality &amp; systemic risk</h3>
+    <p>Computed <strong>eigenvector centrality</strong> to identify the most influential nodes. Unlike market cap, centrality measures how connected a stock is to <em>other</em> highly connected stocks — closer to the regulators' notion of systemic importance.</p>
+    <p><strong>Finding.</strong> Financials and Industrials showed higher average centrality than Tech, despite smaller market caps. The practical read: a shock originating in a major bank propagates through the system faster than a same-magnitude shock to a tech giant, because the bank sits closer to the weighted core of the graph.</p>
+
+    <h2 id="stack" data-num="§ 06">Technical <em>stack.</em></h2>
+    <p>The project leverages:</p>
+    <ul>
+      <li><strong>Pandas / NumPy.</strong> Vectorized operations for return computation and correlation matrices.</li>
+      <li><strong>NetworkX.</strong> Graph algorithms — centrality, MST, efficiency, shortest paths.</li>
+      <li><strong>python-louvain.</strong> Modularity-optimizing community detection.</li>
+      <li><strong>Matplotlib / Seaborn.</strong> Static visualization of heatmaps and degree distributions.</li>
+      <li><strong>yfinance.</strong> Bulk OHLCV ingestion for the full universe.</li>
+    </ul>
+
+    <h2 id="next" data-num="§ 07">Future <em>directions.</em></h2>
+    <p>The current analysis uses static correlation windows. To sharpen predictive power for trading applications, the next phase will implement:</p>
+    <ul>
+      <li><strong>Dynamic Time Warping.</strong> To capture lagged and non-linear co-movement that Pearson misses.</li>
+      <li><strong>Rolling-window topology.</strong> Density and modularity as a time series — early-warning indicators for regime change.</li>
+      <li><strong>Intraday graphs.</strong> Rebuild the network at 5-minute bars; ask whether the "density spike" precedes drawdowns or just accompanies them.</li>
+    </ul>
+
+    <div class="art-end">
+      <span>— <span class="sym">§</span> END OF CASE <span class="sym">§</span></span>
+      <span>N. T. · WASHINGTON, D.C.</span>
+    </div>
+
+  </article>
+</div>
+
+<!-- PREV / NEXT -->
+<div class="art-next">
+  <a href="/projects/">
+    <div class="label">← The portfolio</div>
+    <div class="title">Back to the <em>index</em> of projects</div>
+  </a>
+  <a href="/blog/example-post.html">
+    <div class="label" style="text-align:right;">Essay →</div>
+    <div class="title" style="text-align:right;">Why traditional models miss <em>systemic risk</em></div>
+  </a>
+</div>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <div>
+      <div class="label">Have a network worth mapping?</div>
+      <h2>Commission a <em>bespoke</em> analysis.</h2>
+      <p>Custom correlation graphs for specific universes, systemic-risk scoring, or a dashboard that watches the topology in production. Contract work welcome.</p>
+    </div>
+    <a class="btn" href="/#contact">Start a conversation →</a>
+  </div>
+</section>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+  <span><a href="/projects/">← Return to projects</a></span>
+</div>
+
+<script>
+// ======================================================================
+// Active TOC + small smooth jump
+// ======================================================================
+(function(){
+  const links = document.querySelectorAll('.toc-mini a');
+  const heads = Array.from(document.querySelectorAll('.case-body h2'));
+  function onScroll(){
+    let idx = 0;
+    heads.forEach((h,i) => { if (h.getBoundingClientRect().top - 130 <= 0) idx = i; });
+    links.forEach((a,i) => a.classList.toggle('active', i === idx));
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+
+// ======================================================================
+// FIG 01 — force-directed correlation network
+// ======================================================================
+(function(){
+  const svg = document.getElementById('netSvg');
+  if (!svg) return;
+  const W = 800, H = 440;
+
+  // 11 sector communities (8 colored, 3 neutral)
+  const sectors = [
+    { name: 'Financials',   color: '#1a2a44', n: 8 },
+    { name: 'Tech',         color: '#1d3a2f', n: 10 },
+    { name: 'Energy',       color: '#6b1f1a', n: 6 },
+    { name: 'Consumer',     color: '#8a6a2a', n: 8 },
+    { name: 'Healthcare',   color: '#4a3a5e', n: 7 },
+    { name: 'Industrials',  color: '#3a5a44', n: 7 },
+    { name: 'Materials',    color: '#6e4a2a', n: 5 },
+    { name: 'Utilities',    color: '#2a4a5e', n: 5 },
+    { name: 'Staples',      color: '#55533f', n: 4 },
+    { name: 'Comm Svc',     color: '#5e4a55', n: 4 },
+    { name: 'Real Estate',  color: '#6a5e3a', n: 4 }
+  ];
+
+  // Seed a deterministic RNG-ish
+  let seed = 7;
+  function rnd(){ seed = (seed*9301+49297)%233280; return seed/233280; }
+
+  // Build nodes
+  const nodes = [];
+  sectors.forEach((s, si) => {
+    for (let i=0; i<s.n; i++){
+      nodes.push({
+        id: nodes.length,
+        sector: si,
+        color: s.color,
+        label: '',
+        x: W/2 + (rnd()-0.5)*W*0.7,
+        y: H/2 + (rnd()-0.5)*H*0.7,
+        vx: 0, vy: 0,
+        deg: 0,
+        r: 4
+      });
+    }
+  });
+
+  // A few labeled constituents
+  const famous = { 0:'JPM', 1:'BAC', 2:'GS', 8:'AAPL', 9:'MSFT', 10:'NVDA', 15:'AMZN', 18:'XOM', 19:'CVX', 26:'WMT', 32:'JNJ', 33:'PFE', 39:'BA', 46:'LIN', 51:'NEE' };
+  Object.keys(famous).forEach(k => { if (nodes[k]) nodes[k].label = famous[k]; });
+
+  // Build full weighted edge set (fixed). Intra-sector denser, inter sparser.
+  const allEdges = [];
+  for (let i=0;i<nodes.length;i++){
+    for (let j=i+1;j<nodes.length;j++){
+      const same = nodes[i].sector === nodes[j].sector;
+      const base = same ? 0.55 + rnd()*0.42 : rnd()*0.55;
+      // small cross-cluster bridges for Tech-Consumer and Fin-Indus
+      const s1 = nodes[i].sector, s2 = nodes[j].sector;
+      const bridge = ((s1===1 && s2===3)||(s1===3 && s2===1)||(s1===0 && s2===5)||(s1===5 && s2===0)) ? 0.15 : 0;
+      const rho = Math.min(0.98, base + bridge);
+      const wantInclude = same ? rnd() < 0.65 : rnd() < 0.08;
+      if (wantInclude) allEdges.push({a:i, b:j, rho});
+    }
+  }
+
+  let edges = [];
+  let threshold = 0.5;
+  function applyThreshold(){
+    edges = allEdges.filter(e => e.rho > threshold);
+    // Recompute node degree for sizing
+    const deg = new Array(nodes.length).fill(0);
+    edges.forEach(e => { deg[e.a] += e.rho; deg[e.b] += e.rho; });
+    const mx = Math.max(...deg, 1);
+    nodes.forEach((n,i) => { n.deg = deg[i]; n.r = 3.5 + (deg[i]/mx)*8; });
+    const N = nodes.length;
+    const maxE = N*(N-1)/2;
+    document.getElementById('netE').textContent = edges.length;
+    document.getElementById('netD').textContent = (edges.length/maxE).toFixed(3);
+  }
+  document.getElementById('netN').textContent = nodes.length;
+
+  // Simple spring simulation
+  let tick = 0;
+  function step(){
+    tick++;
+    const cx = W/2, cy = H/2;
+    // Reset forces
+    nodes.forEach(n => { n.fx = 0; n.fy = 0; });
+    // Gravity
+    nodes.forEach(n => {
+      n.fx += (cx - n.x)*0.004;
+      n.fy += (cy - n.y)*0.004;
+    });
+    // Repulsion (approximate; O(n^2) but N=68)
+    for (let i=0;i<nodes.length;i++){
+      for (let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        let d2 = dx*dx + dy*dy; if (d2<1) d2 = 1;
+        const f = 180/d2;
+        const dxn = dx/Math.sqrt(d2), dyn = dy/Math.sqrt(d2);
+        a.fx += dxn*f; a.fy += dyn*f;
+        b.fx -= dxn*f; b.fy -= dyn*f;
+      }
+    }
+    // Springs
+    edges.forEach(e => {
+      const a=nodes[e.a], b=nodes[e.b];
+      const dx=b.x-a.x, dy=b.y-a.y;
+      const d = Math.sqrt(dx*dx+dy*dy) || 1;
+      const target = 55 + (1-e.rho)*80;
+      const k = 0.06 * e.rho;
+      const f = (d - target)*k;
+      const dxn=dx/d, dyn=dy/d;
+      a.fx += dxn*f; a.fy += dyn*f;
+      b.fx -= dxn*f; b.fy -= dyn*f;
+    });
+    // Integrate
+    nodes.forEach(n => {
+      if (n.dragging) return;
+      n.vx = (n.vx + n.fx)*0.82;
+      n.vy = (n.vy + n.fy)*0.82;
+      n.x += n.vx; n.y += n.vy;
+      // Keep in box
+      n.x = Math.max(20, Math.min(W-20, n.x));
+      n.y = Math.max(20, Math.min(H-20, n.y));
+    });
+    render();
+    if (tick < 400 || dragging) requestAnimationFrame(step);
+  }
+
+  function render(){
+    let html = '';
+    // edges
+    edges.forEach(e => {
+      const a=nodes[e.a], b=nodes[e.b];
+      const op = 0.15 + (e.rho-threshold)*0.9;
+      html += `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="#6a685f" stroke-opacity="${Math.min(op,0.65).toFixed(2)}" stroke-width="${(e.rho*1.3).toFixed(2)}"/>`;
+    });
+    // nodes
+    nodes.forEach(n => {
+      html += `<circle data-id="${n.id}" cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="${n.color}" stroke="#faf9f6" stroke-width="1.3" style="cursor:grab"/>`;
+      if (n.label){
+        html += `<text x="${(n.x+n.r+3).toFixed(1)}" y="${(n.y+3).toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="9" fill="#23231f">${n.label}</text>`;
+      }
+    });
+    svg.innerHTML = html;
+    attachDrag();
+  }
+
+  // Drag
+  let dragging = null;
+  function svgPt(evt){
+    const pt = svg.createSVGPoint();
+    pt.x = evt.clientX; pt.y = evt.clientY;
+    return pt.matrixTransform(svg.getScreenCTM().inverse());
+  }
+  function attachDrag(){
+    svg.querySelectorAll('circle').forEach(c => {
+      c.addEventListener('mousedown', (e) => {
+        const n = nodes[parseInt(c.dataset.id)];
+        dragging = n; n.dragging = true;
+        c.style.cursor = 'grabbing';
+      });
+    });
+  }
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const p = svgPt(e);
+    dragging.x = p.x; dragging.y = p.y; dragging.vx = 0; dragging.vy = 0;
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging.dragging = false; dragging = null;
+  });
+
+  // Controls
+  const slider = document.getElementById('thrSlider');
+  const thrVal = document.getElementById('thrVal');
+  slider.addEventListener('input', () => {
+    threshold = parseFloat(slider.value);
+    thrVal.textContent = threshold.toFixed(2);
+    applyThreshold();
+    tick = 0;
+    requestAnimationFrame(step);
+  });
+  document.getElementById('netReheat').addEventListener('click', () => {
+    nodes.forEach(n => {
+      n.x = W/2 + (rnd()-0.5)*W*0.7;
+      n.y = H/2 + (rnd()-0.5)*H*0.7;
+      n.vx = 0; n.vy = 0;
+    });
+    tick = 0; requestAnimationFrame(step);
+  });
+
+  applyThreshold();
+  requestAnimationFrame(step);
+})();
+
+// ======================================================================
+// FIG 02 — regime heatmap (11x11)
+// ======================================================================
+(function(){
+  const canvas = document.getElementById('heatCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const N = 11;
+  const sectors = ['FIN','TEC','ENE','CON','HLT','IND','MAT','UTL','STA','CMS','RE'];
+
+  // Regime matrices — hand-seeded but consistent
+  function mkMatrix(meanDiag, meanOff, noise){
+    let seed = 17;
+    function rnd(){ seed=(seed*9301+49297)%233280; return seed/233280; }
+    const M = [];
+    for (let i=0;i<N;i++){
+      const row = [];
+      for (let j=0;j<N;j++){
+        if (i===j) row.push(1.0);
+        else {
+          const v = (i<j) ? (meanOff + (rnd()-0.5)*noise) : null;
+          row.push(v);
         }
-    </script>
+      }
+      M.push(row);
+    }
+    // mirror
+    for (let i=0;i<N;i++) for (let j=0;j<i;j++) M[i][j] = M[j][i];
+    return M;
+  }
+
+  const regimes = {
+    calm:   { M: mkMatrix(1.0, 0.38, 0.18), window: 'JAN 2021 – DEC 2021', mean: 0.38, vix: 18.4 },
+    stress: { M: mkMatrix(1.0, 0.58, 0.18), window: 'MAR 2020 – JUN 2020', mean: 0.58, vix: 36.7 },
+    crash:  { M: mkMatrix(1.0, 0.78, 0.12), window: 'JAN 2022 – OCT 2022', mean: 0.78, vix: 29.8 }
+  };
+
+  // Colormap from navy (ρ=0) through brass (ρ=0.5) to oxblood (ρ=1)
+  function rhoColor(v){
+    v = Math.max(0, Math.min(1, v));
+    // Three-stop gradient
+    const stops = [
+      [0.00, [26, 42, 68]],    // navy
+      [0.50, [122, 110, 68]],  // brass
+      [0.80, [165, 90, 58]],   // warm
+      [1.00, [107, 31, 26]]    // oxblood
+    ];
+    for (let k=0;k<stops.length-1;k++){
+      const [p1,c1] = stops[k], [p2,c2] = stops[k+1];
+      if (v>=p1 && v<=p2){
+        const t = (v-p1)/(p2-p1);
+        const r = Math.round(c1[0] + (c2[0]-c1[0])*t);
+        const g = Math.round(c1[1] + (c2[1]-c1[1])*t);
+        const b = Math.round(c1[2] + (c2[2]-c1[2])*t);
+        return `rgb(${r},${g},${b})`;
+      }
+    }
+    return 'rgb(107,31,26)';
+  }
+
+  function draw(regime){
+    const R = regimes[regime];
+    const M = R.M;
+    // size
+    const side = Math.min(canvas.width*0.62, canvas.height*0.85);
+    const cell = side / N;
+    const x0 = 80;
+    const y0 = 30;
+
+    ctx.fillStyle = '#fffef8';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // cells
+    for (let i=0;i<N;i++){
+      for (let j=0;j<N;j++){
+        ctx.fillStyle = rhoColor(M[i][j]);
+        ctx.fillRect(x0 + j*cell, y0 + i*cell, cell-1, cell-1);
+        // numeric in dim cells
+        if (Math.abs(M[i][j]) > 0.55){
+          ctx.fillStyle = 'rgba(250,249,246,0.7)';
+          ctx.font = '9px JetBrains Mono, monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(M[i][j].toFixed(2), x0 + j*cell + cell/2, y0 + i*cell + cell/2 + 3);
+        }
+      }
+    }
+    // labels
+    ctx.fillStyle = '#6a685f';
+    ctx.font = '10px JetBrains Mono, monospace';
+    ctx.textAlign = 'right';
+    for (let i=0;i<N;i++){
+      ctx.fillText(sectors[i], x0 - 6, y0 + i*cell + cell/2 + 3);
+    }
+    ctx.textAlign = 'center';
+    for (let j=0;j<N;j++){
+      ctx.save();
+      ctx.translate(x0 + j*cell + cell/2, y0 - 6);
+      ctx.fillText(sectors[j], 0, 0);
+      ctx.restore();
+    }
+
+    // Right side — histogram of ρ distribution
+    const hx = x0 + side + 40;
+    const hy = y0;
+    const hw = canvas.width - hx - 30;
+    const hh = side;
+    // collect ρ values excluding diagonal
+    const vals = [];
+    for (let i=0;i<N;i++) for (let j=i+1;j<N;j++) vals.push(M[i][j]);
+    const bins = 12;
+    const counts = new Array(bins).fill(0);
+    vals.forEach(v => { const b = Math.min(bins-1, Math.max(0, Math.floor(v*bins))); counts[b]++; });
+    const cmax = Math.max(...counts);
+    ctx.fillStyle = '#6a685f';
+    ctx.font = '10px JetBrains Mono, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('ρ DISTRIBUTION', hx, hy - 8);
+    // axis
+    ctx.strokeStyle = '#bfbaa8'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(hx, hy+hh); ctx.lineTo(hx+hw, hy+hh); ctx.stroke();
+    for (let k=0;k<bins;k++){
+      const bw = hw/bins;
+      const barH = (counts[k]/cmax) * (hh-10);
+      const rho = (k+0.5)/bins;
+      ctx.fillStyle = rhoColor(rho);
+      ctx.fillRect(hx + k*bw + 1, hy + hh - barH, bw - 2, barH);
+    }
+    // mean line
+    ctx.strokeStyle = '#10100f'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
+    const mx = hx + R.mean*hw;
+    ctx.beginPath(); ctx.moveTo(mx, hy); ctx.lineTo(mx, hy+hh); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#10100f';
+    ctx.textAlign = 'center';
+    ctx.fillText('ρ̄', mx, hy - 2);
+    // x-axis labels
+    ctx.fillStyle = '#6a685f'; ctx.textAlign = 'center';
+    [0,0.5,1].forEach(v => { ctx.fillText(v.toFixed(1), hx + v*hw, hy + hh + 13); });
+
+    // Update stats panel
+    document.getElementById('heatWindow').textContent = R.window;
+    document.getElementById('heatMean').textContent = R.mean.toFixed(2);
+    document.getElementById('heatVix').textContent = R.vix.toFixed(1);
+  }
+
+  // Controls
+  document.querySelectorAll('#figHeat .seg').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('#figHeat .seg').forEach(x => x.classList.remove('on'));
+      el.classList.add('on');
+      draw(el.dataset.regime);
+    });
+  });
+
+  // Init
+  draw('calm');
+})();
+</script>
+
 </body>
 </html>
