@@ -1,527 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research & Insights | Complexity Insights</title>
-    <meta name="description" content="Analysis of market dynamics, systemic risk, and complexity economics.">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<title>Writing & Research — Complexity Insights</title>
+<meta name="description" content="Essays, research notes, and working papers on complexity economics, network science, and market dynamics." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:       #faf9f6;
+    --paper-2:     #f0ede3;
+    --paper-3:     #fffef8;
+    --ink:         #10100f;
+    --ink-2:       #23231f;
+    --muted:       #6a685f;
+    --rule:        #ddd9cc;
+    --rule-strong: #bfbaa8;
+    --accent:      #1a2a44;   /* navy — primary */
+    --accent-ink:  #12213a;
+    --accent-2:    #1d3a2f;   /* forest — secondary */
+    --brass:       #8a6a2a;
 
-    <style>
-        /* * =========================================
-         * BRAND BIBLE V3.2 (Imported for Consistency)
-         * ========================================= */
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-dark: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-        }
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--ink); }
+  body { font-family: var(--serif); font-size: 18px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--accent); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Masthead */
+  .masthead {
+    padding: 1.3rem 3vw 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--rule-strong);
+    font-family: var(--sans);
+    gap: 2rem;
+  }
+  .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; color: var(--ink); display: inline-flex; align-items: center; gap: 0.55em; }
+  .wordmark .mark { width: 1.35em; height: 1.35em; display: inline-block; flex-shrink: 0; }
+  .masthead nav { display: flex; gap: 2rem; justify-content: center; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .masthead nav a { color: var(--muted); }
+  .masthead nav a:hover, .masthead nav a.active { color: var(--ink); }
+  .masthead nav a.active { border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .masthead .issue { justify-self: end; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.05em; display: flex; gap: 0.8rem; align-items: center; }
+  .masthead .issue .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-2); display: inline-block; box-shadow: 0 0 0 3px rgba(29,58,47,0.25); }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            overflow-x: hidden;
-        }
+  /* Page header */
+  .page-head {
+    max-width: 1560px; margin: 0 auto;
+    padding: 4rem 3vw 3rem;
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 3rem;
+    align-items: end;
+    border-bottom: 1px solid var(--rule);
+  }
+  .page-head .label {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+    border-top: 1px solid var(--ink); padding-top: 0.5rem;
+    align-self: start;
+  }
+  .page-head .label .num { font-family: var(--mono); color: var(--accent); margin-right: 0.6em; }
+  .page-head h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.4rem, 4.4vw, 4rem); line-height: 1.02;
+    letter-spacing: -0.015em; color: var(--ink); text-wrap: balance;
+  }
+  .page-head h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .page-head .dek {
+    font-family: var(--serif); font-size: 1.05rem; color: var(--ink-2);
+    line-height: 1.55; max-width: 36ch; text-wrap: pretty;
+  }
 
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
+  /* Filter rail */
+  .filters {
+    max-width: 1560px; margin: 0 auto;
+    padding: 1.1rem 3vw;
+    border-bottom: 1px solid var(--rule);
+    display: flex; gap: 1.8rem; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .filters .f-label { color: var(--muted); }
+  .filters .f-btn {
+    background: none; border: none; padding: 0;
+    color: var(--muted); cursor: pointer;
+    font: inherit; letter-spacing: inherit; text-transform: inherit;
+    transition: color 0.15s;
+  }
+  .filters .f-btn:hover { color: var(--ink); }
+  .filters .f-btn.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo i { color: var(--accent); }
+  /* Featured essay — takes the top spot */
+  .featured {
+    max-width: 1560px; margin: 0 auto;
+    padding: 4rem 3vw 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .feat-img {
+    background: var(--paper-2);
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 5/4;
+    position: relative;
+    background-image:
+      repeating-linear-gradient(135deg, transparent 0, transparent 11px, rgba(26,42,68,0.05) 11px, rgba(26,42,68,0.05) 12px);
+  }
+  .feat-img .label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.12em;
+  }
+  .feat-img .label span { background: var(--paper); padding: 6px 10px; border: 1px solid var(--rule-strong); }
+  .feat-img .corner {
+    position: absolute; top: 12px; left: 12px;
+    font-family: var(--mono); font-size: 10px; color: var(--accent);
+    letter-spacing: 0.15em; background: var(--paper); padding: 4px 8px; border: 1px solid var(--accent);
+  }
+  .feat-body .kicker {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.7rem;
+  }
+  .feat-body .kicker::before {
+    content: ""; width: 22px; height: 1px; background: var(--accent);
+  }
+  .feat-body h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.9rem, 3.1vw, 2.8rem); line-height: 1.08;
+    letter-spacing: -0.012em; margin-bottom: 1.3rem; text-wrap: balance;
+  }
+  .feat-body h2 a { color: var(--ink); }
+  .feat-body h2 a:hover { color: var(--accent); }
+  .feat-body h2 em { font-style: italic; color: var(--accent-ink); font-weight: 400; }
+  .feat-body .excerpt {
+    font-family: var(--serif); font-size: 1.1rem; line-height: 1.6;
+    color: var(--ink-2); margin-bottom: 1.5rem; max-width: 48ch;
+  }
+  .feat-body .meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.06em; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+    display: flex; gap: 1.4rem; flex-wrap: wrap;
+  }
+  .feat-body .meta .live { color: var(--accent); }
+  .feat-body .read {
+    display: inline-block; margin-top: 1.3rem;
+    font-family: var(--sans); font-size: 13px; letter-spacing: 0.05em;
+    color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px;
+  }
+  .feat-body .read:hover { color: var(--accent-ink); border-color: var(--accent-ink); }
 
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
-        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
-        
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+  /* Index list */
+  .list-section {
+    max-width: 1560px; margin: 0 auto;
+    padding: 3rem 3vw 5rem;
+  }
+  .list-head {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.5rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .list-head .count { font-family: var(--mono); color: var(--accent); letter-spacing: 0.08em; }
 
-        /* Page Header */
-        .page-header {
-            margin-top: 70px;
-            padding: 5rem 5% 3rem;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-        }
+  .post-list { display: grid; }
+  .post-row {
+    display: grid;
+    grid-template-columns: 90px 140px 1fr 180px auto;
+    gap: 2rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background 0.15s ease, padding 0.15s ease;
+  }
+  .post-row:hover { background: var(--paper-2); padding-left: 1rem; padding-right: 1rem; }
+  .post-row .num {
+    font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em;
+  }
+  .post-row .cat {
+    font-family: var(--sans); font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .post-row[data-cat="network"] .cat { color: var(--accent-2); }
+  .post-row[data-cat="research"] .cat { color: var(--brass); }
+  .post-row .title {
+    font-family: var(--serif); font-size: 1.4rem; line-height: 1.22;
+    color: var(--ink); letter-spacing: -0.005em;
+  }
+  .post-row .title a { color: var(--ink); }
+  .post-row .title a:hover { color: var(--accent); }
+  .post-row .title .sub {
+    display: block; font-family: var(--serif); font-size: 0.95rem; color: var(--muted);
+    margin-top: 0.35rem; font-style: italic; line-height: 1.4; max-width: 52ch;
+  }
+  .post-row .tags {
+    font-family: var(--mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.04em;
+  }
+  .post-row .tags span::before { content: "· "; color: var(--rule-strong); margin: 0 0.2rem; }
+  .post-row .tags span:first-child::before { content: ""; margin: 0; }
+  .post-row .meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    text-align: right; white-space: nowrap; letter-spacing: 0.05em;
+  }
+  .post-row .meta .status-live { color: var(--accent); }
+  .post-row.hidden { display: none; }
 
-        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
-        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
+  /* Newsletter */
+  .newsletter {
+    background: var(--ink); color: var(--paper);
+    padding: 4rem 3vw;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .news-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center;
+  }
+  .newsletter .label { font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #bba98a; margin-bottom: 0.7rem; }
+  .newsletter h3 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(1.6rem, 2.4vw, 2.2rem); line-height: 1.1; color: var(--paper);
+    letter-spacing: -0.01em; margin-bottom: 0.8rem; max-width: 20ch;
+  }
+  .newsletter h3 em { font-style: italic; color: #d4b47a; font-weight: 400; }
+  .newsletter p { font-family: var(--serif); color: #d9d2c2; max-width: 40ch; font-size: 1.02rem; line-height: 1.5; }
+  .newsletter form { display: flex; gap: 0.5rem; }
+  .newsletter input {
+    flex: 1; padding: 0.85rem 1rem;
+    background: transparent; border: 1px solid #3a3a34; color: var(--paper);
+    font-family: var(--serif); font-size: 1rem;
+  }
+  .newsletter input:focus { outline: none; border-color: #d4b47a; }
+  .newsletter button {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0 1.4rem; background: var(--paper); color: var(--ink); border: 1px solid var(--paper); cursor: pointer;
+  }
+  .newsletter button:hover { background: #d4b47a; border-color: #d4b47a; }
 
-        /* Filter Section */
-        .filter-section {
-            background: white;
-            padding: 1.5rem 5%;
-            border-bottom: 1px solid #e2e8f0;
-            position: sticky;
-            top: 70px;
-            z-index: 90;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        }
+  /* Footer */
+  .footline {
+    background: var(--ink); color: #7a7162;
+    padding: 1.4rem 3vw;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
+    display: flex; justify-content: space-between;
+    border-top: 1px solid #3a332a;
+  }
+  .footline a { color: #d4b47a; }
 
-        .filter-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid #e2e8f0;
-            background: white;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: white; }
-
-        /* Blog Grid */
-        .blog-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 5%;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .blog-card {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid #f1f5f9;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .blog-card.visible { opacity: 1; transform: translateY(0); }
-        .blog-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); border-color: #e2e8f0; }
-
-        /* Card Image / Header */
-        .blog-image {
-            height: 220px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3.5rem;
-        }
-
-        /* Category Gradients */
-        .blog-image.complexity { background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%); }
-        .blog-image.network { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); }
-        .blog-image.market { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); }
-        .blog-image.research { background: linear-gradient(135deg, #334155 0%, #64748b 100%); }
-
-        .category-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(4px);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .blog-content { padding: 2rem; flex: 1; display: flex; flex-direction: column; }
-
-        /* Meta Data (Date / Read Time) */
-        .blog-meta {
-            display: flex;
-            gap: 1rem;
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .meta-item { display: flex; align-items: center; gap: 0.4rem; }
-
-        .blog-content h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            line-height: 1.3;
-        }
-
-        .blog-content h3 a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .blog-content h3 a:hover { color: var(--accent); }
-
-        .blog-excerpt {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            flex: 1;
-        }
-
-        /* Tags */
-        .blog-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            background: #f1f5f9;
-            color: var(--text-dark);
-            padding: 0.25rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
-        }
-
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #f1f5f9;
-            transition: gap 0.3s;
-        }
-
-        .read-more:hover { gap: 0.8rem; }
-
-        /* CTA Box (Newsletter) */
-        .cta-mini-section {
-            background: var(--bg-light);
-            padding: 4rem 5%;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .cta-mini-box {
-            background: white;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary);
-            color: #94a3b8;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .footer-col a:hover { color: white; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .page-header h1 { font-size: 2.5rem; }
-            .footer-grid { grid-template-columns: 1fr; }
-            
-            /* Mobile Menu */
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 2rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-        }
-    </style>
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr auto; }
+    .masthead nav { display: none; }
+    .page-head, .featured, .news-inner { grid-template-columns: 1fr; gap: 1.8rem; }
+    .post-row { grid-template-columns: auto 1fr; gap: 0.8rem 1.2rem; }
+    .post-row .num, .post-row .cat, .post-row .tags, .post-row .meta { grid-column: 1 / -1; }
+  }
+</style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo">
-            <i class="fas fa-project-diagram"></i>
-            Complexity Insights
-        </a>
-        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/#solutions">Solutions</a></li>
-            <li><a href="/projects/">Case Studies</a></li>
-            <li><a href="/blog/" class="active">Insights</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/#contact" class="nav-btn">Contact</a></li>
-        </ul>
-    </nav>
 
-    <header class="page-header">
-        <h1>Research &<br>Market Intelligence</h1>
-        <p>Exploring the intersection of complexity economics, network science, and financial market dynamics.</p>
-    </header>
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav>
+    <a href="/projects/">Projects</a>
+    <a href="/blog/" class="active">Writing</a>
+    <a href="/about/">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  <div class="issue">
+    <span class="dot"></span>
+    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
+  </div>
+</header>
 
-    <section class="filter-section">
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterPosts('all')">All Insights</button>
-            <button class="filter-btn" onclick="filterPosts('complexity')">Complexity Economics</button>
-            <button class="filter-btn" onclick="filterPosts('network')">Network Analysis</button>
-            <button class="filter-btn" onclick="filterPosts('market')">Market Structure</button>
-            <button class="filter-btn" onclick="filterPosts('research')">Technical Notes</button>
-        </div>
-    </section>
+<section class="page-head">
+  <div class="label"><span class="num">§ II</span>Writing</div>
+  <h1>Essays, notes, and <em>working papers.</em></h1>
+  <div class="dek">Long-form thinking on complexity economics, network science, and the dynamics that standard models leave out.</div>
+</section>
 
-    <div class="blog-container">
-        <div class="blog-grid" id="blogGrid">
-            
-            <div class="blog-card" data-category="complexity">
-                <div class="blog-image complexity">
-                    <span class="category-badge">Theory</span>
-                    <i class="fas fa-brain"></i>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <div class="meta-item"><i class="far fa-calendar"></i> Oct 2, 2025</div>
-                        <div class="meta-item"><i class="far fa-clock"></i> 8 min read</div>
-                    </div>
-                    <h3><a href="/blog/example-post.html">Why Traditional Economic Models Miss Systemic Risk</a></h3>
-                    <p class="blog-excerpt">
-                        Standard equilibrium models assume independence. Real markets are interconnected networks where small shocks cascade. Here is why complexity offers a better framework.
-                    </p>
-                    <div class="blog-tags">
-                        <span class="tag">Systemic Risk</span>
-                        <span class="tag">Crisis Alpha</span>
-                    </div>
-                    <a href="/blog/example-post.html" class="read-more">
-                        Read Analysis <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
+<section class="filters">
+  <span class="f-label">Filter —</span>
+  <button class="f-btn active" data-cat="all">All</button>
+  <button class="f-btn" data-cat="complexity">Complexity Economics</button>
+  <button class="f-btn" data-cat="network">Network Analysis</button>
+  <button class="f-btn" data-cat="market">Market Structure</button>
+  <button class="f-btn" data-cat="research">Technical Notes</button>
+</section>
 
-            <div class="blog-card" data-category="network">
-                <div class="blog-image network">
-                    <span class="category-badge">Methodology</span>
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <div class="meta-item"><i class="far fa-calendar"></i> Coming Soon</div>
-                        <div class="meta-item"><i class="far fa-clock"></i> 6 min read</div>
-                    </div>
-                    <h3><a href="#">Network Centrality in Financial Systems</a></h3>
-                    <p class="blog-excerpt">
-                        A practical guide to understanding degree, betweenness, and eigenvector centrality, and how to use them to identify "Too Big to Fail" institutions.
-                    </p>
-                    <div class="blog-tags">
-                        <span class="tag">Graph Theory</span>
-                        <span class="tag">Python</span>
-                    </div>
-                    <a href="#" class="read-more" style="opacity: 0.6; cursor: default;">
-                        Coming Soon <i class="fas fa-clock"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="blog-card" data-category="market">
-                <div class="blog-image market">
-                    <span class="category-badge">Trading</span>
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="blog-content">
-                    <div class="blog-meta">
-                        <div class="meta-item"><i class="far fa-calendar"></i> Coming Soon</div>
-                        <div class="meta-item"><i class="far fa-clock"></i> 10 min read</div>
-                    </div>
-                    <h3><a href="#">Market Microstructure: Beyond Supply & Demand</a></h3>
-                    <p class="blog-excerpt">
-                        Exploring order flow, liquidity provision, and the mechanics of price discovery. How algorithmic trading shifts the equilibrium.
-                    </p>
-                    <div class="blog-tags">
-                        <span class="tag">Liquidity</span>
-                        <span class="tag">HFT</span>
-                    </div>
-                    <a href="#" class="read-more" style="opacity: 0.6; cursor: default;">
-                        Coming Soon <i class="fas fa-clock"></i>
-                    </a>
-                </div>
-            </div>
-
-        </div>
+<!-- FEATURED -->
+<section class="featured">
+  <div class="feat-img">
+    <div class="corner">FEATURED · № 003</div>
+    <div class="label"><span>FIGURE · COVER ESSAY</span></div>
+  </div>
+  <div class="feat-body">
+    <div class="kicker">Research Note · Complexity Economics</div>
+    <h2><a href="/blog/example-post.html">Why traditional economic models <em>miss systemic risk.</em></a></h2>
+    <p class="excerpt">Standard equilibrium models assume independence. Real markets are interconnected networks where small shocks cascade. Here is why complexity offers a better framework — and what the Santa Fe school has been saying for thirty years.</p>
+    <div class="meta">
+      <span>OCT 2025</span>
+      <span>8 MIN READ</span>
+      <span class="live">● LIVE</span>
+      <span>TAGS · SYSTEMIC RISK · CRISIS ALPHA</span>
     </div>
+    <a href="/blog/example-post.html" class="read">Read the essay →</a>
+  </div>
+</section>
 
-    <section class="cta-mini-section">
-        <div class="cta-mini-box">
-            <h3 style="margin-bottom: 0.5rem; color: var(--primary);">Stay Ahead of the Curve</h3>
-            <p style="color: var(--text-light); margin-bottom: 1.5rem;">Get our quarterly research briefing on complexity economics and market risk.</p>
-            <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" style="display: flex; gap: 0.5rem;">
-                <input type="email" name="email" placeholder="Enter your email" required style="flex:1; padding: 0.8rem; border: 1px solid #e2e8f0; border-radius: 6px;">
-                <button type="submit" style="padding: 0.8rem 1.5rem; background: var(--accent); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer;">Subscribe</button>
-            </form>
-        </div>
-    </section>
+<!-- INDEX -->
+<section class="list-section">
+  <div class="list-head">
+    <span>Index of writing</span>
+    <span class="count" id="listCount">3 entries</span>
+  </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
-                </h4>
-                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    Applying complexity science to economic and financial challenges.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Market Simulation</a></li>
-                    <li><a href="#">Network Analysis</a></li>
-                    <li><a href="#">Risk Modeling</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/about/">About Us</a></li>
-                    <li><a href="/projects/">Case Studies</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://www.linkedin.com/in/thomasnicholasa/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="https://github.com/EconNickT"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://x.com/EconNickT"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
-        </div>
-    </footer>
+  <div class="post-list" id="postList">
 
-    <script>
-        function filterPosts(category) {
-            const cards = document.querySelectorAll('.blog-card');
-            const buttons = document.querySelectorAll('.filter-btn');
-            
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+    <a class="post-row" data-cat="complexity" href="/blog/example-post.html">
+      <div class="num">№ 003</div>
+      <div class="cat">Complexity econ.</div>
+      <div class="title">Why traditional economic models miss systemic risk
+        <span class="sub">Equilibrium assumes independence; real markets cascade. A case for the complexity framework.</span>
+      </div>
+      <div class="tags"><span>Systemic risk</span><span>Crisis alpha</span></div>
+      <div class="meta">OCT 2025<br/><span class="status-live">LIVE →</span></div>
+    </a>
 
-        // Mobile Menu
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '2rem';
-                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-            }
-        }
+    <a class="post-row" data-cat="network" href="#">
+      <div class="num">№ 002</div>
+      <div class="cat">Network</div>
+      <div class="title">Network centrality in financial systems
+        <span class="sub">A practical guide to degree, betweenness, and eigenvector centrality — with a Python-native workflow for identifying "too connected to fail" institutions.</span>
+      </div>
+      <div class="tags"><span>Graph theory</span><span>Python</span><span>NetworkX</span></div>
+      <div class="meta">Q2 2026<br/>IN PROGRESS</div>
+    </a>
 
-        // Staggered Animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 100);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+    <a class="post-row" data-cat="market" href="#">
+      <div class="num">№ 001</div>
+      <div class="cat">Market structure</div>
+      <div class="title">Market microstructure beyond supply &amp; demand
+        <span class="sub">Order flow, liquidity provision, and price discovery. How algorithmic trading shifts the equilibrium — and why that shift is the interesting part.</span>
+      </div>
+      <div class="tags"><span>Liquidity</span><span>HFT</span><span>Microstructure</span></div>
+      <div class="meta">Q3 2026<br/>PLANNED</div>
+    </a>
 
-        document.querySelectorAll('.blog-card').forEach(card => {
-            observer.observe(card);
-        });
-    </script>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="news-inner">
+    <div>
+      <div class="label">Quarterly briefing</div>
+      <h3>A short note, <em>four times a year.</em></h3>
+      <p>New writing, ongoing research, and the occasional flagged paper worth reading. No pitching, no tracking.</p>
+    </div>
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST">
+      <input type="email" name="email" placeholder="your email address" required />
+      <button type="submit">Subscribe →</button>
+    </form>
+  </div>
+</section>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+  <span><a href="/">← Return home</a></span>
+</div>
+
+<script>
+// Filter
+(function(){
+  const btns = document.querySelectorAll('.f-btn');
+  const rows = document.querySelectorAll('.post-row');
+  const count = document.getElementById('listCount');
+  btns.forEach(b => b.addEventListener('click', () => {
+    btns.forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    const cat = b.dataset.cat;
+    let n = 0;
+    rows.forEach(r => {
+      const show = cat === 'all' || r.dataset.cat === cat;
+      r.classList.toggle('hidden', !show);
+      if (show) n++;
+    });
+    count.textContent = n + (n === 1 ? ' entry' : ' entries');
+  }));
+})();
+// Date
+(function(){
+  const el = document.getElementById('today'); if (!el) return;
+  const d = new Date();
+  const m = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  el.textContent = m[d.getMonth()] + ' ' + d.getFullYear();
+})();
+</script>
 </body>
 </html>
