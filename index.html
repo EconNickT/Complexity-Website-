@@ -1,989 +1,1390 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-direction="archive">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Complexity Insights | Strategic Economic Consulting</title>
-    <meta name="description" content="Nicholas Thomas applies complexity economics, agent-based modeling, and network science to solve strategic business challenges.">
-    <meta property="og:title" content="Complexity Insights | Economics & Data Science">
-    <meta property="og:description" content="Portfolio and consultancy of Nicholas Thomas. Applied complexity economics and computational modeling.">
-    <meta property="og:type" content="website">
-    
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        /* * =================================================================
-         * COMPLEXITY INSIGHTS - BRAND BIBLE (V3.2)
-         * =================================================================
-         * Use these variables for all future pages to ensure consistency.
-         *
-         * 1. CORE PALETTE
-         * ---------------
-         * --primary     : #0f172a  (Slate 900) -> The "Suit" color. Professional, deep, academic.
-         * --accent      : #2563eb  (Blue 600)  -> The "Action" color. Buttons, links, icons.
-         * --accent-dark : #1d4ed8  (Blue 700)  -> Hover states.
-         * --text-main   : #334155  (Slate 700) -> Readable body text.
-         * --text-muted  : #64748b  (Slate 500) -> Subtitles, captions.
-         * --bg-surface  : #ffffff  (White)     -> Cards, modals.
-         * --bg-canvas   : #f8fafc  (Slate 50)  -> Page background.
-         *
-         * 2. TYPOGRAPHY
-         * -------------
-         * Family    : 'Segoe UI', system-ui, sans-serif
-         * Heads     : Weight 800, Letter-spacing -0.5px
-         * Body      : Weight 400, Line-height 1.6
-         *
-         * 3. SHAPES & EFFECTS
-         * -------------------
-         * Radius    : 8px (Small), 16px (Cards)
-         * Shadow    : 0 4px 20px rgba(15, 23, 42, 0.08)
-         * Gradient  : linear-gradient(135deg, #0f172a 0%, #1e293b 100%)
-         * =================================================================
-         */
-
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-dark: #1d4ed8;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --bg-surface: #ffffff;
-            --bg-canvas: #f8fafc;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-main);
-            background-color: var(--bg-canvas);
-            overflow-x: hidden;
-        }
-
-        /* --- NAVIGATION --- */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-
-        .nav.scrolled {
-            padding: 0.75rem 5%;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .logo i { color: var(--accent); }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--accent); }
-
-        .nav-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--primary);
-            color: white !important;
-            border-radius: 6px;
-            transition: all 0.3s;
-        }
-
-        .nav-btn:hover {
-            background: var(--accent);
-            transform: translateY(-1px);
-        }
-
-        .mobile-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary);
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            margin-top: 70px;
-            min-height: 85vh;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #networkCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.4; /* Slightly clearer nodes */
-        }
-
-        .hero-content {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-            max-width: 850px;
-        }
-
-        .hero-label {
-            display: inline-block;
-            background: rgba(37, 99, 235, 0.2);
-            border: 1px solid rgba(37, 99, 235, 0.4);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #93c5fd;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 3.75rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            font-weight: 800;
-            letter-spacing: -1px;
-            animation: fadeInUp 1s ease 0.1s both;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-            color: #cbd5e1;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            animation: fadeInUp 1s ease 0.3s both;
-        }
-
-        .cta-button {
-            padding: 1rem 2rem;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid var(--accent);
-        }
-
-        .cta-button:hover {
-            background: var(--accent-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-        }
-
-        .cta-button.secondary {
-            background: transparent;
-            border-color: rgba(255,255,255,0.2);
-        }
-
-        .cta-button.secondary:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: white;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- TRUST / METHODS BAR --- */
-        .trust-bar {
-            background: white;
-            padding: 2.5rem 5%;
-            border-bottom: 1px solid #e2e8f0;
-            text-align: center;
-        }
-
-        .trust-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .trust-logos {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-            opacity: 0.8;
-        }
-
-        .method-badge {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 1.1rem;
-            transition: transform 0.3s;
-            cursor: default;
-        }
-
-        .method-badge:hover {
-            transform: translateY(-2px);
-            color: var(--accent);
-        }
-
-        .method-badge i { color: var(--accent); }
-
-        /* --- SECTIONS GENERAL --- */
-        .section {
-            padding: 6rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .section-header p {
-            color: var(--text-muted);
-            font-size: 1.15rem;
-        }
-
-        /* --- SOLUTIONS GRID --- */
-        .solutions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 2rem;
-        }
-
-        .solution-card {
-            background: var(--bg-surface);
-            padding: 2.5rem;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s;
-        }
-
-        .solution-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            border-color: var(--accent);
-        }
-
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            background: #eff6ff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .icon-box i { font-size: 1.5rem; color: var(--accent); }
-
-        .solution-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .solution-card p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .learn-link {
-            color: var(--accent);
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .learn-link:hover gap { gap: 0.6rem; }
-
-        /* --- PROJECTS STRIP --- */
-        .projects-section {
-            background: var(--primary);
-            color: white;
-            padding: 6rem 5%;
-        }
-
-        .project-preview-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .project-mini-card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-
-        .project-mini-card:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-5px);
-        }
-
-        .project-category {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #93c5fd;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        .project-mini-card h3 { font-size: 1.4rem; margin-bottom: 1rem; }
-        .project-mini-card p { color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem; }
-
-        /* --- ABOUT / FOUNDER --- */
-        .about-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .about-text p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .stat-row {
-            display: flex;
-            gap: 3rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .stat h4 { font-size: 2rem; color: var(--accent); font-weight: 800; }
-        .stat span { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
-
-        .about-visual {
-            background: #eff6ff;
-            border-radius: 20px;
-            padding: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .code-snippet {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 10px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-
-        /* --- CONTACT SECTION (SECURE) --- */
-        .contact-section {
-            background: white;
-            padding: 6rem 5%;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            max-width: 1000px;
-            margin: 0 auto;
-            align-items: start;
-        }
-
-        .contact-info h2 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .contact-info p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
-
-        .contact-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-card {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: var(--text-main);
-        }
-
-        .contact-card:hover {
-            border-color: var(--accent);
-            background: white;
-            transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .contact-icon {
-            width: 40px;
-            height: 40px;
-            background: #eff6ff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        /* Secure Form */
-        .secure-form {
-            background: #f8fafc;
-            padding: 2.5rem;
-            border-radius: 16px;
-        }
-
-        .form-group { margin-bottom: 1.5rem; }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .submit-btn:hover { background: var(--accent); }
-
-        /* --- FOOTER --- */
-        footer {
-            background: var(--primary);
-            color: #94a3b8;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 { color: white; margin-bottom: 1.5rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .footer-col a:hover { color: white; }
-
-        .tech-stack {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            font-size: 0.9rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero h1 { font-size: 2.5rem; }
-            .about-split, .contact-grid { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 2rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Complexity Insights — Nicholas Thomas</title>
+<meta name="description" content="An independent research practice applying agent-based modeling, network science, and non-linear dynamics to problems in financial and economic systems.">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* ARCHIVE — off-white paper, deep navy primary, forest green secondary */
+    --paper:       #faf9f6;
+    --paper-2:     #f0ede3;
+    --paper-3:     #fffef8;
+    --ink:         #10100f;
+    --ink-2:       #23231f;
+    --ink-3:       #3a3a34;
+    --muted:       #6a685f;
+    --rule:        #ddd9cc;
+    --rule-strong: #bfbaa8;
+    --accent:      #1a2a44;   /* deep navy — primary */
+    --accent-ink:  #12213a;
+    --accent-2:    #1d3a2f;   /* forest green — secondary */
+    --positive:    #1d3a2f;
+    --negative:    #8a6a2a;   /* warm brass for tertiary emphasis */
+
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--ink); }
+  body {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--accent-ink); }
+
+  /* ============================================================
+     TICKER BAR (top, quant touch)
+     ============================================================ */
+  .ticker {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    padding: 6px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--ink-2);
+  }
+  .ticker-track {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker 80s linear infinite;
+  }
+  .ticker-track span {
+    display: inline-block;
+    margin: 0 1.4rem;
+    color: #d4cfb8;
+  }
+  .ticker-track .pos { color: #7cb38a; }
+  .ticker-track .neg { color: #d49090; }
+  .ticker-track .sym { color: var(--paper); font-weight: 600; }
+  .ticker-track .sep { color: #4a453c; margin: 0 0.6rem; }
+  @keyframes ticker { to { transform: translateX(-50%); } }
+
+  /* ============================================================
+     MASTHEAD
+     ============================================================ */
+  .masthead {
+    padding: 1.3rem 3vw 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--rule-strong);
+    font-family: var(--sans);
+    background: var(--paper);
+    gap: 2rem;
+  }
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+  }
+  .wordmark .mark {
+    width: 1.35em;
+    height: 1.35em;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .masthead nav {
+    display: flex; gap: 2rem; justify-content: center;
+    font-size: 12.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .masthead nav a { color: var(--muted); }
+  .masthead nav a:hover { color: var(--ink); }
+  .masthead .issue {
+    justify-self: end;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    display: flex; gap: 0.8rem; align-items: center;
+  }
+  .masthead .issue .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--positive); display: inline-block;
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--positive) 30%, transparent);
+  }
+
+  /* ============================================================
+     HERO — LARGE NETWORK FIGURE WITH HEADLINE INSIDE
+     ============================================================ */
+  .hero {
+    position: relative;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 1.2rem 3vw 0;
+  }
+  .hero-frame {
+    position: relative;
+    background: var(--paper-3);
+    border: 1px solid var(--rule-strong);
+    height: clamp(460px, 68vh, 720px);
+    overflow: hidden;
+  }
+  .hero-frame canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  }
+  /* Corner registration marks */
+  .reg { position: absolute; width: 14px; height: 14px; pointer-events: none; }
+  .reg::before, .reg::after {
+    content: ''; position: absolute; background: var(--ink);
+  }
+  .reg::before { width: 100%; height: 1px; top: 50%; }
+  .reg::after  { width: 1px; height: 100%; left: 50%; }
+  .reg.tl { top: 8px; left: 8px; }
+  .reg.tr { top: 8px; right: 8px; }
+  .reg.bl { bottom: 8px; left: 8px; }
+  .reg.br { bottom: 8px; right: 8px; }
+
+  .hero-labels {
+    position: absolute; top: 0; left: 0; right: 0;
+    padding: 1.1rem 1.5rem;
+    display: flex; justify-content: space-between;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.08em; color: var(--muted);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+  .hero-labels .right { text-align: right; }
+  .hero-labels .right .v { color: var(--accent); font-weight: 600; }
+
+  .hero-headline-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    padding: 3rem 2rem;
+  }
+  .hero-headline {
+    max-width: 17ch;
+    text-align: center;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 5.2vw, 4.6rem);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+    position: relative;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--accent-ink);
+    font-weight: 400;
+    display: block;
+    margin-top: 0.25em;
+  }
+  .hero-headline::before,
+  .hero-headline::after {
+    content: ''; display: block;
+    width: 60px; height: 1px;
+    background: var(--ink);
+    margin: 1.2rem auto;
+    opacity: 0.8;
+  }
+  .hero-headline .kicker-inline {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.3em;
+  }
+
+  .hero-footer {
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 0 3vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2.5rem;
+    border-top: 0;
+  }
+  .hero-footer > div {
+    padding: 1.8rem 0 2.2rem;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .hero-dek {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--ink-2);
+    grid-column: 1 / span 2;
+    text-wrap: pretty;
+    max-width: 58ch;
+  }
+  .hero-dek strong { color: var(--ink); font-weight: 500; }
+  .hero-byline {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-align: right;
+  }
+  .hero-byline .by { display: block; color: var(--ink); font-weight: 500; font-size: 14px; margin-bottom: 0.3rem; }
+  .hero-byline .role { display: block; }
+  .hero-byline .mini-links { margin-top: 0.9rem; display: flex; gap: 0.8rem; justify-content: flex-end; font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em; }
+  .hero-byline .mini-links a { color: var(--accent); border-bottom: 1px solid var(--accent); }
+
+  /* ============================================================
+     DATA STRIP — quant touch, runs under hero
+     ============================================================ */
+  .data-strip {
+    max-width: 1560px;
+    margin: 0 auto 0;
+    padding: 0.9rem 3vw;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    border-top: 1px solid var(--rule-strong);
+    border-bottom: 1px solid var(--rule-strong);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--paper);
+  }
+  .data-strip .cell { line-height: 1.3; }
+  .data-strip .k { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; display: block; }
+  .data-strip .v { font-size: 13px; color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
+  .data-strip .v .pos { color: var(--positive); }
+  .data-strip .v .neg { color: var(--negative); }
+  @media (max-width: 900px) {
+    .data-strip { grid-template-columns: repeat(2, 1fr); row-gap: 0.7rem; }
+  }
+
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  .section {
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 4.5rem 3vw;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    margin-bottom: 2.8rem;
+  }
+  .section-head .label {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--ink);
+    align-self: start;
+    max-width: 200px;
+  }
+  .section-head .label .num {
+    font-family: var(--mono);
+    color: var(--accent);
+    margin-right: 0.6em;
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 2.7vw, 2.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    max-width: 26ch;
+    color: var(--ink);
+  }
+  .section-head h2 em { font-style: italic; color: var(--accent-ink); font-weight: 400; }
+
+  /* ============================================================
+     THESIS
+     ============================================================ */
+  .thesis {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 3rem;
+    align-items: start;
+  }
+  .thesis-body {
+    font-family: var(--serif);
+    font-size: 1.17rem;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .thesis-body p { margin-bottom: 1.1rem; text-wrap: pretty; }
+  .thesis-body .dropcap::first-letter {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 4.6rem;
+    line-height: 0.85;
+    float: left;
+    margin: 0.15rem 0.5rem 0 -0.1rem;
+    color: var(--accent-ink);
+  }
+  .thesis-aside {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    border-left: 2px solid var(--accent);
+    padding: 0.4rem 0 0.4rem 1rem;
+    letter-spacing: 0.01em;
+  }
+  .thesis-aside .label {
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .thesis-aside .eq {
+    font-size: 13px;
+    color: var(--ink);
+    margin: 0.4rem 0;
+    font-weight: 500;
+  }
+  .thesis-aside .note { color: var(--muted); font-size: 11px; }
+
+  /* ============================================================
+     PRACTICE LIST
+     ============================================================ */
+  .practice-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--rule);
+  }
+  .practice-item {
+    padding: 2rem 1.8rem 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 1.2rem;
+    align-items: start;
+  }
+  .practice-item:nth-child(odd)  { padding-right: 2.4rem; border-right: 1px solid var(--rule); }
+  .practice-item:nth-child(even) { padding-left: 2.4rem; }
+  .practice-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    padding-top: 0.3rem;
+    font-weight: 600;
+  }
+  .practice-item h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    margin-bottom: 0.7rem;
+    color: var(--ink);
+  }
+  .practice-item p {
+    font-family: var(--serif);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    margin-bottom: 1rem;
+  }
+  .practice-item .methods {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .practice-item .methods span { margin-right: 0.9rem; }
+  .practice-item .methods span::before { content: "· "; color: var(--rule-strong); }
+  .practice-item .methods span:first-child::before { content: ""; }
+
+  /* ============================================================
+     ABM SIM — interactive quant demo
+     ============================================================ */
+  .sim {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    align-items: start;
+    margin-bottom: 1rem;
+  }
+  .sim-wrap {
+    border: 1px solid var(--rule-strong);
+    background: var(--paper-3);
+    padding: 0;
+  }
+  .sim-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    align-items: baseline;
+  }
+  .sim-head .title {
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sim-head .price {
+    font-family: var(--mono);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .sim-head .price .tag { color: var(--muted); margin-right: 0.4em; }
+  .sim-head .price .delta.pos { color: var(--positive); }
+  .sim-head .price .delta.neg { color: var(--negative); }
+
+  .sim-canvas-wrap {
+    position: relative;
+    height: 340px;
+    background:
+      linear-gradient(to right, transparent calc(100% - 1px), var(--rule) calc(100% - 1px)),
+      linear-gradient(to bottom, transparent calc(100% - 1px), var(--rule) calc(100% - 1px));
+    background-size: 80px 40px;
+  }
+  .sim-canvas-wrap canvas {
+    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  }
+
+  .sim-controls {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--paper-2);
+    align-items: center;
+  }
+  .sim-controls .ctl label {
+    display: block;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .sim-controls .ctl .val {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .sim-controls input[type=range] {
+    width: 100%;
+    height: 2px;
+    background: var(--rule-strong);
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 4px 0 0;
+  }
+  .sim-controls input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: none;
+  }
+  .sim-controls input[type=range]::-moz-range-thumb {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); cursor: pointer; border: none;
+  }
+  .sim-controls .sim-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    border: none;
+    cursor: pointer;
+  }
+  .sim-controls .sim-btn:hover { background: var(--accent); }
+
+  .sim-legend {
+    padding: 0.8rem 1.1rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+  .sim-legend .swatch {
+    display: inline-block; width: 14px; height: 2px;
+    vertical-align: middle; margin-right: 6px;
+  }
+  .sim-legend .sw-fund { background: var(--ink); }
+  .sim-legend .sw-chart { background: var(--accent); }
+  .sim-legend .sw-noise { background: var(--accent-2); border-top: 1px dashed var(--accent-2); height:0; border-bottom:0; }
+
+  /* ============================================================
+     INTEL LIST
+     ============================================================ */
+  .intel-list { display: grid; gap: 0; }
+  .intel-item {
+    display: grid;
+    grid-template-columns: 90px 140px 1fr auto;
+    gap: 2rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background 0.15s ease, padding 0.15s ease;
+  }
+  .intel-item:first-child { border-top: 1px solid var(--rule); }
+  .intel-item:hover { background: var(--paper-2); padding-left: 1rem; padding-right: 1rem; }
+  .intel-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .intel-cat {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .intel-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .intel-title .sub {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .intel-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+  }
+  .intel-meta .status-live { color: var(--accent); }
+  .intel-meta .ticker-code { color: var(--ink); font-weight: 600; }
+
+  /* ============================================================
+     PROFILE
+     ============================================================ */
+  .profile {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .profile-img {
+    background: var(--paper-2);
+    border: 1px solid var(--rule-strong);
+    aspect-ratio: 4/5;
+    position: relative;
+    background-image:
+      repeating-linear-gradient(
+        135deg,
+        transparent 0,
+        transparent 11px,
+        rgba(0,0,0,0.04) 11px,
+        rgba(0,0,0,0.04) 12px
+      );
+  }
+  .profile-img .placeholder-label {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px;
+    color: var(--muted); letter-spacing: 0.08em;
+  }
+  .profile-img .placeholder-label span {
+    background: var(--paper); padding: 6px 10px;
+    border: 1px solid var(--rule-strong);
+  }
+  .profile-body { font-family: var(--serif); font-size: 1.1rem; line-height: 1.6; color: var(--ink-2); }
+  .profile-body h3 {
+    font-family: var(--serif); font-weight: 500;
+    font-size: 1.85rem; line-height: 1.15;
+    margin-bottom: 1.2rem; letter-spacing: -0.01em; color: var(--ink);
+  }
+  .profile-body h3 em { font-style: italic; color: var(--accent-ink); font-weight: 400; }
+  .profile-body p { margin-bottom: 1rem; text-wrap: pretty; }
+  .profile-body .sig {
+    font-family: var(--serif); font-style: italic;
+    font-size: 1.15rem; color: var(--ink);
+    margin-top: 2rem; padding-top: 1.4rem;
+    border-top: 1px solid var(--rule);
+  }
+  .profile-body .sig .name { font-style: normal; font-weight: 500; }
+  .profile-body .sig .role {
+    display: block; font-family: var(--sans);
+    font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+    font-style: normal; margin-top: 0.4rem;
+  }
+  .cv-strip {
+    margin-top: 1.8rem;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem; padding-top: 1.2rem;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+  }
+  .cv-strip .cv-label {
+    font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .cv-strip .cv-value {
+    font-family: var(--serif); font-size: 0.98rem;
+    color: var(--ink); line-height: 1.35;
+  }
+
+  /* ============================================================
+     COLOPHON
+     ============================================================ */
+  .colophon {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4.5rem 3vw 3rem;
+  }
+  .colophon-inner {
+    max-width: 1560px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
+  }
+  .colophon .label {
+    font-family: var(--sans); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #bba98a; margin-bottom: 1rem;
+  }
+  .colophon h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.08;
+    margin-bottom: 1.5rem; color: var(--paper);
+    letter-spacing: -0.01em; max-width: 20ch;
+  }
+  .colophon h2 em { font-style: italic; color: #d4b47a; font-weight: 400; }
+  .colophon p {
+    font-family: var(--serif); font-size: 1.1rem;
+    line-height: 1.55; color: #d9d2c2;
+    max-width: 44ch; margin-bottom: 2rem;
+  }
+  .contact-list { border-top: 1px solid #3a332a; font-family: var(--sans); }
+  .contact-row {
+    display: grid; grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem; padding: 1rem 0;
+    border-bottom: 1px solid #3a332a;
+    align-items: center; color: var(--paper);
+    font-size: 14px; transition: padding 0.2s ease;
+  }
+  .contact-row:hover { padding-left: 0.8rem; color: #d4b47a; }
+  .contact-row .rlabel {
+    font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #9c907a;
+  }
+  .contact-row .rval { font-family: var(--serif); font-size: 1.05rem; color: var(--paper); }
+  .contact-row .rarrow { font-family: var(--serif); color: #d4b47a; font-size: 1.2rem; }
+
+  .footline {
+    background: var(--ink); color: #7a7162;
+    padding: 1.4rem 3vw;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em;
+    display: flex; justify-content: space-between;
+    border-top: 1px solid #3a332a;
+  }
+
+  @media (max-width: 900px) {
+    .masthead { grid-template-columns: 1fr auto; }
+    .masthead nav { display: none; }
+    .hero-frame { height: 420px; }
+    .hero-footer, .section-head, .thesis, .profile, .colophon-inner, .sim { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-dek { grid-column: 1; }
+    .hero-byline { text-align: left; }
+    .practice-list { grid-template-columns: 1fr; }
+    .practice-item:nth-child(odd) { border-right: none; padding-right: 0; }
+    .practice-item:nth-child(even) { padding-left: 0; }
+    .intel-item { grid-template-columns: auto 1fr; }
+    .intel-item .intel-num, .intel-item .intel-meta { grid-column: 1 / -1; }
+    .sim-controls { grid-template-columns: repeat(2, 1fr); }
+    .data-strip { font-size: 10px; }
+  }
+
+</style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo">
-            <i class="fas fa-project-diagram"></i>
-            Complexity Insights
-        </a>
-        <div class="mobile-toggle" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#solutions">Solutions</a></li>
-            <li><a href="/projects/">Case Studies</a></li>
-            <li><a href="/blog/">Insights</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="#contact" class="nav-btn">Contact</a></li>
-        </ul>
-    </nav>
 
-    <section class="hero">
-        <canvas id="networkCanvas"></canvas>
-        <div class="hero-content">
-            <span class="hero-label">Next-Gen Economic Strategy</span>
-            <h1>Navigate Uncertainty with<br>Complexity Economics</h1>
-            <p>Traditional models assume equilibrium. We assume reality. Leverage network science and agent-based simulations to turn market volatility into a strategic advantage.</p>
-            <div class="cta-buttons">
-                <a href="#solutions" class="cta-button">Explore Solutions</a>
-                <a href="/projects/" class="cta-button secondary">View Case Studies</a>
-            </div>
-        </div>
-    </section>
+<!-- MASTHEAD -->
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav>
+    <a href="/projects/">Projects</a>
+    <a href="/blog/">Writing</a>
+    <a href="/about/">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="issue">
+    <span class="dot"></span>
+    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
+  </div>
+</header>
 
-    <div class="trust-bar">
-        <span class="trust-label">Powered by Advanced Methodologies</span>
-        <div class="trust-logos">
-            <div class="method-badge"><i class="fas fa-network-wired"></i> Network Theory</div>
-            <div class="method-badge"><i class="fas fa-users"></i> Agent-Based Modeling</div>
-            <div class="method-badge"><i class="fas fa-chart-line"></i> Non-Linear Dynamics</div>
-            <div class="method-badge"><i class="fas fa-shield-alt"></i> Systemic Risk Analysis</div>
-        </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-frame" id="heroFrame">
+    <span class="reg tl"></span><span class="reg tr"></span>
+    <span class="reg bl"></span><span class="reg br"></span>
+    <canvas id="networkCanvas"></canvas>
+    <div class="hero-labels">
+      <div>
+        FIG. 01 &nbsp;·&nbsp; STOCHASTIC NETWORK<br/>
+        FORCE-DIRECTED · HOVER TO PERTURB
+      </div>
+      <div class="right">
+        n = <span id="nodeCount" class="v">—</span><br/>
+        ⟨k⟩ = <span id="avgDeg" class="v">—</span>
+      </div>
+    </div>
+    <div class="hero-headline-wrap">
+      <div class="hero-headline">
+        <span class="kicker-inline">A Research Practice</span>
+        Markets aren't in equilibrium.
+        <em>Your models shouldn't pretend they are.</em>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA STRIP -->
+<div class="data-strip">
+  <div class="cell"><span class="k">Practice</span><span class="v">Complexity Econ.</span></div>
+  <div class="cell"><span class="k">Methods</span><span class="v">ABM · Network · Non-linear</span></div>
+  <div class="cell"><span class="k">Toolkit</span><span class="v">Python · Mesa · NetworkX</span></div>
+  <div class="cell"><span class="k">Case studies</span><span class="v">4 · <span class="pos">2 live</span></span></div>
+  <div class="cell"><span class="k">Writing</span><span class="v">1 essay · 1 note</span></div>
+  <div class="cell"><span class="k">Status</span><span class="v"><span class="pos">● accepting work</span></span></div>
+</div>
+
+<!-- HERO FOOTER -->
+<div class="hero-footer">
+  <div class="hero-dek">
+    <strong>Complexity Insights</strong> is an independent research practice applying agent-based modeling, network science, and non-linear dynamics to problems standard econometrics can't touch — feedback loops, contagion, emergent behavior, and phase transitions in financial and economic systems.
+  </div>
+  <div class="hero-byline">
+    <span class="by">Nicholas Thomas</span>
+    <span class="role">Founder · Economist · Researcher</span>
+    <div class="mini-links">
+      <a href="#lab">LAB →</a>
+      <a href="#contact">CONTACT →</a>
+    </div>
+  </div>
+</div>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="section-head">
+    <div class="label"><span class="num">01</span>Thesis</div>
+    <h2>The standard model assumes a world that doesn't exist. <em>Real economies are networks of adapting agents.</em></h2>
+  </div>
+
+  <div class="thesis">
+    <div></div>
+    <div class="thesis-body">
+      <p class="dropcap">Equilibrium economics answers the wrong question. It asks what price clears the market when everyone is rational, identical, and finished adjusting. That is a useful cartoon for a seminar, and a dangerous one for a trading floor or a supply chain.</p>
+      <p>The alternative is not to abandon rigor — it is to model behavior that is genuinely adaptive. Traders who learn. Firms that imitate. Shocks that propagate through network topology rather than dissipating smoothly across representative agents. The methods are now mature: agent-based models, calibrated networks, non-linear stochastic dynamics. The bottleneck is practitioners who can translate between the research and a real business problem.</p>
+      <p>That is the practice.</p>
+    </div>
+    <aside class="thesis-aside">
+      <span class="label">Working apparatus</span>
+      <div class="eq">x<sub>t+1</sub> = f(x<sub>t</sub>, θ, ε<sub>t</sub>)</div>
+      <p class="note">State evolves through agent-level rules f, calibrated parameters θ, and idiosyncratic noise ε — solved by simulation, not closed form.</p>
+      <div class="eq" style="margin-top:1rem;">G = (V, E, w)</div>
+      <p class="note">Exposure networks — weighted graphs over agents — give tractable structure where equilibrium gives only averages.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="section" id="practice">
+  <div class="section-head">
+    <div class="label"><span class="num">02</span>Practice</div>
+    <h2>Four problems worth modeling <em>properly.</em></h2>
+  </div>
+
+  <div class="practice-list">
+    <article class="practice-item">
+      <div class="practice-num">i.</div>
+      <div>
+        <h3>Market simulation &amp; strategy</h3>
+        <p>Stress-test pricing, launch strategy, or trading rules against synthetic populations of heterogeneous agents before committing capital. Finds the failure modes averages can't see.</p>
+        <div class="methods"><span>Agent-based</span><span>Monte Carlo</span><span>Calibration</span></div>
+      </div>
+    </article>
+
+    <article class="practice-item">
+      <div class="practice-num">ii.</div>
+      <div>
+        <h3>Supply-chain &amp; exposure networks</h3>
+        <p>Map the graph — who actually depends on whom, two and three hops deep. Identify nodes whose failure triggers cascades disproportionate to their size or spend.</p>
+        <div class="methods"><span>Network science</span><span>Centrality</span><span>Percolation</span></div>
+      </div>
+    </article>
+
+    <article class="practice-item">
+      <div class="practice-num">iii.</div>
+      <div>
+        <h3>Systemic &amp; tail-risk indicators</h3>
+        <p>Conventional VaR underestimates regime change. Complexity-based indicators — correlation structure, critical slowing-down — give early warning of phase transitions conventional models miss by construction.</p>
+        <div class="methods"><span>Non-linear dynamics</span><span>Correlation structure</span><span>Early warning</span></div>
+      </div>
+    </article>
+
+    <article class="practice-item">
+      <div class="practice-num">iv.</div>
+      <div>
+        <h3>M&amp;A &amp; integration analysis</h3>
+        <p>Apply network theory to deal sourcing, synergy modeling, and post-merger integration risk. Synergies live in the graph of who-talks-to-whom; so do the integration failures.</p>
+        <div class="methods"><span>Graph analysis</span><span>Synergy modeling</span><span>Integration risk</span></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- LAB — interactive ABM sim -->
+<section class="section" id="lab">
+  <div class="section-head">
+    <div class="label"><span class="num">03</span>The Lab</div>
+    <h2>A live agent-based market. <em>Fundamentalists, chartists, noise.</em></h2>
+  </div>
+
+  <div class="sim">
+    <div style="font-family: var(--serif); color: var(--ink-2); line-height: 1.6; font-size: 1rem;">
+      <p style="margin-bottom: 1rem;">A working toy of the <em>Santa Fe Artificial Stock Market</em>. Three populations of traders interact: <strong>fundamentalists</strong> pull price toward a latent value, <strong>chartists</strong> chase the trend, <strong>noise</strong> traders add liquidity and randomness.</p>
+      <p style="margin-bottom: 1rem;">Raise the chartist fraction — watch bubbles, crashes, and fat tails emerge from the same rule-set that used to converge quietly.</p>
+      <p style="font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em;">NO EQUILIBRIUM ASSUMED.<br/>NO REPRESENTATIVE AGENT.</p>
     </div>
 
-    <section class="section" id="solutions">
-        <div class="section-header">
-            <h2>Strategic Solutions</h2>
-            <p>We help organizations look beyond simple averages to understand the emergent behaviors that drive risk and opportunity.</p>
+    <div class="sim-wrap">
+      <div class="sim-head">
+        <div>
+          <div class="title">ABM · Price Formation</div>
+          <div style="margin-top:0.2rem; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em;">
+            N = 200 AGENTS · Δt = 1 TICK
+          </div>
         </div>
-
-        <div class="solutions-grid">
-            <div class="solution-card">
-                <div class="icon-box"><i class="fas fa-chess-board"></i></div>
-                <h3>Market Simulation & Strategy</h3>
-                <p>Test new pricing models, product launches, or trading strategies in risk-free synthetic environments before deploying real capital.</p>
-                <a href="/projects/" class="learn-link">View Simulations <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="solution-card">
-                <div class="icon-box"><i class="fas fa-project-diagram"></i></div>
-                <h3>Supply Chain Resilience</h3>
-                <p>Map hidden dependencies in your supply network to identify "too connected to fail" nodes and prevent cascading failures.</p>
-                <a href="/projects/" class="learn-link">See Network Analysis <i class="fas fa-arrow-right"></i></a>
-            </div>
-
-            <div class="solution-card">
-                <div class="icon-box"><i class="fas fa-search-dollar"></i></div>
-                <h3>Systemic Risk Detection</h3>
-                <p>Traditional risk models fail during crises. Our complexity-based indicators provide early warning signals for phase transitions.</p>
-                <a href="/projects/" class="learn-link">Explore Risk Frameworks <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="solution-card">
-                <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
-                <h3>Finance and M&A Analysis</h3>
-                <p>Applying network theory to deal sourcing, synergy modeling, and post-merger integration risks.</p>
-                <a href="/projects/" class="learn-link">View Our Models <i class="fas fa-arrow-right"></i></a>
-            </div>            
+        <div class="price" id="priceReadout">
+          <span class="tag">px</span><span id="pxVal">100.00</span>
+          &nbsp;<span class="delta" id="pxDelta">+0.00</span>
         </div>
-    </section>
+      </div>
 
-    <section class="projects-section">
-        <div class="section-header" style="color: white;">
-            <h2 style="color: white;">Recent Intelligence</h2>
-            <p style="color: #cbd5e1;">Applied research and technical analysis.</p>
+      <div class="sim-canvas-wrap">
+        <canvas id="simCanvas"></canvas>
+      </div>
+
+      <div class="sim-controls">
+        <div class="ctl">
+          <label>Chartists <span class="val" id="vChart">40%</span></label>
+          <input id="sChart" type="range" min="0" max="80" value="40" />
         </div>
-
-        <div class="project-preview-grid">
-            <div class="project-mini-card">
-                <span class="project-category">Network Analysis</span>
-                <h3>S&P 500 Correlation Breakdown</h3>
-                <p>Mapping the erosion of diversification benefits during the 2022 volatility spikes.</p>
-                <a href="/projects/example-network-analysis.html" class="learn-link" style="color: #93c5fd;">Read Report <i class="fas fa-arrow-right"></i></a>
-            </div>
-            <div class="project-mini-card">
-                <span class="project-category">Agent-Based Model</span>
-                <h3>Liquidity Spirals</h3>
-                <p>Simulating how algorithmic trading strategies amplify flash crash dynamics.</p>
-                <a href="#" class="learn-link" style="color: #93c5fd;">Coming Soon <i class="fas fa-clock"></i></a>
-            </div>
-            <div class="project-mini-card">
-                <span class="project-category">Research Note</span>
-                <h3>The End of Equilibrium</h3>
-                <p>Why static economic models are costing businesses millions in unhedged tail risk.</p>
-                <a href="/blog/example-post.html" class="learn-link" style="color: #93c5fd;">Read Article <i class="fas fa-arrow-right"></i></a>
-            </div>
+        <div class="ctl">
+          <label>Noise <span class="val" id="vNoise">0.40</span></label>
+          <input id="sNoise" type="range" min="0" max="100" value="40" />
         </div>
-    </section>
-
-    <section class="section" id="about">
-        <div class="about-split">
-            <div class="about-text">
-                <h2>Bridging Theory & Practice</h2>
-                <p>Complexity economics has long been trapped in academia. Complexity Insights demonstrates the practical application of these powerful tools.</p>
-                <p>Founded by Nicholas Thomas, we combine rigorous economic theory with advanced <strong>computational modeling</strong> and <strong>data science</strong>. We tackle problems standard econometrics cannot solve—specifically those involving feedback loops, behavioral adaption, and network effects.</p>
-                
-                <div class="stat-row">
-                    <div class="stat">
-                        <h4>100%</h4>
-                        <span>Data-Driven</span>
-                    </div>
-                    <div class="stat">
-                        <h4>Python</h4>
-                        <span>Native Analysis</span>
-                    </div>
-                </div>
-                <br>
-                <a href="/about/" class="learn-link">Meet the Team <i class="fas fa-arrow-right"></i></a>
-            </div>
-            
-            <div class="about-visual">
-                <div class="code-snippet">
-<span style="color: #c678dd">def</span> <span style="color: #61afef">simulate_market_shock</span>(agents, shock_val):
-    <span style="color: #5c6370"># Initialize contagion parameters</span>
-    network = build_exposure_graph(agents)
-    failed_nodes = []
-    
-    <span style="color: #c678dd">for</span> node <span style="color: #c678dd">in</span> network.nodes:
-        <span style="color: #c678dd">if</span> node.exposure > shock_val:
-            failed_nodes.append(node)
-            trigger_cascade(node, network)
-            
-    <span style="color: #c678dd">return</span> calculate_systemic_loss(failed_nodes)
-                </div>
-            </div>
+        <div class="ctl">
+          <label>Fundamental <span class="val" id="vFund">100</span></label>
+          <input id="sFund" type="range" min="70" max="130" value="100" />
         </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-        <div class="contact-grid">
-            <div class="contact-info">
-                <h2>Let's Start a Conversation</h2>
-                <p>Interested in seeing how complexity economics can apply to your specific challenges? We are currently accepting new projects and collaborations.</p>
-                
-                <div class="contact-options">
-                    <a href="YOUR_CALENDLY_LINK" target="_blank" class="contact-card">
-                        <div class="contact-icon"><i class="fas fa-calendar-check"></i></div>
-                        <div>
-                            <h4 style="margin-bottom:0.2rem;">Schedule a Discovery Call</h4>
-                            <span style="font-size:0.9rem; color:var(--text-muted);">Directly via Calendly</span>
-                        </div>
-                    </a>
-
-                    <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="contact-card">
-                        <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
-                        <div>
-                            <h4 style="margin-bottom:0.2rem;">Connect on LinkedIn</h4>
-                            <span style="font-size:0.9rem; color:var(--text-muted);">Professional Network</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="secure-form">
-                <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Send a Message</h3>
-                <form action="https://formspree.io/f/xjklygav" method="POST">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" name="name" required placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" name="email" required placeholder="Your email address">
-                    </div>
-                    <div class="form-group">
-                        <label>Message</label>
-                        <textarea name="message" rows="4" required placeholder="How can we help?"></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
-            </div>
+        <div class="ctl">
+          <label>Speed <span class="val" id="vSpeed">1.0×</span></label>
+          <input id="sSpeed" type="range" min="5" max="30" value="10" />
         </div>
-    </section>
+        <button class="sim-btn" id="simShock">Shock</button>
+      </div>
 
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
-                </h4>
-                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    Applying complexity science to economic and financial challenges.
-                </p>
-                <div class="tech-stack">
-                    <span><i class="fab fa-python"></i> Python</span>
-                    <span><i class="fas fa-project-diagram"></i> NetworkX</span>
-                </div>
-            </div>
-            <div class="footer-col">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Market Simulation</a></li>
-                    <li><a href="#">Network Analysis</a></li>
-                    <li><a href="#">Risk Modeling</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/about/">About Us</a></li>
-                    <li><a href="/projects/">Case Studies</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://www.linkedin.com/company/complexity-insights"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="https://github.com/EconNickT"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://x.com/EconNickT"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
-                </ul>
-            </div>
+      <div class="sim-legend">
+        <span><span class="swatch sw-fund"></span>Price p<sub>t</sub></span>
+        <span><span class="swatch sw-chart"></span>Fundamental v<sub>t</sub></span>
+        <span style="color: var(--muted);">Series shows last 400 ticks · hover chart to pause</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING -->
+<section class="section" id="writing">
+  <div class="section-head">
+    <div class="label"><span class="num">04</span>Writing &amp; research</div>
+    <h2>Working papers, notes, and case studies.</h2>
+  </div>
+
+  <div class="intel-list">
+    <a class="intel-item" href="/projects/example-network-analysis.html">
+      <div class="intel-num">№ 001</div>
+      <div class="intel-cat">Network analysis</div>
+      <div class="intel-title">S&amp;P 500 correlation breakdown
+        <span class="sub">Mapping the erosion of diversification during the 2022 volatility regime.</span>
+      </div>
+      <div class="intel-meta"><span class="ticker-code">CORR</span><br/><span class="status-live">LIVE →</span></div>
+    </a>
+
+    <a class="intel-item" href="#">
+      <div class="intel-num">№ 002</div>
+      <div class="intel-cat">Agent-based model</div>
+      <div class="intel-title">Liquidity spirals in thin markets
+        <span class="sub">Simulating how algorithmic strategies amplify flash-crash dynamics.</span>
+      </div>
+      <div class="intel-meta"><span class="ticker-code">LIQ</span><br/>Q2 2026</div>
+    </a>
+
+    <a class="intel-item" href="/blog/example-post.html">
+      <div class="intel-num">№ 003</div>
+      <div class="intel-cat">Research note</div>
+      <div class="intel-title">The end of equilibrium
+        <span class="sub">Why static models are costing businesses millions in unhedged tail risk.</span>
+      </div>
+      <div class="intel-meta"><span class="ticker-code">EQM</span><br/><span class="status-live">LIVE →</span></div>
+    </a>
+
+    <a class="intel-item" href="/projects/banking-deserts.html">
+      <div class="intel-num">№ 004</div>
+      <div class="intel-cat">Applied research</div>
+      <div class="intel-title">Banking deserts
+        <span class="sub">Spatial and network analysis of financial-access gaps.</span>
+      </div>
+      <div class="intel-meta"><span class="ticker-code">BNK</span><br/><span class="status-live">LIVE →</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="section" id="profile">
+  <div class="section-head">
+    <div class="label"><span class="num">05</span>About</div>
+    <h2>Who runs this.</h2>
+  </div>
+
+  <div class="profile">
+    <div class="profile-img">
+      <div class="placeholder-label"><span>PORTRAIT · 4:5</span></div>
+    </div>
+    <div class="profile-body">
+      <h3>Nicholas Thomas works at the intersection of <em>network science, agent-based modeling, and applied finance.</em></h3>
+      <p>The practice was founded on a simple wager: that the methods of complexity economics — agent-based simulation, network analysis, non-linear dynamics — are ready to leave the journals and solve real business problems. Most organizations still rely on models built on equilibrium assumptions they would never use to run the rest of their operations.</p>
+      <p>Current work spans correlation-structure analysis for equity portfolios, network models of supply-chain and financial exposure, and agent-based simulations of market microstructure. All output is Python-native, reproducible, and versioned publicly where possible.</p>
+
+      <div class="cv-strip">
+        <div>
+          <div class="cv-label">Training</div>
+          <div class="cv-value">Economics<br/>Recent graduate</div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 Complexity Insights. All rights reserved.</p>
+        <div>
+          <div class="cv-label">Toolkit</div>
+          <div class="cv-value">Python · NetworkX<br/>Mesa · NumPy</div>
         </div>
-    </footer>
+        <div>
+          <div class="cv-label">Available for</div>
+          <div class="cv-value">Full-time roles<br/>Contract engagements</div>
+        </div>
+      </div>
 
-    <script>
-        // INTERACTIVE NETWORK ANIMATION (V2 PHYSICS - GENTLE FLOAT)
-        const canvas = document.getElementById('networkCanvas');
-        const ctx = canvas.getContext('2d');
-        let nodes = [];
-        let mouse = { x: null, y: null };
+      <div class="sig">
+        Questions, problems, or potential collaborations — write.<br/>
+        <span class="name">— Nicholas Thomas</span>
+        <span class="role">Founder · Complexity Insights</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-        function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            initNodes();
+<!-- CONTACT -->
+<section class="colophon" id="contact">
+  <div class="colophon-inner">
+    <div>
+      <div class="label">Get in touch</div>
+      <h2>The best problems come in <em>through the front door.</em></h2>
+      <p>If you have an interesting question — inside a firm, a research group, or a hiring pipeline — the fastest path is a direct note. Short is fine.</p>
+    </div>
+    <div class="contact-list">
+      <a class="contact-row" href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" rel="noopener">
+        <span class="rlabel">LinkedIn</span>
+        <span class="rval">/in/thomasnicholasa</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="https://x.com/EconNickT" target="_blank" rel="noopener">
+        <span class="rlabel">X</span>
+        <span class="rval">@EconNickT · DMs open</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="https://github.com/EconNickT" target="_blank" rel="noopener">
+        <span class="rlabel">GitHub</span>
+        <span class="rval">EconNickT</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="#">
+        <span class="rlabel">Schedule</span>
+        <span class="rval">Book a 30-minute call</span>
+        <span class="rarrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+  <span>Set in Source Serif 4, Inter &amp; JetBrains Mono</span>
+</div>
+
+<script>
+/* ============================================================
+   NETWORK ANIMATION
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('networkCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let nodes = [], mouse = { x: null, y: null };
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+  function palette() {
+    const css = getComputedStyle(document.documentElement);
+    return {
+      ink:    css.getPropertyValue('--ink').trim(),
+      accent: css.getPropertyValue('--accent').trim(),
+      accent2:css.getPropertyValue('--accent-2').trim(),
+    };
+  }
+
+  class Node {
+    constructor(w, h) {
+      this.x = Math.random() * w;
+      this.y = Math.random() * h;
+      this.vx = (Math.random() - 0.5) * 0.32;
+      this.vy = (Math.random() - 0.5) * 0.32;
+      this.r = Math.random() * 1.4 + 1.2;
+      const r = Math.random();
+      this.kind = r < 0.10 ? 'accent' : r < 0.17 ? 'accent2' : 'ink';
+    }
+    update(w, h) {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > w) this.vx *= -1;
+      if (this.y < 0 || this.y > h) this.vy *= -1;
+      if (mouse.x !== null) {
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        const d = Math.hypot(dx, dy), R = 160;
+        if (d < R) { const f = (R - d) / R; this.x += dx * f * 0.028; this.y += dy * f * 0.028; }
+      }
+    }
+    draw(p) {
+      const c = this.kind === 'accent' ? p.accent : this.kind === 'accent2' ? p.accent2 : p.ink;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = c;
+      ctx.globalAlpha = this.kind === 'ink' ? 0.7 : 0.95;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  }
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    init(rect.width, rect.height);
+  }
+  function init(w, h) {
+    nodes = [];
+    const n = Math.floor((w * h) / 6500);
+    for (let i = 0; i < n; i++) nodes.push(new Node(w, h));
+    const nc = document.getElementById('nodeCount');
+    if (nc) nc.textContent = n;
+  }
+  let frame = 0;
+  function draw() {
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width, h = rect.height;
+    const p = palette();
+    ctx.clearRect(0, 0, w, h);
+    let edgeCount = 0;
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i+1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.hypot(dx, dy);
+        if (d < 115) {
+          edgeCount++;
+          const a = 0.28 * (1 - d/115);
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = p.ink;
+          ctx.globalAlpha = a;
+          ctx.lineWidth = 0.65;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
         }
+      }
+    }
+    nodes.forEach(n => { n.update(w, h); n.draw(p); });
+    if (frame++ % 30 === 0) {
+      const ad = document.getElementById('avgDeg');
+      if (ad && nodes.length) ad.textContent = (2*edgeCount/nodes.length).toFixed(1);
+    }
+    requestAnimationFrame(draw);
+  }
 
-        class Node {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5; // Constant drift
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 1.5 + 1;
-            }
+  const frame_el = document.getElementById('heroFrame');
+  frame_el.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left;
+    mouse.y = e.clientY - r.top;
+  });
+  frame_el.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+  window.addEventListener('resize', resize);
+  resize(); draw();
+})();
 
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
+/* ============================================================
+   ABM PRICE-FORMATION SIM
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('simCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
 
-                // Bounce off walls
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  let N = 200;
+  let chartFrac = 0.40;
+  let noiseSig = 0.40;
+  let fundValue = 100;
+  let speed = 10;
+  let paused = false;
 
-                // Mouse Interaction: DISPLACEMENT (V2 Style)
-                // Nodes gently move away/towards mouse but don't accelerate indefinitely
-                if (mouse.x !== null && mouse.y !== null) {
-                    const dx = mouse.x - this.x;
-                    const dy = mouse.y - this.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    const maxDistance = 150; // Interaction radius
+  // state
+  let price = 100;
+  let prevPrice = 100;
+  let momentum = 0;
+  const history = []; // price series
+  const fundHist = [];
+  const maxHist = 400;
 
-                    if (distance < maxDistance) {
-                        const force = (maxDistance - distance) / maxDistance;
-                        // This creates the "floaty" magnetic feel without rocket speed
-                        this.x += dx * force * 0.03;
-                        this.y += dy * force * 0.03;
-                    }
-                }
-            }
+  function palette() {
+    const css = getComputedStyle(document.documentElement);
+    return {
+      ink:    css.getPropertyValue('--ink').trim(),
+      ink2:   css.getPropertyValue('--ink-2').trim(),
+      accent: css.getPropertyValue('--accent').trim(),
+      accent2:css.getPropertyValue('--accent-2').trim(),
+      muted:  css.getPropertyValue('--muted').trim(),
+      rule:   css.getPropertyValue('--rule').trim(),
+    };
+  }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'; 
-                ctx.fill();
-            }
-        }
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
 
-        function initNodes() {
-            nodes = [];
-            // Slightly more numerous as requested (Density factor 6000 instead of 9000)
-            const nodeCount = Math.floor((canvas.width * canvas.height) / 6000); 
-            for (let i = 0; i < nodeCount; i++) {
-                nodes.push(new Node());
-            }
-        }
+  // One simulation step — compute excess demand, update price
+  function step() {
+    const nChart = Math.round(N * chartFrac);
+    const nFund  = Math.round(N * (1 - chartFrac) * 0.7);
+    const nNoise = N - nChart - nFund;
 
-        function drawConnections() {
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+    // Fundamentalist demand: pulls toward fundValue
+    const fundDemand = nFund * 0.02 * (fundValue - price);
+    // Chartist demand: chases momentum
+    const chartDemand = nChart * 0.35 * momentum;
+    // Noise demand: random
+    const noiseDemand = nNoise * noiseSig * (Math.random() - 0.5) * 2;
 
-                    if (distance < 100) {
-                        ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.15 * (1 - distance / 100)})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
+    const excess = (fundDemand + chartDemand + noiseDemand) / N;
+    // price adjustment
+    const kappa = 0.15;
+    const newPrice = price + kappa * excess + (Math.random() - 0.5) * 0.05;
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawConnections();
-            nodes.forEach(node => {
-                node.update();
-                node.draw();
-            });
-            requestAnimationFrame(animate);
-        }
+    // update momentum (exp smoothing of returns)
+    const ret = (newPrice - price) / Math.max(price, 1e-6);
+    momentum = 0.85 * momentum + 0.15 * ret;
 
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-        });
+    prevPrice = price;
+    price = Math.max(1, newPrice);
 
-        canvas.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
+    history.push(price);
+    fundHist.push(fundValue);
+    if (history.length > maxHist) { history.shift(); fundHist.shift(); }
+  }
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        animate();
+  function draw() {
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width, h = rect.height;
+    const p = palette();
+    ctx.clearRect(0, 0, w, h);
 
-        // Mobile Menu Logic
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
-        }
+    if (history.length < 2) return;
 
-        // Navbar Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('.nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-    </script>
+    // compute y-range
+    const allVals = history.concat(fundHist);
+    let lo = Math.min(...allVals), hi = Math.max(...allVals);
+    const pad = Math.max(2, (hi - lo) * 0.12);
+    lo -= pad; hi += pad;
+    if (hi - lo < 4) { const m = (hi+lo)/2; lo = m-2; hi = m+2; }
+
+    const xStep = w / (maxHist - 1);
+    const yOf = v => h - ((v - lo) / (hi - lo)) * h;
+
+    // fundamental line (dashed accent2)
+    ctx.save();
+    ctx.strokeStyle = p.accent;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    fundHist.forEach((v, i) => {
+      const x = (i + (maxHist - fundHist.length)) * xStep;
+      const y = yOf(v);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    // price line (ink)
+    ctx.strokeStyle = p.ink;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    history.forEach((v, i) => {
+      const x = (i + (maxHist - history.length)) * xStep;
+      const y = yOf(v);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // last-price marker
+    const lastX = (history.length - 1 + (maxHist - history.length)) * xStep;
+    const lastY = yOf(price);
+    ctx.fillStyle = p.accent;
+    ctx.beginPath(); ctx.arc(lastX, lastY, 3, 0, Math.PI*2); ctx.fill();
+
+    // axis tick labels (min/max)
+    ctx.fillStyle = p.muted;
+    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(hi.toFixed(1), w - 6, 12);
+    ctx.fillText(lo.toFixed(1), w - 6, h - 4);
+  }
+
+  // loop
+  let acc = 0;
+  function frame() {
+    if (!paused) {
+      // step count proportional to speed
+      for (let i = 0; i < Math.max(1, Math.floor(speed/5)); i++) step();
+      draw();
+      // update readouts
+      const pxEl = document.getElementById('pxVal');
+      const dxEl = document.getElementById('pxDelta');
+      if (pxEl) pxEl.textContent = price.toFixed(2);
+      const d = price - prevPrice;
+      if (dxEl) {
+        dxEl.textContent = (d >= 0 ? '+' : '') + d.toFixed(2);
+        dxEl.className = 'delta ' + (d >= 0 ? 'pos' : 'neg');
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  // seed history
+  for (let i = 0; i < 100; i++) step();
+
+  // controls
+  const sChart = document.getElementById('sChart');
+  const sNoise = document.getElementById('sNoise');
+  const sFund  = document.getElementById('sFund');
+  const sSpeed = document.getElementById('sSpeed');
+  const shock  = document.getElementById('simShock');
+
+  sChart.addEventListener('input', e => {
+    chartFrac = +e.target.value / 100;
+    document.getElementById('vChart').textContent = Math.round(chartFrac * 100) + '%';
+  });
+  sNoise.addEventListener('input', e => {
+    noiseSig = +e.target.value / 100;
+    document.getElementById('vNoise').textContent = noiseSig.toFixed(2);
+  });
+  sFund.addEventListener('input', e => {
+    fundValue = +e.target.value;
+    document.getElementById('vFund').textContent = fundValue;
+  });
+  sSpeed.addEventListener('input', e => {
+    speed = +e.target.value;
+    document.getElementById('vSpeed').textContent = (speed/10).toFixed(1) + '×';
+  });
+  shock.addEventListener('click', () => {
+    price *= (Math.random() < 0.5 ? 0.9 : 1.1);
+    momentum += (Math.random() - 0.5) * 0.04;
+  });
+  canvas.addEventListener('mouseenter', () => paused = true);
+  canvas.addEventListener('mouseleave', () => paused = false);
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame();
+})();
+
+/* ============================================================
+   TODAY (masthead issue date)
+   ============================================================ */
+(function(){
+  const el = document.getElementById('today');
+  if (!el) return;
+  const d = new Date();
+  const m = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  el.textContent = m[d.getMonth()] + ' ' + d.getFullYear();
+})();
+</script>
+</body>
+</html>
+</script>
 </body>
 </html>
