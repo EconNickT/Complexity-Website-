@@ -1,554 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+================================================================================
+ COMPLEXITY INSIGHTS — BRAND BIBLE v4.0 (Archive / Research-House)
+================================================================================
+ Use this at the top of every page. Keeps the site consistent without a build step.
+
+ VOICE
+ ─────
+ - Editorial, not marketing. Research-house, not SaaS startup.
+ - First-person when personal, third-person when presenting work.
+ - No emoji. Semicolons are fine. Italic accent on ONE phrase per headline.
+
+ TYPE SYSTEM
+ ───────────
+ --serif : Source Serif 4   — all headlines, body copy, pull quotes
+ --sans  : Inter            — labels, kickers, metadata, nav
+ --mono  : JetBrains Mono   — numbers, tickers, section refs, code
+
+ COLOR PALETTE
+ ─────────────
+ PAPER / INK
+  --paper       #faf9f6
+  --paper-2     #f0ede3
+  --paper-3     #fffef8
+  --ink         #10100f
+  --ink-2       #23231f
+  --muted       #6a685f
+  --rule        #ddd9cc
+  --rule-strong #bfbaa8
+
+ ACCENTS
+  --accent      #1a2a44   navy
+  --accent-2    #1d3a2f   forest
+  --oxblood     #6b1f1a
+  --brass       #8a6a2a
+  --brass-2     #d4b47a
+
+ LAYOUT
+ ──────
+ - Max content width 1560px; side padding 3vw.
+ - Hairline 1px --rule dividers; no cards-with-shadow.
+ - Numerals: № 001, § III, 11.5px mono for tickers / section refs.
+
+ MOTIFS
+ ──────
+ - Italic accent on ONE phrase per headline, in the local accent color.
+ - Section labels: "§ III.B — Section" in 11px sans, 0.22em tracking.
+================================================================================
+-->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About the Firm | Complexity Insights</title>
-    <meta name="description" content="Bridging academic complexity economics with real-world business strategy. Founded by Nicholas Thomas.">
-    <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<title>About — Complexity Insights</title>
+<meta name="description" content="About Nicholas Thomas and Complexity Insights — a research-house applying complexity science to economic and financial questions." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf9f6; --paper-2:#f0ede3; --paper-3:#fffef8;
+    --ink:#10100f; --ink-2:#23231f; --muted:#6a685f;
+    --rule:#ddd9cc; --rule-strong:#bfbaa8;
+    --accent:#1a2a44; --accent-2:#1d3a2f; --oxblood:#6b1f1a;
+    --brass:#8a6a2a; --brass-2:#d4b47a;
+    --serif:"Source Serif 4","Iowan Old Style",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:var(--paper);color:var(--ink);}
+  body{font-family:var(--serif);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:var(--ink);text-decoration:none;}
+  a:hover{color:var(--accent);}
 
-    <style>
-        /* * =========================================
-         * BRAND BIBLE V3.2 (Imported)
-         * ========================================= */
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
-            --text-dark: #334155;
-            --text-light: #64748b;
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-        }
+  /* Masthead */
+  .masthead{
+    padding:1.3rem 3vw 1rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    border-bottom:1px solid var(--rule-strong);font-family:var(--sans);gap:2rem;
+  }
+  .wordmark{font-family:var(--serif);font-weight:600;font-size:1.25rem;color:var(--ink);display:inline-flex;align-items:center;gap:.55em;}
+  .wordmark .mark{width:1.35em;height:1.35em;display:inline-block;flex-shrink:0;}
+  .masthead nav{display:flex;gap:2rem;justify-content:center;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  .masthead nav a{color:var(--muted);}
+  .masthead nav a:hover,.masthead nav a.active{color:var(--ink);}
+  .masthead nav a.active{border-bottom:1px solid var(--accent);padding-bottom:2px;}
+  .masthead .issue{justify-self:end;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;display:flex;gap:.8rem;align-items:center;}
+  .masthead .issue .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2);display:inline-block;box-shadow:0 0 0 3px rgba(29,58,47,.25);}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Crumbs */
+  .crumbs{max-width:1560px;margin:0 auto;padding:1rem 3vw;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--rule);}
+  .crumbs a{color:var(--muted);}.crumbs a:hover{color:var(--ink);}
+  .crumbs .sep{margin:0 .7rem;color:var(--rule-strong);}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            overflow-x: hidden;
-        }
+  /* Page head */
+  .page-head{max-width:1100px;margin:0 auto;padding:5rem 3vw 3rem;}
+  .kicker{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem;}
+  .kicker::after{content:"";height:1px;background:var(--rule-strong);flex:1;max-width:200px;}
+  .kicker .ref{font-family:var(--mono);color:var(--muted);letter-spacing:.08em;}
+  .page-head h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,5.4vw,4.6rem);line-height:1;letter-spacing:-.02em;margin-bottom:1.6rem;color:var(--ink);text-wrap:balance;}
+  .page-head h1 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .page-head .dek{font-family:var(--serif);font-size:clamp(1.15rem,1.5vw,1.35rem);line-height:1.45;color:var(--ink-2);max-width:50ch;text-wrap:pretty;}
 
-        /* --- NAVIGATION --- */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
+  /* Thesis block */
+  .thesis{max-width:1100px;margin:0 auto;padding:2rem 3vw 4rem;border-top:1px solid var(--ink);}
+  .thesis-grid{display:grid;grid-template-columns:180px 1fr;gap:3rem;padding-top:1.8rem;}
+  .thesis-label{font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+  .thesis-body{font-family:var(--serif);font-size:1.3rem;line-height:1.5;color:var(--ink);text-wrap:pretty;max-width:55ch;}
+  .thesis-body strong{font-weight:600;}
+  .thesis-body em{font-style:italic;color:var(--accent);}
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .logo i { color: var(--accent); }
+  /* Practice section */
+  .practice{border-top:1px solid var(--rule-strong);background:var(--paper-2);}
+  .practice-inner{max-width:1400px;margin:0 auto;padding:5rem 3vw;display:grid;grid-template-columns:1fr 2fr;gap:4rem;}
+  .practice-header{position:sticky;top:1.5rem;align-self:start;}
+  .practice-header .lab{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+  .practice-header h2{font-family:var(--serif);font-weight:400;font-size:2.6rem;line-height:1.05;letter-spacing:-.018em;color:var(--ink);margin-bottom:1rem;}
+  .practice-header h2 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .practice-header p{font-family:var(--serif);font-size:1.05rem;color:var(--muted);line-height:1.55;max-width:30ch;}
+  .practice-list{display:grid;grid-template-columns:1fr 1fr;gap:2rem 3rem;}
+  .pr-item{border-top:1px solid var(--ink);padding-top:1.3rem;}
+  .pr-item .num{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent);margin-bottom:.8rem;}
+  .pr-item h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;line-height:1.2;color:var(--ink);margin-bottom:.6rem;}
+  .pr-item h3 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .pr-item p{font-family:var(--serif);font-size:1rem;line-height:1.55;color:var(--ink-2);}
 
-        .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
-        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-btn { padding: 0.6rem 1.2rem; background: var(--primary); color: white !important; border-radius: 6px; transition: all 0.3s; }
-        .nav-btn:hover { background: var(--accent); transform: translateY(-1px); }
-        
-        .mobile-toggle { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); }
+  /* Founder section (the one that must preserve structure + links) */
+  .founder{border-top:1px solid var(--rule-strong);}
+  .founder-inner{max-width:1200px;margin:0 auto;padding:5rem 3vw;display:grid;grid-template-columns:320px 1fr;gap:4rem;}
 
-        /* --- HEADER --- */
-        .page-header {
-            margin-top: 70px;
-            padding: 5rem 5% 3rem;
-            background: var(--primary);
-            color: white;
-            text-align: center;
-        }
+  .founder-side{display:flex;flex-direction:column;gap:1.3rem;}
+  .portrait{
+    width:100%;aspect-ratio:4/5;background:var(--paper-2);border:1px solid var(--rule-strong);
+    position:relative;overflow:hidden;
+  }
+  .portrait img{width:100%;height:100%;object-fit:cover;}
+  .portrait .placeholder{
+    position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(45deg,transparent 0 18px,rgba(26,42,68,.06) 18px 19px),
+      linear-gradient(180deg,var(--paper-2),var(--paper-3));
+    display:flex;align-items:flex-end;justify-content:flex-start;padding:1.2rem;
+    font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);
+  }
+  .portrait .placeholder::before{
+    content:"";position:absolute;top:38%;left:50%;transform:translate(-50%,-50%);
+    width:52%;aspect-ratio:1;border-radius:50%;background:var(--paper);border:1px solid var(--rule-strong);
+  }
+  .portrait .placeholder::after{
+    content:"";position:absolute;top:74%;left:50%;transform:translateX(-50%);
+    width:74%;height:30%;background:var(--paper);border:1px solid var(--rule-strong);border-bottom:none;
+    border-radius:50% 50% 0 0 / 80% 80% 0 0;
+  }
+  .portrait .tag{position:absolute;top:.8rem;left:.8rem;font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--muted);background:var(--paper);padding:.25rem .5rem;border:1px solid var(--rule-strong);z-index:2;}
 
-        .page-header h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; letter-spacing: -1px; }
-        .page-header p { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; color: #cbd5e1; }
+  .resume-btn{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.95rem 1.1rem;background:var(--ink);color:var(--paper);
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    transition:background .15s;
+  }
+  .resume-btn .arr{color:var(--brass-2);}
+  .resume-btn:hover{background:var(--accent);color:var(--paper);}
 
-        /* --- MISSION / CORE VALUES --- */
-        .mission-section {
-            padding: 4rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+  .quick-specs{border:1px solid var(--rule-strong);background:var(--paper);padding:1.3rem 1.4rem;}
+  .spec-item{display:grid;grid-template-columns:110px 1fr;gap:1rem;padding:.6rem 0;border-bottom:1px solid var(--rule);}
+  .spec-item:first-child{padding-top:0;}
+  .spec-item:last-child{border-bottom:none;padding-bottom:0;}
+  .spec-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+  .spec-value{font-family:var(--serif);font-size:15px;color:var(--ink);line-height:1.35;}
+  .spec-value em{font-style:italic;color:var(--accent);}
 
-        .intro-text {
-            max-width: 800px;
-            margin: 0 auto 4rem;
-            text-align: center;
-            font-size: 1.15rem;
-            color: var(--text-dark);
-            line-height: 1.8;
-        }
+  .founder-bio{font-family:var(--serif);font-size:1.15rem;line-height:1.7;color:var(--ink-2);}
+  .founder-bio .name-block{border-top:1px solid var(--ink);padding-top:1.4rem;margin-bottom:2rem;}
+  .founder-bio .meta-line{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem;}
+  .founder-bio h2{font-family:var(--serif);font-weight:400;font-size:clamp(2.4rem,3.6vw,3.4rem);line-height:1;letter-spacing:-.015em;color:var(--ink);margin-bottom:.3rem;}
+  .founder-bio h2 em{font-style:italic;color:var(--accent);}
+  .founder-bio .role{font-family:var(--serif);font-style:italic;color:var(--accent);font-size:1.15rem;}
+  .founder-bio p{margin-bottom:1.5rem;text-wrap:pretty;}
+  .founder-bio p strong{color:var(--ink);font-weight:600;}
+  .founder-bio .first::first-letter{font-family:var(--serif);font-style:italic;float:left;font-size:3.6rem;line-height:.85;padding:.2rem .55rem 0 0;color:var(--accent);font-weight:400;}
 
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+  .social-block{margin-top:2.2rem;padding-top:1.5rem;border-top:1px solid var(--rule-strong);}
+  .social-block .s-lab{font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+  .social-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem;}
+  .social-link{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:.8rem 1rem;border:1px solid var(--rule-strong);background:var(--paper);
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);
+    transition:all .15s;
+  }
+  .social-link:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+  .social-link:hover .arr{color:var(--brass-2);}
+  .social-link .arr{color:var(--accent);transition:color .15s;}
+  .social-link .handle{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:.6rem;}
+  .social-link:hover .handle{color:var(--brass-2);}
 
-        .value-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-            transition: transform 0.3s;
-        }
+  /* How I work / process */
+  .process{border-top:1px solid var(--rule-strong);background:var(--paper-2);}
+  .process-inner{max-width:1100px;margin:0 auto;padding:5rem 3vw;}
+  .process .lab{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+  .process h2{font-family:var(--serif);font-weight:400;font-size:2.6rem;line-height:1.05;letter-spacing:-.018em;color:var(--ink);margin-bottom:2.5rem;max-width:18ch;}
+  .process h2 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+  .step{border-top:1px solid var(--ink);padding-top:1.2rem;}
+  .step .n{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent);margin-bottom:.7rem;}
+  .step h3{font-family:var(--serif);font-weight:500;font-size:1.2rem;color:var(--ink);margin-bottom:.5rem;line-height:1.25;}
+  .step p{font-family:var(--serif);font-size:.98rem;line-height:1.55;color:var(--ink-2);}
 
-        .value-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+  /* Join form */
+  .join{border-top:1px solid var(--rule-strong);}
+  .join-inner{max-width:1100px;margin:0 auto;padding:5rem 3vw;display:grid;grid-template-columns:1fr 1.3fr;gap:4rem;}
+  .join-left .lab{font-family:var(--sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+  .join-left h2{font-family:var(--serif);font-weight:400;font-size:2.4rem;line-height:1.05;letter-spacing:-.015em;color:var(--ink);margin-bottom:1rem;max-width:16ch;}
+  .join-left h2 em{font-style:italic;color:var(--accent);font-weight:400;}
+  .join-left p{font-family:var(--serif);font-size:1.05rem;color:var(--ink-2);line-height:1.6;max-width:34ch;margin-bottom:2rem;}
+  .join-left .contact-line{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;padding-top:1rem;border-top:1px solid var(--rule-strong);}
+  .join-left .contact-line a{color:var(--ink);border-bottom:1px solid var(--accent);}
 
-        .value-icon {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
+  form.join-form{display:grid;gap:1.1rem;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .form-group label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:.75rem .85rem;border:1px solid var(--rule-strong);background:var(--paper);
+    font-family:var(--serif);font-size:15px;color:var(--ink);
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+    outline:1px solid var(--accent);border-color:var(--accent);
+  }
+  .form-group textarea{resize:vertical;min-height:120px;line-height:1.5;}
+  .submit-btn{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1rem 1.2rem;background:var(--ink);color:var(--paper);
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    border:none;cursor:pointer;transition:background .15s;
+  }
+  .submit-btn:hover{background:var(--accent);}
+  .submit-btn .arr{color:var(--brass-2);}
 
-        .value-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary); }
-        .value-card p { font-size: 0.95rem; color: var(--text-light); }
+  /* Footline */
+  .footline{background:var(--ink);color:#7a7162;padding:1.4rem 3vw;font-family:var(--mono);font-size:11px;letter-spacing:.04em;display:flex;justify-content:space-between;border-top:1px solid #3a332a;}
+  .footline a{color:var(--brass-2);}
 
-        /* --- FOUNDER PROFILE --- */
-        .founder-section {
-            background: white;
-            padding: 5rem 5%;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .founder-grid {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 4rem;
-        }
-
-        /* Founder Sidebar */
-        .founder-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .profile-photo-container {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: #f1f5f9;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        /* Image Placeholder - Replace src with real image */
-        .profile-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Fallback icon if no image yet */
-        .profile-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: #cbd5e1;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-        }
-
-        .resume-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: 700;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.1);
-        }
-
-        .resume-btn:hover { background: var(--accent); transform: translateY(-2px); }
-
-        .quick-specs {
-            background: #f8fafc;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .spec-item { margin-bottom: 1rem; }
-        .spec-item:last-child { margin-bottom: 0; }
-        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-light); font-weight: 700; display: block; margin-bottom: 0.2rem; }
-        .spec-value { font-size: 0.95rem; font-weight: 600; color: var(--primary); }
-
-        /* Founder Bio */
-        .founder-bio h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .founder-role { font-size: 1.1rem; color: var(--accent); font-weight: 600; margin-bottom: 2rem; display: block; }
-        
-        .founder-bio p { margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.8; color: var(--text-dark); }
-
-        .social-row {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .social-pill {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 50px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .social-pill:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-
-        /* --- TALENT & PARTNERSHIP FORM --- */
-        .join-section {
-            padding: 5rem 5%;
-            background: var(--bg-light);
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .join-container {
-            max-width: 700px;
-            margin: 0 auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-
-        .join-header { text-align: center; margin-bottom: 2rem; }
-        .join-header h2 { font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .join-header p { color: var(--text-light); }
-
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 0.8rem; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; font-size: 1rem; transition: border-color 0.3s;
-        }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        .submit-btn {
-            width: 100%; padding: 1rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background 0.3s; font-size: 1rem;
-        }
-        .submit-btn:hover { background: var(--accent); }
-
-        /* --- FOOTER --- */
-        footer {
-            background: var(--primary);
-            color: #94a3b8;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-bottom: 3rem;
-        }
-
-        .footer-col h4 { color: white; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .footer-col ul { list-style: none; }
-        .footer-col li { margin-bottom: 0.8rem; }
-        .footer-col a { color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .footer-col a:hover { color: white; }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #334155;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-toggle { display: block; }
-            .founder-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .intro-text { text-align: left; }
-            .values-grid { grid-template-columns: 1fr; }
-            
-            /* Mobile Menu */
-            .nav-links.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 2rem;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            }
-        }
-    </style>
+  @media (max-width:1000px){
+    .thesis-grid, .practice-inner, .founder-inner, .join-inner{grid-template-columns:1fr;gap:2rem;}
+    .practice-header{position:static;}
+    .practice-list{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:700px){
+    .masthead{grid-template-columns:1fr auto;}
+    .masthead nav{display:none;}
+    .masthead .issue{display:none;}
+    .form-row{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+  }
+</style>
 </head>
 <body>
-    <nav class="nav">
-        <a href="/" class="logo">
-            <i class="fas fa-project-diagram"></i>
-            Complexity Insights
-        </a>
-        <div class="mobile-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/#solutions">Solutions</a></li>
-            <li><a href="/projects/">Case Studies</a></li>
-            <li><a href="/blog/">Insights</a></li>
-            <li><a href="/about/" class="active">About</a></li>
-            <li><a href="/#contact" class="nav-btn">Contact</a></li>
-        </ul>
-    </nav>
 
-    <header class="page-header">
-        <h1>About the Firm</h1>
-        <p>Bridging the gap between academic theory and real-world strategy.</p>
-    </header>
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav>
+    <a href="/projects/">Projects</a>
+    <a href="/blog/">Writing</a>
+    <a href="/about/" class="active">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  <div class="issue">
+    <span class="dot"></span>
+    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
+  </div>
+</header>
 
-    <section class="mission-section">
-        <div class="intro-text">
-            <p>
-                <strong>Traditional economic models assume equilibrium.</strong> But real markets are dynamic, adaptive, and constantly evolving. Complexity Insights applies cutting-edge computational methods to understand these systems as they actually are—complex, interconnected networks where small changes can cascade into large effects.
-            </p>
+<div class="crumbs">
+  <a href="/">Home</a><span class="sep">/</span>
+  <span>About</span>
+</div>
+
+<!-- PAGE HEAD -->
+<header class="page-head">
+  <div class="kicker">About the practice <span class="ref">§ IV · COLOPHON</span></div>
+  <h1>A research-house for <em>complex systems.</em></h1>
+  <p class="dek">Complexity Insights is a one-person practice applying network science, agent-based modeling, and quantitative data work to economic and financial questions that don't sit still long enough for a textbook answer.</p>
+</header>
+
+<!-- THESIS -->
+<section class="thesis">
+  <div class="thesis-grid">
+    <div class="thesis-label">The thesis</div>
+    <div class="thesis-body">
+      <p><strong>Traditional models assume equilibrium.</strong> Real markets don't stand still — they are <em>adaptive, networked, and reflexive.</em> Small changes cascade; stable periods end abruptly; the same number can mean wildly different things across regimes. The practice is built around taking that seriously, with code you can run.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="practice">
+  <div class="practice-inner">
+    <div class="practice-header">
+      <div class="lab">§ IV.A — Areas of work</div>
+      <h2>What the practice <em>actually does.</em></h2>
+      <p>Four threads. They overlap more than they diverge; most engagements use two or three at once.</p>
+    </div>
+
+    <div class="practice-list">
+      <div class="pr-item">
+        <div class="num">01 / NETWORK ANALYSIS</div>
+        <h3>Mapping <em>contagion</em> &amp; connectivity.</h3>
+        <p>Correlation graphs, counterparty networks, community detection, centrality-based systemic-risk scoring. Identifying the institutions that are "too connected to fail" — not just too big.</p>
+      </div>
+
+      <div class="pr-item">
+        <div class="num">02 / AGENT-BASED MODELING</div>
+        <h3>Simulating <em>emergence</em> in synthetic markets.</h3>
+        <p>Testing strategies, policy shifts, and microstructure changes in risk-free synthetic environments. When closed-form analysis breaks, a well-specified ABM still produces usable answers.</p>
+      </div>
+
+      <div class="pr-item">
+        <div class="num">03 / DATA SCIENCE</div>
+        <h3>Beyond <em>linear regression.</em></h3>
+        <p>Non-linear dynamics, regime-dependent behavior, feedback loops. Reproducible pipelines in Python; versioned data; everything that makes a finding hold up under re-running it next quarter.</p>
+      </div>
+
+      <div class="pr-item">
+        <div class="num">04 / SYSTEMIC RISK</div>
+        <h3>Quantifying the <em>tails</em> that VaR misses.</h3>
+        <p>Network-aware risk metrics, stress propagation, regime-change early warning. Standard VaR assumes independence. Real crises don't.</p>
+      </div>
+
+      <div class="pr-item">
+        <div class="num">05 / M&amp;A &amp; STRATEGY</div>
+        <h3>Network theory for <em>deal work.</em></h3>
+        <p>Deal sourcing, synergy modeling, post-merger integration risk. What's the topology of the combined entity, and where are the fragile bridges?</p>
+      </div>
+
+      <div class="pr-item">
+        <div class="num">06 / CORPORATE FINANCE</div>
+        <h3>Complexity &amp; <em>valuation.</em></h3>
+        <p>Capital allocation and FP&amp;A that takes non-stationarity seriously. Traditional DCF meets regime-dependent discounting and scenario trees that actually resolve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER — STRUCTURE PRESERVED -->
+<section class="founder">
+  <div class="founder-inner">
+
+    <aside class="founder-side">
+      <div class="portrait">
+        <div class="placeholder">PORTRAIT · FORTHCOMING</div>
+        <!-- When a real headshot is ready, replace the placeholder div above with:
+             <img src="your-headshot.jpg" alt="Nicholas Thomas"> -->
+
+        <div class="tag">N. T. · 2026</div>
+      </div>
+
+      <a href="#" class="resume-btn">Download resume <span class="arr">↓</span></a>
+
+      <div class="quick-specs">
+        <div class="spec-item">
+          <span class="spec-label">Role</span>
+          <span class="spec-value">Founder &amp; <em>Principal</em></span>
         </div>
-
-        <div class="values-grid">
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-project-diagram"></i></div>
-                <h3>Network Analysis</h3>
-                <p>Mapping financial contagion pathways and identifying "Too Connected To Fail" institutions.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-users"></i></div>
-                <h3>Agent-Based Models</h3>
-                <p>Simulating emergent behavior to test strategies in risk-free synthetic environments.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-chart-line"></i></div>
-                <h3>Data Science</h3>
-                <p>Moving beyond linear regression to capture non-linear dynamics and feedback loops.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
-                <h3>Systemic Risk</h3>
-                <p>Quantifying tail risks that standard VaR (Value at Risk) models systematically ignore.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-handshake"></i></div>
-                <h3>M&A & Strategy</h3>
-                <p>Applying network theory to deal sourcing, synergy modeling, and post-merger integration risks.</p>
-            </div>
-            <div class="value-card">
-                <div class="value-icon"><i class="fas fa-chart-pie"></i></div>
-                <h3>Corporate Finance</h3>
-                <p>Bridging the gap between complexity science and traditional valuation, capital allocation, and FP&A.</p>
-            </div>
+        <div class="spec-item">
+          <span class="spec-label">Location</span>
+          <span class="spec-value">Washington, D.C.</span>
         </div>
-    </section>
-
-    <section class="founder-section">
-        <div class="founder-grid">
-            
-            <aside class="founder-sidebar">
-                <div class="profile-photo-container">
-                    <img src="path/to/your-headshot.jpg" alt="Nicholas Thomas" class="profile-img" onerror="this.style.display='none'; document.getElementById('ph-icon').style.display='flex';">
-                    <div id="ph-icon" class="profile-placeholder" style="display:none;">
-                        <i class="fas fa-user"></i>
-                    </div>
-                </div>
-                
-                <a href="#" class="resume-btn">
-                    <i class="fas fa-file-download"></i> Download Resume
-                </a>
-
-                <div class="quick-specs">
-                    <div class="spec-item">
-                        <span class="spec-label">Role</span>
-                        <span class="spec-value">Founder & Principal</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Location</span>
-                        <span class="spec-value">Washington, DC</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Education</span>
-                        <span class="spec-value">Economics (B.S.)</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-label">Core Stack</span>
-                        <span class="spec-value">Python, R, Julia, NetworkX</span>
-                    </div>
-                </div>
-            </aside>
-
-            <div class="founder-bio">
-                <h2>Nicholas Thomas</h2>
-                <span class="founder-role">Research Lead & Founder</span>
-
-                <p>
-                    I am an economics graduate and researcher focused on the intersection of <strong>complexity science</strong> and <strong>financial markets</strong>. My work challenges the static assumptions of traditional economics by applying computational methods to real-world data.
-                </p>
-                <p>
-                    During my studies, I became frustrated with the gap between textbook models and market reality. The 2008 financial crisis wasn't just a "black swan"—it was a failure of models that assumed independence in a deeply interconnected system.
-                </p>
-                <p>
-                    I founded <strong>Complexity Insights</strong> to bridge that gap. This firm serves as both a consultancy and a research laboratory, applying Agent-Based Modeling (ABM) and Network Theory to solve strategic problems in finance and risk management.
-                </p>
-                <p>
-                    I am currently available for full-time roles in <strong>Economic Research</strong>, <strong>Data Analysis</strong>, and <strong>Financial Modeling</strong>, where I can apply these rigorous quantitative methods to drive business value.
-                </p>
-
-                <div class="social-row">
-                    <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="social-pill">
-                        <i class="fab fa-linkedin"></i> LinkedIn
-                    </a>
-                    <a href="https://github.com/EconNickT" target="_blank" class="social-pill">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="https://x.com/EconNickT" target="_blank" class="social-pill">
-                        <i class="fab fa-x-twitter"></i> X (Twitter)
-                    </a>
-                    <a href="https://substack.com/@econnickt" target="_blank" class="social-pill">
-                        <i class="fas fa-envelope-open-text"></i> Substack
-                    </a>
-                    <a href="https://nicholas-thomas.com" target="_blank" class="social-pill">
-                        <i class="fas fa-globe"></i> Personal Site
-                    </a>
-                </div>
-            </div>
+        <div class="spec-item">
+          <span class="spec-label">Education</span>
+          <span class="spec-value">Economics, B.S.</span>
         </div>
-    </section>
-
-    <section class="join-section" id="join">
-        <div class="join-container">
-            <div class="join-header">
-                <h2>Join Our Network</h2>
-                <p>Interested in collaborating, hiring, or commissioning research?</p>
-            </div>
-            
-            <form action="https://formspree.io/f/xjklygav" method="POST">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required placeholder="John Doe">
-                </div>
-                
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required placeholder="john@example.com">
-                </div>
-
-                <div class="form-group">
-                    <label>I am interested in...</label>
-                    <select name="interest">
-                        <option value="client">Hiring Complexity Insights (Consulting)</option>
-                        <option value="hiring">Recruiting Nicholas Thomas (Full-time Role)</option>
-                        <option value="collab">Research Collaboration</option>
-                        <option value="other">Other Inquiry</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Message</label>
-                    <textarea name="message" rows="4" required placeholder="Tell us about your project or opportunity..."></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
+        <div class="spec-item">
+          <span class="spec-label">Core stack</span>
+          <span class="spec-value">Python · R · Julia · NetworkX</span>
         </div>
-    </section>
-
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-col">
-                <h4 style="font-size: 1.4rem; display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-project-diagram" style="color: white;"></i> Complexity Insights
-                </h4>
-                <p style="opacity: 0.8; font-size: 0.9rem; line-height: 1.6;">
-                    Applying complexity science to economic and financial challenges.
-                </p>
-            </div>
-            <div class="footer-col">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Market Simulation</a></li>
-                    <li><a href="#">Network Analysis</a></li>
-                    <li><a href="#">Risk Modeling</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="/about/">About Us</a></li>
-                    <li><a href="/projects/">Case Studies</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://www.linkedin.com/in/thomasnicholasa/"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
-                    <li><a href="https://github.com/EconNickT"><i class="fab fa-github"></i> GitHub</a></li>
-                    <li><a href="https://x.com/EconNickT"><i class="fab fa-x-twitter"></i> X (Twitter)</a></li>
-                </ul>
-            </div>
+        <div class="spec-item">
+          <span class="spec-label">Status</span>
+          <span class="spec-value"><em>Open</em> to roles &amp; contract work</span>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 Complexity Insights. All rights reserved.</p>
-        </div>
-    </footer>
+      </div>
+    </aside>
 
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '2rem';
-                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
-            }
-        }
-    </script>
+    <div class="founder-bio">
+      <div class="name-block">
+        <div class="meta-line">§ IV.B — The founder</div>
+        <h2>Nicholas <em>Thomas</em></h2>
+        <span class="role">Research Lead &amp; Founder</span>
+      </div>
+
+      <p class="first">I am an economics graduate and researcher focused on the intersection of <strong>complexity science</strong> and <strong>financial markets</strong>. My work challenges the static assumptions of traditional economics by applying computational methods to real-world data.</p>
+
+      <p>During my studies, I became frustrated with the gap between textbook models and market reality. The 2008 financial crisis wasn't just a "black swan" — it was a failure of models that assumed independence in a deeply interconnected system.</p>
+
+      <p>I founded <strong>Complexity Insights</strong> to bridge that gap. The firm serves as both a consultancy and a research laboratory, applying Agent-Based Modeling (ABM) and network theory to solve strategic problems in finance and risk management.</p>
+
+      <p>I am currently available for full-time roles in <strong>economic research</strong>, <strong>data analysis</strong>, and <strong>financial modeling</strong>, where I can apply these rigorous quantitative methods to drive business value.</p>
+
+      <div class="social-block">
+        <div class="s-lab">Find me elsewhere</div>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" class="social-link">
+            <span>LinkedIn</span><span class="arr">↗</span>
+          </a>
+          <a href="https://github.com/EconNickT" target="_blank" class="social-link">
+            <span>GitHub <span class="handle">@EconNickT</span></span><span class="arr">↗</span>
+          </a>
+          <a href="https://x.com/EconNickT" target="_blank" class="social-link">
+            <span>X (Twitter) <span class="handle">@EconNickT</span></span><span class="arr">↗</span>
+          </a>
+          <a href="https://substack.com/@econnickt" target="_blank" class="social-link">
+            <span>Substack <span class="handle">@econnickt</span></span><span class="arr">↗</span>
+          </a>
+          <a href="https://nicholas-thomas.com" target="_blank" class="social-link">
+            <span>Personal site</span><span class="arr">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="process">
+  <div class="process-inner">
+    <div class="lab">§ IV.C — Process</div>
+    <h2>How the <em>work</em> gets done.</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Scope the question</h3>
+        <p>One page. What you actually want to know, what a useful answer looks like, what data exists. Most engagements end here if the question is wrong.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>Build the pipeline</h3>
+        <p>Ingest, clean, version. Reproducibility first; plots second. The pipeline is the deliverable just as much as the chart on top.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>Model &amp; stress-test</h3>
+        <p>Specify, fit, break. Every model gets run in at least one regime it wasn't fit on. A fragile result should fall over in the lab, not in production.</p>
+      </div>
+      <div class="step">
+        <div class="n">04</div>
+        <h3>Write it up</h3>
+        <p>Prose, code, notebook. Findings stated in plain language with the caveats in the open. Nothing goes out that I couldn't defend under cross-examination.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN / CONTACT -->
+<section class="join" id="join">
+  <div class="join-inner">
+
+    <div class="join-left">
+      <div class="lab">§ IV.D — Get in touch</div>
+      <h2>Hiring, collaborating, or <em>commissioning.</em></h2>
+      <p>Open to full-time roles, contract engagements, research collaboration, and the occasional "can you look at this?" from someone with a thorny network question. I read every message.</p>
+    </div>
+
+    <form action="https://formspree.io/f/xjklygav" method="POST" class="join-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" required placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" required placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nature of inquiry</label>
+        <select name="interest">
+          <option value="client">Commissioning Complexity Insights (consulting)</option>
+          <option value="hiring">Recruiting Nicholas Thomas (full-time role)</option>
+          <option value="collab">Research collaboration</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Message</label>
+        <textarea name="message" rows="5" required placeholder="A few lines about the question, the scope, and what a useful result would look like."></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Send message <span class="arr">→</span></button>
+    </form>
+
+  </div>
+</section>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+  <span><a href="/">← Return home</a></span>
+</div>
+
 </body>
 </html>
