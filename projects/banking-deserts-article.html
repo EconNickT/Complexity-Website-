@@ -352,7 +352,7 @@
       <p>Single-variable maps answer the wrong question. The policy-relevant pattern isn't where income is low or where branch access is low — it's where they compound. Bivariate classification surfaces exactly that overlap.</p>
     </div>
 
-    <h2 id="method" data-num="§ 02">Methodology &amp; <em>pipeline.</em></h2>
+    <h2 id="method" data-num="§ 02">Methodology &amp; pipeline.</h2>
 
     <h3>Data sources</h3>
     <ul>
@@ -383,7 +383,7 @@
       <p>A county with adequate average branch density may still have underserved neighborhoods. The analysis also doesn't account for credit unions, online banking adoption, or mobile banking access — all of which affect the real-world financial access picture. Extending to census-tract level is the natural next step.</p>
     </div>
 
-    <h2 id="complexity" data-num="§ 04">A complexity <em>lens.</em></h2>
+    <h2 id="complexity" data-num="§ 04">A complexity lens.</h2>
     <p>Banking deserts aren't a simple resource-allocation problem. They're an emergent property of interconnected economic, demographic, and regulatory systems. A few complexity concepts help explain the patterns visible in the map.</p>
 
     <h3>Feedback loops</h3>
@@ -395,7 +395,7 @@
     <h3>Fintech as partial solution</h3>
     <p>Digital banking is often proposed as the answer, but it faces its own complexity challenges. Broadband access is uneven — often worst in the same areas with the fewest branches. Digital literacy varies. Many financial services still require in-person interaction. Technology can complement physical infrastructure; it doesn't fully substitute for it.</p>
 
-    <h2 id="stack" data-num="§ 05">Technical <em>notes.</em></h2>
+    <h2 id="stack" data-num="§ 05">Technical notes.</h2>
     <p>The map is built as a static web application with no server-side processing. County boundaries and merged data are served as GeoJSON files, rendered with <strong>Leaflet.js</strong> on a CartoDB dark basemap. The bivariate color scheme uses a palette that stays distinguishable across all nine categories.</p>
     <p>Interactive features include click-to-inspect popups with exact branch density and income figures for each county, plus a bivariate legend that doubles as a visual guide to the color scheme. The entire application loads client-side, suitable for static hosting on Cloudflare Pages — which is where it runs.</p>
 
