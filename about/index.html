@@ -250,8 +250,8 @@
     .steps{grid-template-columns:1fr 1fr;}
   }
   @media (max-width:700px){
-    .masthead{grid-template-columns:1fr auto;}
-    .masthead nav{display:none;}
+    .masthead{grid-template-columns:1fr;justify-items:start;gap:.9rem;}
+    .masthead nav{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:1.1rem;}
     .masthead .issue{display:none;}
     .form-row{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
@@ -267,14 +267,10 @@
   </a>
   <nav>
     <a href="/projects/">Projects</a>
-    <a href="/blog/">Writing</a>
+    <a href="https://complexityinsights.substack.com" target="_blank" rel="noopener">Writings</a>
     <a href="/about/" class="active">About</a>
     <a href="/#contact">Contact</a>
   </nav>
-  <div class="issue">
-    <span class="dot"></span>
-    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
-  </div>
 </header>
 
 <div class="crumbs">
@@ -357,11 +353,9 @@
         <div class="placeholder">PORTRAIT · FORTHCOMING</div>
         <!-- When a real headshot is ready, replace the placeholder div above with:
              <img src="your-headshot.jpg" alt="Nicholas Thomas"> -->
-
-        <div class="tag">N. T. · 2026</div>
       </div>
 
-      <a href="#" class="resume-btn">Download resume <span class="arr">↓</span></a>
+      <a href="/#contact" class="resume-btn">Request resume <span class="arr">→</span></a>
 
       <div class="quick-specs">
         <div class="spec-item">
@@ -414,8 +408,8 @@
           <a href="https://x.com/EconNickT" target="_blank" class="social-link">
             <span>X (Twitter) <span class="handle">@EconNickT</span></span><span class="arr">↗</span>
           </a>
-          <a href="https://substack.com/@econnickt" target="_blank" class="social-link">
-            <span>Substack <span class="handle">@econnickt</span></span><span class="arr">↗</span>
+          <a href="https://complexityinsights.substack.com" target="_blank" rel="noopener" class="social-link">
+            <span>Substack</span><span class="arr">↗</span>
           </a>
           <a href="https://nicholas-thomas.com" target="_blank" class="social-link">
             <span>Personal site</span><span class="arr">↗</span>
@@ -427,82 +421,9 @@
   </div>
 </section>
 
-<!-- HOW I WORK -->
-<section class="process">
-  <div class="process-inner">
-    <div class="lab">§ IV.C — Process</div>
-    <h2>How the <em>work</em> gets done.</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="n">01</div>
-        <h3>Scope the question</h3>
-        <p>One page. What you actually want to know, what a useful answer looks like, what data exists. Most engagements end here if the question is wrong.</p>
-      </div>
-      <div class="step">
-        <div class="n">02</div>
-        <h3>Build the pipeline</h3>
-        <p>Ingest, clean, version. Reproducibility first; plots second. The pipeline is the deliverable just as much as the chart on top.</p>
-      </div>
-      <div class="step">
-        <div class="n">03</div>
-        <h3>Model &amp; stress-test</h3>
-        <p>Specify, fit, break. Every model gets run in at least one regime it wasn't fit on. A fragile result should fall over in the lab, not in production.</p>
-      </div>
-      <div class="step">
-        <div class="n">04</div>
-        <h3>Write it up</h3>
-        <p>Prose, code, notebook. Findings stated in plain language with the caveats in the open. Nothing goes out that I couldn't defend under cross-examination.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- JOIN / CONTACT -->
-<section class="join" id="join">
-  <div class="join-inner">
-
-    <div class="join-left">
-      <div class="lab">§ IV.D — Get in touch</div>
-      <h2>Hiring, collaborating, or <em>commissioning.</em></h2>
-      <p>Open to full-time roles, contract engagements, research collaboration, and the occasional "can you look at this?" from someone with a thorny network question. I read every message.</p>
-    </div>
-
-    <form action="https://formspree.io/f/xjklygav" method="POST" class="join-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Name</label>
-          <input type="text" name="name" required placeholder="Your name">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email" required placeholder="you@example.com">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Nature of inquiry</label>
-        <select name="interest">
-          <option value="client">Commissioning Complexity Insights (consulting)</option>
-          <option value="hiring">Recruiting Nicholas Thomas (full-time role)</option>
-          <option value="collab">Research collaboration</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Message</label>
-        <textarea name="message" rows="5" required placeholder="A few lines about the question, the scope, and what a useful result would look like."></textarea>
-      </div>
-
-      <button type="submit" class="submit-btn">Send message <span class="arr">→</span></button>
-    </form>
-
-  </div>
-</section>
-
 <div class="footline">
   <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
-  <span><a href="/">← Return home</a></span>
+  <span>Set in Source Serif 4, Inter &amp; JetBrains Mono</span>
 </div>
 
 </body>
