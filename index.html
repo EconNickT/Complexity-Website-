@@ -333,6 +333,8 @@
     font-size: 1.17rem;
     line-height: 1.65;
     color: var(--ink-2);
+    border-right: 2px solid var(--accent);
+    padding-right: 3rem;
   }
   .thesis-body p { margin-bottom: 1.1rem; text-wrap: pretty; }
   .thesis-body .dropcap::first-letter {
@@ -732,10 +734,11 @@
   }
 
   @media (max-width: 900px) {
-    .masthead { grid-template-columns: 1fr auto; }
-    .masthead nav { display: none; }
+    .masthead { grid-template-columns: 1fr; justify-items: start; gap: 0.9rem; }
+    .masthead nav { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 1.1rem; }
     .hero-frame { height: 420px; }
     .hero-footer, .section-head, .thesis, .profile, .colophon-inner, .sim { grid-template-columns: 1fr; gap: 2rem; }
+    .thesis-body { border-right: none; padding-right: 0; }
     .hero-dek { grid-column: 1; }
     .hero-byline { text-align: left; }
     .practice-list { grid-template-columns: 1fr; }
@@ -759,32 +762,16 @@
   </a>
   <nav>
     <a href="/projects/">Projects</a>
-    <a href="/blog/">Writing</a>
+    <a href="https://complexityinsights.substack.com" target="_blank" rel="noopener">Writings</a>
     <a href="/about/">About</a>
     <a href="#contact">Contact</a>
   </nav>
-  <div class="issue">
-    <span class="dot"></span>
-    VOL. I &nbsp;·&nbsp; <span id="today">APR 2026</span>
-  </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-frame" id="heroFrame">
-    <span class="reg tl"></span><span class="reg tr"></span>
-    <span class="reg bl"></span><span class="reg br"></span>
     <canvas id="networkCanvas"></canvas>
-    <div class="hero-labels">
-      <div>
-        FIG. 01 &nbsp;·&nbsp; STOCHASTIC NETWORK<br/>
-        FORCE-DIRECTED · HOVER TO PERTURB
-      </div>
-      <div class="right">
-        n = <span id="nodeCount" class="v">—</span><br/>
-        ⟨k⟩ = <span id="avgDeg" class="v">—</span>
-      </div>
-    </div>
     <div class="hero-headline-wrap">
       <div class="hero-headline">
         <span class="kicker-inline">A Research Practice</span>
@@ -795,16 +782,6 @@
   </div>
 </section>
 
-<!-- DATA STRIP -->
-<div class="data-strip">
-  <div class="cell"><span class="k">Practice</span><span class="v">Complexity Econ.</span></div>
-  <div class="cell"><span class="k">Methods</span><span class="v">ABM · Network · Non-linear</span></div>
-  <div class="cell"><span class="k">Toolkit</span><span class="v">Python · Mesa · NetworkX</span></div>
-  <div class="cell"><span class="k">Case studies</span><span class="v">4 · <span class="pos">2 live</span></span></div>
-  <div class="cell"><span class="k">Writing</span><span class="v">1 essay · 1 note</span></div>
-  <div class="cell"><span class="k">Status</span><span class="v"><span class="pos">● accepting work</span></span></div>
-</div>
-
 <!-- HERO FOOTER -->
 <div class="hero-footer">
   <div class="hero-dek">
@@ -814,8 +791,7 @@
     <span class="by">Nicholas Thomas</span>
     <span class="role">Founder · Economist · Researcher</span>
     <div class="mini-links">
-      <a href="#lab">LAB →</a>
-      <a href="#contact">CONTACT →</a>
+      <a href="/about/">ABOUT →</a>
     </div>
   </div>
 </div>
@@ -834,13 +810,6 @@
       <p>The alternative is not to abandon rigor — it is to model behavior that is genuinely adaptive. Traders who learn. Firms that imitate. Shocks that propagate through network topology rather than dissipating smoothly across representative agents. The methods are now mature: agent-based models, calibrated networks, non-linear stochastic dynamics. The bottleneck is practitioners who can translate between the research and a real business problem.</p>
       <p>That is the practice.</p>
     </div>
-    <aside class="thesis-aside">
-      <span class="label">Working apparatus</span>
-      <div class="eq">x<sub>t+1</sub> = f(x<sub>t</sub>, θ, ε<sub>t</sub>)</div>
-      <p class="note">State evolves through agent-level rules f, calibrated parameters θ, and idiosyncratic noise ε — solved by simulation, not closed form.</p>
-      <div class="eq" style="margin-top:1rem;">G = (V, E, w)</div>
-      <p class="note">Exposure networks — weighted graphs over agents — give tractable structure where equilibrium gives only averages.</p>
-    </aside>
   </div>
 </section>
 
@@ -890,67 +859,6 @@
   </div>
 </section>
 
-<!-- LAB — interactive ABM sim -->
-<section class="section" id="lab">
-  <div class="section-head">
-    <div class="label"><span class="num">03</span>The Lab</div>
-    <h2>A live agent-based market. <em>Fundamentalists, chartists, noise.</em></h2>
-  </div>
-
-  <div class="sim">
-    <div style="font-family: var(--serif); color: var(--ink-2); line-height: 1.6; font-size: 1rem;">
-      <p style="margin-bottom: 1rem;">A working toy of the <em>Santa Fe Artificial Stock Market</em>. Three populations of traders interact: <strong>fundamentalists</strong> pull price toward a latent value, <strong>chartists</strong> chase the trend, <strong>noise</strong> traders add liquidity and randomness.</p>
-      <p style="margin-bottom: 1rem;">Raise the chartist fraction — watch bubbles, crashes, and fat tails emerge from the same rule-set that used to converge quietly.</p>
-      <p style="font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.04em;">NO EQUILIBRIUM ASSUMED.<br/>NO REPRESENTATIVE AGENT.</p>
-    </div>
-
-    <div class="sim-wrap">
-      <div class="sim-head">
-        <div>
-          <div class="title">ABM · Price Formation</div>
-          <div style="margin-top:0.2rem; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.05em;">
-            N = 200 AGENTS · Δt = 1 TICK
-          </div>
-        </div>
-        <div class="price" id="priceReadout">
-          <span class="tag">px</span><span id="pxVal">100.00</span>
-          &nbsp;<span class="delta" id="pxDelta">+0.00</span>
-        </div>
-      </div>
-
-      <div class="sim-canvas-wrap">
-        <canvas id="simCanvas"></canvas>
-      </div>
-
-      <div class="sim-controls">
-        <div class="ctl">
-          <label>Chartists <span class="val" id="vChart">40%</span></label>
-          <input id="sChart" type="range" min="0" max="80" value="40" />
-        </div>
-        <div class="ctl">
-          <label>Noise <span class="val" id="vNoise">0.40</span></label>
-          <input id="sNoise" type="range" min="0" max="100" value="40" />
-        </div>
-        <div class="ctl">
-          <label>Fundamental <span class="val" id="vFund">100</span></label>
-          <input id="sFund" type="range" min="70" max="130" value="100" />
-        </div>
-        <div class="ctl">
-          <label>Speed <span class="val" id="vSpeed">1.0×</span></label>
-          <input id="sSpeed" type="range" min="5" max="30" value="10" />
-        </div>
-        <button class="sim-btn" id="simShock">Shock</button>
-      </div>
-
-      <div class="sim-legend">
-        <span><span class="swatch sw-fund"></span>Price p<sub>t</sub></span>
-        <span><span class="swatch sw-chart"></span>Fundamental v<sub>t</sub></span>
-        <span style="color: var(--muted);">Series shows last 400 ticks · hover chart to pause</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- WRITING -->
 <section class="section" id="writing">
   <div class="section-head">
@@ -997,46 +905,6 @@
   </div>
 </section>
 
-<!-- PROFILE -->
-<section class="section" id="profile">
-  <div class="section-head">
-    <div class="label"><span class="num">05</span>About</div>
-    <h2>Who runs this.</h2>
-  </div>
-
-  <div class="profile">
-    <div class="profile-img">
-      <div class="placeholder-label"><span>PORTRAIT · 4:5</span></div>
-    </div>
-    <div class="profile-body">
-      <h3>Nicholas Thomas works at the intersection of <em>network science, agent-based modeling, and applied finance.</em></h3>
-      <p>The practice was founded on a simple wager: that the methods of complexity economics — agent-based simulation, network analysis, non-linear dynamics — are ready to leave the journals and solve real business problems. Most organizations still rely on models built on equilibrium assumptions they would never use to run the rest of their operations.</p>
-      <p>Current work spans correlation-structure analysis for equity portfolios, network models of supply-chain and financial exposure, and agent-based simulations of market microstructure. All output is Python-native, reproducible, and versioned publicly where possible.</p>
-
-      <div class="cv-strip">
-        <div>
-          <div class="cv-label">Training</div>
-          <div class="cv-value">Economics<br/>Recent graduate</div>
-        </div>
-        <div>
-          <div class="cv-label">Toolkit</div>
-          <div class="cv-value">Python · NetworkX<br/>Mesa · NumPy</div>
-        </div>
-        <div>
-          <div class="cv-label">Available for</div>
-          <div class="cv-value">Full-time roles<br/>Contract engagements</div>
-        </div>
-      </div>
-
-      <div class="sig">
-        Questions, problems, or potential collaborations — write.<br/>
-        <span class="name">— Nicholas Thomas</span>
-        <span class="role">Founder · Complexity Insights</span>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CONTACT -->
 <section class="colophon" id="contact">
   <div class="colophon-inner">
@@ -1046,6 +914,11 @@
       <p>If you have an interesting question — inside a firm, a research group, or a hiring pipeline — the fastest path is a direct note. Short is fine.</p>
     </div>
     <div class="contact-list">
+      <a class="contact-row" href="mailto:REPLACE-WITH-EMAIL">
+        <span class="rlabel">Email</span>
+        <span class="rval">REPLACE-WITH-EMAIL</span>
+        <span class="rarrow">→</span>
+      </a>
       <a class="contact-row" href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" rel="noopener">
         <span class="rlabel">LinkedIn</span>
         <span class="rval">/in/thomasnicholasa</span>
@@ -1059,11 +932,6 @@
       <a class="contact-row" href="https://github.com/EconNickT" target="_blank" rel="noopener">
         <span class="rlabel">GitHub</span>
         <span class="rval">EconNickT</span>
-        <span class="rarrow">→</span>
-      </a>
-      <a class="contact-row" href="#">
-        <span class="rlabel">Schedule</span>
-        <span class="rval">Book a 30-minute call</span>
         <span class="rarrow">→</span>
       </a>
     </div>
@@ -1184,207 +1052,6 @@
   resize(); draw();
 })();
 
-/* ============================================================
-   ABM PRICE-FORMATION SIM
-   ============================================================ */
-(function(){
-  const canvas = document.getElementById('simCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
-
-  let N = 200;
-  let chartFrac = 0.40;
-  let noiseSig = 0.40;
-  let fundValue = 100;
-  let speed = 10;
-  let paused = false;
-
-  // state
-  let price = 100;
-  let prevPrice = 100;
-  let momentum = 0;
-  const history = []; // price series
-  const fundHist = [];
-  const maxHist = 400;
-
-  function palette() {
-    const css = getComputedStyle(document.documentElement);
-    return {
-      ink:    css.getPropertyValue('--ink').trim(),
-      ink2:   css.getPropertyValue('--ink-2').trim(),
-      accent: css.getPropertyValue('--accent').trim(),
-      accent2:css.getPropertyValue('--accent-2').trim(),
-      muted:  css.getPropertyValue('--muted').trim(),
-      rule:   css.getPropertyValue('--rule').trim(),
-    };
-  }
-
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-
-  // One simulation step — compute excess demand, update price
-  function step() {
-    const nChart = Math.round(N * chartFrac);
-    const nFund  = Math.round(N * (1 - chartFrac) * 0.7);
-    const nNoise = N - nChart - nFund;
-
-    // Fundamentalist demand: pulls toward fundValue
-    const fundDemand = nFund * 0.02 * (fundValue - price);
-    // Chartist demand: chases momentum
-    const chartDemand = nChart * 0.35 * momentum;
-    // Noise demand: random
-    const noiseDemand = nNoise * noiseSig * (Math.random() - 0.5) * 2;
-
-    const excess = (fundDemand + chartDemand + noiseDemand) / N;
-    // price adjustment
-    const kappa = 0.15;
-    const newPrice = price + kappa * excess + (Math.random() - 0.5) * 0.05;
-
-    // update momentum (exp smoothing of returns)
-    const ret = (newPrice - price) / Math.max(price, 1e-6);
-    momentum = 0.85 * momentum + 0.15 * ret;
-
-    prevPrice = price;
-    price = Math.max(1, newPrice);
-
-    history.push(price);
-    fundHist.push(fundValue);
-    if (history.length > maxHist) { history.shift(); fundHist.shift(); }
-  }
-
-  function draw() {
-    const rect = canvas.getBoundingClientRect();
-    const w = rect.width, h = rect.height;
-    const p = palette();
-    ctx.clearRect(0, 0, w, h);
-
-    if (history.length < 2) return;
-
-    // compute y-range
-    const allVals = history.concat(fundHist);
-    let lo = Math.min(...allVals), hi = Math.max(...allVals);
-    const pad = Math.max(2, (hi - lo) * 0.12);
-    lo -= pad; hi += pad;
-    if (hi - lo < 4) { const m = (hi+lo)/2; lo = m-2; hi = m+2; }
-
-    const xStep = w / (maxHist - 1);
-    const yOf = v => h - ((v - lo) / (hi - lo)) * h;
-
-    // fundamental line (dashed accent2)
-    ctx.save();
-    ctx.strokeStyle = p.accent;
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    fundHist.forEach((v, i) => {
-      const x = (i + (maxHist - fundHist.length)) * xStep;
-      const y = yOf(v);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-    ctx.restore();
-
-    // price line (ink)
-    ctx.strokeStyle = p.ink;
-    ctx.lineWidth = 1.4;
-    ctx.beginPath();
-    history.forEach((v, i) => {
-      const x = (i + (maxHist - history.length)) * xStep;
-      const y = yOf(v);
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    // last-price marker
-    const lastX = (history.length - 1 + (maxHist - history.length)) * xStep;
-    const lastY = yOf(price);
-    ctx.fillStyle = p.accent;
-    ctx.beginPath(); ctx.arc(lastX, lastY, 3, 0, Math.PI*2); ctx.fill();
-
-    // axis tick labels (min/max)
-    ctx.fillStyle = p.muted;
-    ctx.font = '10px "JetBrains Mono", monospace';
-    ctx.textAlign = 'right';
-    ctx.fillText(hi.toFixed(1), w - 6, 12);
-    ctx.fillText(lo.toFixed(1), w - 6, h - 4);
-  }
-
-  // loop
-  let acc = 0;
-  function frame() {
-    if (!paused) {
-      // step count proportional to speed
-      for (let i = 0; i < Math.max(1, Math.floor(speed/5)); i++) step();
-      draw();
-      // update readouts
-      const pxEl = document.getElementById('pxVal');
-      const dxEl = document.getElementById('pxDelta');
-      if (pxEl) pxEl.textContent = price.toFixed(2);
-      const d = price - prevPrice;
-      if (dxEl) {
-        dxEl.textContent = (d >= 0 ? '+' : '') + d.toFixed(2);
-        dxEl.className = 'delta ' + (d >= 0 ? 'pos' : 'neg');
-      }
-    }
-    requestAnimationFrame(frame);
-  }
-
-  // seed history
-  for (let i = 0; i < 100; i++) step();
-
-  // controls
-  const sChart = document.getElementById('sChart');
-  const sNoise = document.getElementById('sNoise');
-  const sFund  = document.getElementById('sFund');
-  const sSpeed = document.getElementById('sSpeed');
-  const shock  = document.getElementById('simShock');
-
-  sChart.addEventListener('input', e => {
-    chartFrac = +e.target.value / 100;
-    document.getElementById('vChart').textContent = Math.round(chartFrac * 100) + '%';
-  });
-  sNoise.addEventListener('input', e => {
-    noiseSig = +e.target.value / 100;
-    document.getElementById('vNoise').textContent = noiseSig.toFixed(2);
-  });
-  sFund.addEventListener('input', e => {
-    fundValue = +e.target.value;
-    document.getElementById('vFund').textContent = fundValue;
-  });
-  sSpeed.addEventListener('input', e => {
-    speed = +e.target.value;
-    document.getElementById('vSpeed').textContent = (speed/10).toFixed(1) + '×';
-  });
-  shock.addEventListener('click', () => {
-    price *= (Math.random() < 0.5 ? 0.9 : 1.1);
-    momentum += (Math.random() - 0.5) * 0.04;
-  });
-  canvas.addEventListener('mouseenter', () => paused = true);
-  canvas.addEventListener('mouseleave', () => paused = false);
-
-  window.addEventListener('resize', resize);
-  resize();
-  frame();
-})();
-
-/* ============================================================
-   TODAY (masthead issue date)
-   ============================================================ */
-(function(){
-  const el = document.getElementById('today');
-  if (!el) return;
-  const d = new Date();
-  const m = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-  el.textContent = m[d.getMonth()] + ' ' + d.getFullYear();
-})();
 </script>
 </body>
-</html>
-</script>
-</body>
-</html>
+</html>     
