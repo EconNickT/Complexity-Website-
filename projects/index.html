@@ -107,33 +107,36 @@
             animation: roll 4s infinite cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        /* The endless loop: Swing, miss, reset */
+/* The endless loop: Swing, miss, reset */
         @keyframes swing {
-            0%, 10% { transform: rotate(0deg); }
-            15% { transform: rotate(12deg); } /* Backswing */
-            20% { transform: rotate(-8deg); } /* Follow through */
-            30%, 100% { transform: rotate(0deg); }
+            0%, 10% { transform: rotate(0deg); }      /* Address the ball */
+            15% { transform: rotate(-15deg); }      /* Backswing (rotates away from hole) */
+            20% { transform: rotate(0deg); }        /* Impact exactly at 20% */
+            25% { transform: rotate(18deg); }       /* Follow-through (towards hole) */
+            35%, 100% { transform: rotate(0deg); }    /* Reset stance */
         }
 
         @keyframes roll {
-            0%, 19% { 
-                transform: translate(0, 0); 
+            0%, 20% { 
+                transform: translate(0, 0);         /* Ball remains completely still until impact at 20% */
                 opacity: 1; 
             }
-            35% { 
-                /* Lips the hole */
+            40% { 
+                /* Reaches and lips the hole */
                 transform: translate(-145px, 2px); 
             }
-            45% { 
-                /* Rolls just past it */
+            50% { 
+                /* Rolls just past the lip */
                 transform: translate(-165px, -8px); 
                 opacity: 1; 
             }
-            55% {
+            60% {
+                /* Fades out into the liminal paper void */
                 transform: translate(-170px, -10px); 
-                opacity: 0; /* Fades out into the void */
+                opacity: 0; 
             }
             100% { 
+                /* Instantly resets invisibly */
                 transform: translate(0, 0); 
                 opacity: 0; 
             }
