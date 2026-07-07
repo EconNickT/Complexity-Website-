@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Complexity Insights</title>
 <meta name="description" content="An independent research practice applying agent-based modeling, network science, and non-linear dynamics to problems in financial and economic systems.">
+<link rel="canonical" href="https://complexityinsights.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://complexityinsights.com/">
+<meta property="og:site_name" content="Complexity Insights">
+<meta property="og:title" content="Complexity Insights">
+<meta property="og:description" content="An independent research practice applying agent-based modeling, network science, and non-linear dynamics to problems in financial and economic systems.">
+<meta property="og:image" content="https://complexityinsights.com/favicon/android-chrome-512x512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@EconNickT">
 <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,36 +53,6 @@
   }
   a { color: var(--ink); text-decoration: none; }
   a:hover { color: var(--accent-ink); }
-
-  /* ============================================================
-     TICKER BAR (top, quant touch)
-     ============================================================ */
-  .ticker {
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    padding: 6px 0;
-    overflow: hidden;
-    white-space: nowrap;
-    border-bottom: 1px solid var(--ink-2);
-  }
-  .ticker-track {
-    display: inline-block;
-    padding-left: 100%;
-    animation: ticker 80s linear infinite;
-  }
-  .ticker-track span {
-    display: inline-block;
-    margin: 0 1.4rem;
-    color: #d4cfb8;
-  }
-  .ticker-track .pos { color: #7cb38a; }
-  .ticker-track .neg { color: #d49090; }
-  .ticker-track .sym { color: var(--paper); font-weight: 600; }
-  .ticker-track .sep { color: #4a453c; margin: 0 0.6rem; }
-  @keyframes ticker { to { transform: translateX(-50%); } }
 
   /* ============================================================
      MASTHEAD
@@ -252,32 +231,6 @@
   .hero-byline .mini-links a { color: var(--accent); border-bottom: 1px solid var(--accent); }
 
   /* ============================================================
-     DATA STRIP — quant touch, runs under hero
-     ============================================================ */
-  .data-strip {
-    max-width: 1560px;
-    margin: 0 auto 0;
-    padding: 0.9rem 3vw;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    border-top: 1px solid var(--rule-strong);
-    border-bottom: 1px solid var(--rule-strong);
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    background: var(--paper);
-  }
-  .data-strip .cell { line-height: 1.3; }
-  .data-strip .k { font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; display: block; }
-  .data-strip .v { font-size: 13px; color: var(--ink); font-weight: 500; letter-spacing: 0.02em; }
-  .data-strip .v .pos { color: var(--positive); }
-  .data-strip .v .neg { color: var(--negative); }
-  @media (max-width: 900px) {
-    .data-strip { grid-template-columns: repeat(2, 1fr); row-gap: 0.7rem; }
-  }
-
-  /* ============================================================
      SECTIONS
      ============================================================ */
   .section {
@@ -424,137 +377,6 @@
   .practice-item .methods span:first-child::before { content: ""; }
 
   /* ============================================================
-     ABM SIM — interactive quant demo
-     ============================================================ */
-  .sim {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 3rem;
-    align-items: start;
-    margin-bottom: 1rem;
-  }
-  .sim-wrap {
-    border: 1px solid var(--rule-strong);
-    background: var(--paper-3);
-    padding: 0;
-  }
-  .sim-head {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
-    padding: 0.9rem 1.1rem;
-    border-bottom: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    align-items: baseline;
-  }
-  .sim-head .title {
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .sim-head .price {
-    font-family: var(--mono);
-    color: var(--ink);
-    font-size: 13px;
-    font-weight: 600;
-  }
-  .sim-head .price .tag { color: var(--muted); margin-right: 0.4em; }
-  .sim-head .price .delta.pos { color: var(--positive); }
-  .sim-head .price .delta.neg { color: var(--negative); }
-
-  .sim-canvas-wrap {
-    position: relative;
-    height: 340px;
-    background:
-      linear-gradient(to right, transparent calc(100% - 1px), var(--rule) calc(100% - 1px)),
-      linear-gradient(to bottom, transparent calc(100% - 1px), var(--rule) calc(100% - 1px));
-    background-size: 80px 40px;
-  }
-  .sim-canvas-wrap canvas {
-    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  }
-
-  .sim-controls {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr) auto;
-    gap: 1rem;
-    padding: 1rem 1.1rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    background: var(--paper-2);
-    align-items: center;
-  }
-  .sim-controls .ctl label {
-    display: block;
-    font-size: 9.5px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 4px;
-  }
-  .sim-controls .ctl .val {
-    font-size: 12px;
-    color: var(--ink);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-  }
-  .sim-controls input[type=range] {
-    width: 100%;
-    height: 2px;
-    background: var(--rule-strong);
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 4px 0 0;
-  }
-  .sim-controls input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--accent); cursor: pointer; border: none;
-  }
-  .sim-controls input[type=range]::-moz-range-thumb {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--accent); cursor: pointer; border: none;
-  }
-  .sim-controls .sim-btn {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 8px 14px;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    cursor: pointer;
-  }
-  .sim-controls .sim-btn:hover { background: var(--accent); }
-
-  .sim-legend {
-    padding: 0.8rem 1.1rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 10.5px;
-    color: var(--muted);
-    letter-spacing: 0.03em;
-    display: flex;
-    gap: 1.4rem;
-    flex-wrap: wrap;
-  }
-  .sim-legend .swatch {
-    display: inline-block; width: 14px; height: 2px;
-    vertical-align: middle; margin-right: 6px;
-  }
-  .sim-legend .sw-fund { background: var(--ink); }
-  .sim-legend .sw-chart { background: var(--accent); }
-  .sim-legend .sw-noise { background: var(--accent-2); border-top: 1px dashed var(--accent-2); height:0; border-bottom:0; }
-
-  /* ============================================================
      INTEL LIST
      ============================================================ */
   .intel-list { display: grid; gap: 0; }
@@ -607,77 +429,6 @@
   }
   .intel-meta .status-live { color: var(--accent); }
   .intel-meta .ticker-code { color: var(--ink); font-weight: 600; }
-
-  /* ============================================================
-     PROFILE
-     ============================================================ */
-  .profile {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .profile-img {
-    background: var(--paper-2);
-    border: 1px solid var(--rule-strong);
-    aspect-ratio: 4/5;
-    position: relative;
-    background-image:
-      repeating-linear-gradient(
-        135deg,
-        transparent 0,
-        transparent 11px,
-        rgba(0,0,0,0.04) 11px,
-        rgba(0,0,0,0.04) 12px
-      );
-  }
-  .profile-img .placeholder-label {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 12px;
-    color: var(--muted); letter-spacing: 0.08em;
-  }
-  .profile-img .placeholder-label span {
-    background: var(--paper); padding: 6px 10px;
-    border: 1px solid var(--rule-strong);
-  }
-  .profile-body { font-family: var(--serif); font-size: 1.1rem; line-height: 1.6; color: var(--ink-2); }
-  .profile-body h3 {
-    font-family: var(--serif); font-weight: 500;
-    font-size: 1.85rem; line-height: 1.15;
-    margin-bottom: 1.2rem; letter-spacing: -0.01em; color: var(--ink);
-  }
-  .profile-body h3 em { font-style: italic; color: var(--accent-ink); font-weight: 400; }
-  .profile-body p { margin-bottom: 1rem; text-wrap: pretty; }
-  .profile-body .sig {
-    font-family: var(--serif); font-style: italic;
-    font-size: 1.15rem; color: var(--ink);
-    margin-top: 2rem; padding-top: 1.4rem;
-    border-top: 1px solid var(--rule);
-  }
-  .profile-body .sig .name { font-style: normal; font-weight: 500; }
-  .profile-body .sig .role {
-    display: block; font-family: var(--sans);
-    font-size: 12px; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--muted);
-    font-style: normal; margin-top: 0.4rem;
-  }
-  .cv-strip {
-    margin-top: 1.8rem;
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem; padding-top: 1.2rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--sans);
-  }
-  .cv-strip .cv-label {
-    font-size: 10.5px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 0.3rem;
-  }
-  .cv-strip .cv-value {
-    font-family: var(--serif); font-size: 0.98rem;
-    color: var(--ink); line-height: 1.35;
-  }
 
   /* ============================================================
      COLOPHON
@@ -737,7 +488,7 @@
     .masthead { grid-template-columns: 1fr; justify-items: start; gap: 0.9rem; }
     .masthead nav { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 1.1rem; }
     .hero-frame { height: 420px; }
-    .hero-footer, .section-head, .thesis, .profile, .colophon-inner, .sim { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-footer, .section-head, .thesis, .colophon-inner { grid-template-columns: 1fr; gap: 2rem; }
     .thesis-body { border-right: none; padding-right: 0; }
     .hero-dek { grid-column: 1; }
     .hero-byline { text-align: left; }
@@ -746,8 +497,6 @@
     .practice-item:nth-child(even) { padding-left: 0; }
     .intel-item { grid-template-columns: auto 1fr; }
     .intel-item .intel-num, .intel-item .intel-meta { grid-column: 1 / -1; }
-    .sim-controls { grid-template-columns: repeat(2, 1fr); }
-    .data-strip { font-size: 10px; }
   }
 
 </style>
@@ -863,37 +612,37 @@
 <!-- WRITING -->
 <section class="section" id="writing">
   <div class="section-head">
-    <div class="label"><span class="num">04</span>Writing &amp; research</div>
+    <div class="label"><span class="num">03</span>Writing &amp; research</div>
     <h2>Working papers, projects, and case studies.</h2>
   </div>
 
   <div class="intel-list">
-    <a class="intel-item" href="#">
+    <div class="intel-item">
       <div class="intel-num">№ 001</div>
       <div class="intel-cat">Data Pipeline</div>
       <div class="intel-title">Data Ingestion Project
         <span class="sub">Creating a multi-layer scraping, cleaning and standardization model to power ABMs.</span>
       </div>
-      <div class="intel-meta"><span class="ticker-code">DPL</span><br/>Q2 2026</div>
-    </a>
+      <div class="intel-meta"><span class="ticker-code">DPL</span><br/>In progress · Q2 2026</div>
+    </div>
 
-    <a class="intel-item" href="#">
+    <div class="intel-item">
       <div class="intel-num">№ 002</div>
       <div class="intel-cat">Agent-based model</div>
       <div class="intel-title">Global Agent Based Model
         <span class="sub">Simulating how real world recessions form to predict the next.</span>
       </div>
-      <div class="intel-meta"><span class="ticker-code">GABM</span><br/>Q3 2026</div>
-    </a>
+      <div class="intel-meta"><span class="ticker-code">GABM</span><br/>In progress · Q3 2026</div>
+    </div>
 
-    <a class="intel-item" href="#">
+    <div class="intel-item">
       <div class="intel-num">№ 003</div>
       <div class="intel-cat">Research note</div>
       <div class="intel-title">How to survive a recession
         <span class="sub">Strategies and methods of how the average person can win when the market is losing.</span>
       </div>
-      <div class="intel-meta"><span class="ticker-code">HSR</span><br/>Q2 2026</div>
-    </a>
+      <div class="intel-meta"><span class="ticker-code">HSR</span><br/>In progress · Q2 2026</div>
+    </div>
 
     <a class="intel-item" href="https://complexityinsights.substack.com/p/the-geography-of-financial-exclusion?r=28tcj5">
       <div class="intel-num">№ 004</div>
@@ -917,7 +666,7 @@
     <div class="contact-list">
       <a class="contact-row" href="mailto:Complexityinsights@gmail.com">
         <span class="rlabel">Email</span>
-        <span class="rval"> </span>
+        <span class="rval">Complexityinsights@gmail.com</span>
         <span class="rarrow">→</span>
       </a>
       <a class="contact-row" href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" rel="noopener">

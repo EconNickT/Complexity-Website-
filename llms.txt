@@ -13,7 +13,7 @@ The practice works across market simulation and strategy, supply-chain and expos
 
 ## Founder
 
-Nicholas Thomas — economist (B.S. Economics, Penn State University, 2025), Washington, DC metro area. Core stack: Python · R · Julia · NetworkX. Open to full-time roles in economic research, data analysis, and financial modeling, alongside contract work.
+Nicholas Thomas — economist (B.S. Economics, Penn State University, 2025), Washington, DC metro area. Core stack: Python · R · Stata · Julia · NetworkX. Open to full-time roles in economic research, data analysis, and financial modeling, alongside contract work.
 
 - [Personal site](https://nicholas-thomas.com)
 - [LinkedIn](https://www.linkedin.com/in/thomasnicholasa/)
