@@ -1,0 +1,25 @@
+# Complexity Insights
+
+> Complexity Insights is an independent economics research practice founded by Nicholas Thomas, based in Washington, D.C. It combines traditional econometrics with complexity science — agent-based modeling, network science, and non-linear dynamics — applied to financial and economic systems.
+
+The practice works across market simulation and strategy, supply-chain and exposure networks, systemic and tail-risk indicators, and M&A/integration analysis. It serves as both a consultancy and a research laboratory, and publishes applied research and essays.
+
+## Pages
+
+- [Home](https://complexityinsights.com/): Thesis, areas of practice, and current research
+- [Projects](https://complexityinsights.com/projects/): Applied research portfolio, including the Banking Deserts interactive county-level map
+- [Writings](https://complexityinsights.com/writings/): Essays and research notes on traditional and complexity economics
+- [About](https://complexityinsights.com/about/): The practice and its founder, Nicholas Thomas
+
+## Founder
+
+Nicholas Thomas — economist (B.S. Economics, Penn State University, 2025), Washington, DC metro area. Core stack: Python · R · Julia · NetworkX. Open to full-time roles in economic research, data analysis, and financial modeling, alongside contract work.
+
+- [Personal site](https://nicholas-thomas.com)
+- [LinkedIn](https://www.linkedin.com/in/thomasnicholasa/)
+- [GitHub](https://github.com/EconNickT)
+- [Substack](https://complexityinsights.substack.com)
+
+## Contact
+
+- Email: Complexityinsights@gmail.com
