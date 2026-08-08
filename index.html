@@ -20,6 +20,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+  /* ==============================================================
+     V4.2 DESIGN LANGUAGE — portable system
+     When building other pages (projects/, about/, blog/), reuse:
+     · Tokens below (:root) — never hardcode hex outside this block
+     · --grad-ink       gradient-clipped italics via .grad-ink
+     · --glass-bg/border + backdrop-blur — glass panels & cards
+       (see .sim-panel, .practice-item; pair with soft radial
+        washes behind so the blur has color to catch)
+     · --grad-deep      dark gradient panels (.pull-quote, .colophon)
+     · --ease           all hover/scroll transitions
+     · .masthead + .scrolled  fixed glass-on-scroll header (JS below)
+     · .section-head .label   eyebrow with gradient top rule
+     · .reveal / .load-in     scroll + load animations
+       (all motion gated behind prefers-reduced-motion)
+     ============================================================== */
   :root {
     /* ARCHIVE — off-white paper, deep navy primary, forest green secondary */
     --paper:       #faf9f6;
@@ -36,6 +51,17 @@
     --accent-2:    #1d3a2f;   /* forest green — secondary */
     --positive:    #1d3a2f;
     --negative:    #8a6a2a;   /* warm brass for tertiary emphasis */
+    --gold:        #d4b47a;
+
+    /* Gradient system — derived strictly from the three existing hues */
+    --grad-ink:  linear-gradient(115deg, var(--accent) 0%, var(--accent-2) 58%, var(--negative) 100%);
+    --grad-rule: linear-gradient(90deg, transparent, var(--accent) 18%, var(--accent-2) 55%, var(--negative) 82%, transparent);
+    --grad-deep: linear-gradient(140deg, #101d33 0%, var(--accent) 42%, #16302a 100%);
+
+    /* Tinted glass on paper */
+    --glass-bg:     rgba(255, 254, 248, 0.55);
+    --glass-border: rgba(26, 42, 68, 0.14);
+    --ease:         cubic-bezier(0.16, 1, 0.3, 1);
 
     --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
     --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
@@ -43,6 +69,7 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { background: var(--paper); color: var(--ink); }
   body {
     font-family: var(--serif);
@@ -50,27 +77,46 @@
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   a { color: var(--ink); text-decoration: none; }
   a:hover { color: var(--accent-ink); }
 
+  /* Gradient-clipped text for chosen italic phrases */
+  .grad-ink {
+    background: var(--grad-ink);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* ============================================================
-     MASTHEAD
+     MASTHEAD — floats over the living hero
      ============================================================ */
   .masthead {
-    padding: 1.3rem 3vw 1rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.6rem 3vw 1.1rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid var(--rule-strong);
+    gap: 0.8rem;
     font-family: var(--sans);
-    background: var(--paper);
-    gap: 2rem;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  }
+  .masthead.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--glass-border);
   }
   .wordmark {
     font-family: var(--serif);
     font-weight: 600;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     letter-spacing: 0.005em;
     color: var(--ink);
     display: inline-flex;
@@ -84,130 +130,122 @@
     flex-shrink: 0;
   }
   .masthead nav {
-    display: flex; gap: 2rem; justify-content: center;
+    display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
     font-size: 12.5px; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted);
   }
-  .masthead nav a { color: var(--muted); }
-  .masthead nav a:hover { color: var(--ink); }
-  .masthead .issue {
-    justify-self: end;
-    font-family: var(--mono);
-    font-size: 11px;
+  .masthead nav a {
     color: var(--muted);
-    letter-spacing: 0.05em;
-    display: flex; gap: 0.8rem; align-items: center;
+    position: relative;
+    padding-bottom: 3px;
   }
-  .masthead .issue .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--positive); display: inline-block;
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--positive) 30%, transparent);
+  .masthead nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.3s ease;
   }
+  .masthead nav a:hover { color: var(--ink); }
+  .masthead nav a:hover::after { right: 0; }
 
   /* ============================================================
-     HERO — LARGE NETWORK FIGURE WITH HEADLINE INSIDE
+     HERO — FULL-BLEED LIVING NETWORK
      ============================================================ */
   .hero {
     position: relative;
-    max-width: 1560px;
-    margin: 0 auto;
-    padding: 1.2rem 3vw 0;
-  }
-  .hero-frame {
-    position: relative;
-    background: var(--paper-3);
-    border: 1px solid var(--rule-strong);
-    height: clamp(460px, 68vh, 720px);
-    overflow: hidden;
-  }
-  .hero-frame canvas {
-    position: absolute; inset: 0; width: 100%; height: 100%; display: block;
-  }
-  /* Corner registration marks */
-  .reg { position: absolute; width: 14px; height: 14px; pointer-events: none; }
-  .reg::before, .reg::after {
-    content: ''; position: absolute; background: var(--ink);
-  }
-  .reg::before { width: 100%; height: 1px; top: 50%; }
-  .reg::after  { width: 1px; height: 100%; left: 50%; }
-  .reg.tl { top: 8px; left: 8px; }
-  .reg.tr { top: 8px; right: 8px; }
-  .reg.bl { bottom: 8px; left: 8px; }
-  .reg.br { bottom: 8px; right: 8px; }
-
-  .hero-labels {
-    position: absolute; top: 0; left: 0; right: 0;
-    padding: 1.1rem 1.5rem;
-    display: flex; justify-content: space-between;
-    font-family: var(--mono); font-size: 11px;
-    letter-spacing: 0.08em; color: var(--muted);
-    text-transform: uppercase;
-    pointer-events: none;
-  }
-  .hero-labels .right { text-align: right; }
-  .hero-labels .right .v { color: var(--accent); font-weight: 600; }
-
-  .hero-headline-wrap {
-    position: absolute;
-    inset: 0;
+    min-height: 92vh;
+    min-height: 92svh;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* soft atmospheric washes of the three hues on paper */
+    background:
+      radial-gradient(1100px 620px at 12% 8%,  rgba(26,42,68,0.10),  transparent 62%),
+      radial-gradient(900px 640px at 88% 22%, rgba(29,58,47,0.09),  transparent 60%),
+      radial-gradient(760px 520px at 70% 92%, rgba(138,106,42,0.08), transparent 58%),
+      var(--paper);
+  }
+  .hero canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    display: block;
+  }
+  /* fade the network into the page at the bottom edge */
+  .hero::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 220px;
+    background: linear-gradient(to bottom, transparent, var(--paper) 78%);
     pointer-events: none;
-    padding: 3rem 2rem;
+  }
+
+  .hero-headline-wrap {
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+    padding: 6rem 2rem 10rem;
+    text-align: center;
   }
   .hero-headline {
     max-width: 17ch;
-    text-align: center;
+    margin: 0 auto;
     font-family: var(--serif);
     font-weight: 400;
-    font-size: clamp(2rem, 5.2vw, 4.6rem);
+    font-size: clamp(2.2rem, 5.6vw, 5rem);
     line-height: 1.0;
     letter-spacing: -0.02em;
     color: var(--ink);
     text-wrap: balance;
-    position: relative;
   }
   .hero-headline em {
     font-style: italic;
-    color: var(--accent-ink);
     font-weight: 400;
     display: block;
-    margin-top: 0.25em;
+    margin-top: 0.28em;
   }
   .hero-headline::before,
   .hero-headline::after {
     content: ''; display: block;
-    width: 60px; height: 1px;
-    background: var(--ink);
-    margin: 1.2rem auto;
-    opacity: 0.8;
+    width: 84px; height: 1px;
+    background: var(--grad-ink);
+    margin: 1.3rem auto;
   }
-  .hero-headline .kicker-inline {
+  .kicker-inline {
     display: block;
     font-family: var(--sans);
     font-size: 11.5px;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 500;
-    margin-bottom: 0.6rem;
-    letter-spacing: 0.3em;
+    margin-bottom: 0.7rem;
   }
+  /* Staggered load-in */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .load-in { opacity: 0; animation: rise-in 1.1s var(--ease) forwards; }
+  .load-in.d1 { animation-delay: 0.15s; }
+  .load-in.d2 { animation-delay: 0.35s; }
 
+  /* ============================================================
+     HERO FOOTER — dek + byline, overlapping the hero's fade
+     ============================================================ */
   .hero-footer {
+    position: relative;
+    z-index: 3;
     max-width: 1560px;
-    margin: 0 auto;
+    margin: -6.5rem auto 0;
     padding: 0 3vw;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 2.5rem;
-    border-top: 0;
   }
-  .hero-footer > div {
-    padding: 1.8rem 0 2.2rem;
-    border-top: 1px solid var(--rule-strong);
-  }
+  .hero-footer > div { padding: 1.4rem 0 2rem; }
   .hero-dek {
     font-family: var(--serif);
     font-size: 1.15rem;
@@ -236,9 +274,10 @@
   .section {
     max-width: 1560px;
     margin: 0 auto;
-    padding: 4.5rem 3vw;
-    border-bottom: 1px solid var(--rule);
+    padding: 5.5rem 3vw;
   }
+  #writing { padding-top: 2.5rem; }
+  #writing .section-head { margin-bottom: 2rem; }
   .section-head {
     display: grid;
     grid-template-columns: 240px 1fr;
@@ -251,15 +290,17 @@
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--muted);
-    padding-top: 0.4rem;
-    border-top: 1px solid var(--ink);
+    padding-top: 0.55rem;
     align-self: start;
     max-width: 200px;
+    position: relative;
   }
-  .section-head .label .num {
-    font-family: var(--mono);
-    color: var(--accent);
-    margin-right: 0.6em;
+  .section-head .label::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 1px;
+    background: var(--grad-ink);
   }
   .section-head h2 {
     font-family: var(--serif);
@@ -270,24 +311,35 @@
     max-width: 26ch;
     color: var(--ink);
   }
-  .section-head h2 em { font-style: italic; color: var(--accent-ink); font-weight: 400; }
+  .section-head h2 em { font-style: italic; font-weight: 400; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .load-in { opacity: 1; transform: none; animation: none; transition: none; }
+    .sim-panel, .practice-item, .contact-row .rarrow, .masthead { transition: none; }
+    html { scroll-behavior: auto; }
+  }
 
   /* ============================================================
      THESIS
      ============================================================ */
   .thesis {
     display: grid;
-    grid-template-columns: 240px 1fr 240px;
-    gap: 3rem;
-    align-items: start;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 4rem;
+    align-items: center;
   }
   .thesis-body {
     font-family: var(--serif);
     font-size: 1.17rem;
     line-height: 1.65;
     color: var(--ink-2);
-    border-right: 2px solid var(--accent);
-    padding-right: 3rem;
   }
   .thesis-body p { margin-bottom: 1.1rem; text-wrap: pretty; }
   .thesis-body .dropcap::first-letter {
@@ -299,57 +351,143 @@
     margin: 0.15rem 0.5rem 0 -0.1rem;
     color: var(--accent-ink);
   }
-  .thesis-aside {
-    font-family: var(--mono);
-    font-size: 11.5px;
-    line-height: 1.55;
-    color: var(--ink-2);
-    border-left: 2px solid var(--accent);
-    padding: 0.4rem 0 0.4rem 1rem;
-    letter-spacing: 0.01em;
+
+  /* Glass simulation panel */
+  .sim-panel {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1.4rem 1.4rem 1.2rem;
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
   }
-  .thesis-aside .label {
-    font-size: 9.5px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
+  .sim-panel:hover { transform: translateY(-4px); border-color: rgba(138,106,42,0.35); }
+  .sim-panel canvas { display: block; width: 100%; height: 300px; }
+  .sim-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.9rem;
+  }
+  .sim-head b { color: var(--accent); font-weight: 600; }
+  .sim-caption {
+    margin-top: 1rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* ============================================================
+     PULL QUOTE — GRADIENT COLOR BLOCK
+     ============================================================ */
+  .pull-quote {
+    position: relative;
+    background: var(--grad-deep);
+    padding: 6.5rem 3vw;
+    overflow: hidden;
+  }
+  /* faint constellation texture inside the panel */
+  .pull-quote::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(2px 2px at 18% 30%, rgba(212,180,122,0.55), transparent 55%),
+      radial-gradient(1.6px 1.6px at 72% 18%, rgba(250,249,246,0.4), transparent 55%),
+      radial-gradient(1.6px 1.6px at 84% 66%, rgba(212,180,122,0.4), transparent 55%),
+      radial-gradient(1.4px 1.4px at 30% 78%, rgba(250,249,246,0.35), transparent 55%),
+      radial-gradient(1.8px 1.8px at 55% 45%, rgba(212,180,122,0.3), transparent 55%),
+      radial-gradient(1.4px 1.4px at 8% 60%, rgba(250,249,246,0.3), transparent 55%),
+      radial-gradient(1.6px 1.6px at 92% 40%, rgba(250,249,246,0.28), transparent 55%);
+    pointer-events: none;
+  }
+  .pull-quote-inner {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .pull-quote-inner p {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.4rem, 4.6vw, 4rem);
+    line-height: 1.2;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .pull-quote-inner p em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .pull-quote-attr {
     display: block;
+    margin-top: 1.7rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9c907a;
   }
-  .thesis-aside .eq {
-    font-size: 13px;
-    color: var(--ink);
-    margin: 0.4rem 0;
-    font-weight: 500;
+  .pull-quote-note {
+    display: block;
+    margin: 1.1rem auto 0;
+    max-width: 46ch;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(217, 210, 194, 0.75);
   }
-  .thesis-aside .note { color: var(--muted); font-size: 11px; }
 
   /* ============================================================
      PRACTICE LIST
      ============================================================ */
+  #practice { position: relative; }
+  /* soft ambient washes behind the cards so the glass has something to blur */
+  #practice::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(760px 480px at 16% 30%, rgba(26,42,68,0.07), transparent 62%),
+      radial-gradient(680px 460px at 86% 70%, rgba(29,58,47,0.07), transparent 60%),
+      radial-gradient(560px 400px at 55% 100%, rgba(138,106,42,0.05), transparent 58%);
+    pointer-events: none;
+  }
   .practice-list {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-top: 1px solid var(--rule);
+    gap: 1.6rem;
   }
   .practice-item {
-    padding: 2rem 1.8rem 2rem 0;
-    border-bottom: 1px solid var(--rule);
-    display: grid;
-    grid-template-columns: 48px 1fr;
-    gap: 1.2rem;
-    align-items: start;
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 2.4rem 2.2rem;
+    overflow: hidden;
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease);
   }
-  .practice-item:nth-child(odd)  { padding-right: 2.4rem; border-right: 1px solid var(--rule); }
-  .practice-item:nth-child(even) { padding-left: 2.4rem; }
-  .practice-num {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    padding-top: 0.3rem;
-    font-weight: 600;
+  .practice-item::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(26,42,68,0.10), rgba(29,58,47,0.05) 40%, transparent 62%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
   }
+  .practice-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(138,106,42,0.4);
+    background: rgba(255, 254, 248, 0.75);
+  }
+  .practice-item:hover::before { opacity: 1; }
+  .practice-item > div { position: relative; }
   .practice-item h3 {
     font-family: var(--serif);
     font-weight: 500;
@@ -381,16 +519,26 @@
      ============================================================ */
   .intel-list { display: grid; gap: 0; }
   .intel-item {
+    position: relative;
     display: grid;
     grid-template-columns: 90px 140px 1fr auto;
     gap: 2rem;
-    padding: 1.6rem 0;
+    padding: 1.6rem 0.4rem;
     border-bottom: 1px solid var(--rule);
     align-items: baseline;
-    transition: background 0.15s ease, padding 0.15s ease;
+    transition: background 0.2s ease, padding 0.2s ease;
   }
+  .intel-item::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: -1px;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.45s ease;
+  }
+  .intel-item:hover::after { right: 0; }
   .intel-item:first-child { border-top: 1px solid var(--rule); }
-  .intel-item:hover { background: var(--paper-2); padding-left: 1rem; padding-right: 1rem; }
+  .intel-item:hover { background: var(--paper-3); padding-left: 1.2rem; padding-right: 1.2rem; }
   .intel-num {
     font-family: var(--mono);
     font-size: 11px;
@@ -427,14 +575,14 @@
     white-space: nowrap;
     letter-spacing: 0.05em;
   }
-  .intel-meta .status-live { color: var(--accent); }
+  .intel-meta .status-live { color: var(--accent-2); font-weight: 600; }
   .intel-meta .ticker-code { color: var(--ink); font-weight: 600; }
 
   /* ============================================================
      COLOPHON
      ============================================================ */
   .colophon {
-    background: var(--ink);
+    background: var(--grad-deep);
     color: var(--paper);
     padding: 4.5rem 3vw 3rem;
   }
@@ -453,50 +601,55 @@
     margin-bottom: 1.5rem; color: var(--paper);
     letter-spacing: -0.01em; max-width: 20ch;
   }
-  .colophon h2 em { font-style: italic; color: #d4b47a; font-weight: 400; }
+  .colophon h2 em { font-style: italic; color: var(--gold); font-weight: 400; }
   .colophon p {
     font-family: var(--serif); font-size: 1.1rem;
     line-height: 1.55; color: #d9d2c2;
     max-width: 44ch; margin-bottom: 2rem;
   }
-  .contact-list { border-top: 1px solid #3a332a; font-family: var(--sans); }
+  .contact-list { border-top: 1px solid rgba(212,180,122,0.28); font-family: var(--sans); }
   .contact-row {
     display: grid; grid-template-columns: 120px 1fr auto;
     gap: 1.5rem; padding: 1rem 0;
-    border-bottom: 1px solid #3a332a;
+    border-bottom: 1px solid rgba(212,180,122,0.28);
     align-items: center; color: var(--paper);
     font-size: 14px; transition: padding 0.2s ease;
   }
-  .contact-row:hover { padding-left: 0.8rem; color: #d4b47a; }
+  .contact-row:hover { padding-left: 0.8rem; color: var(--gold); }
   .contact-row .rlabel {
     font-size: 10.5px; letter-spacing: 0.18em;
     text-transform: uppercase; color: #9c907a;
   }
   .contact-row .rval { font-family: var(--serif); font-size: 1.05rem; color: var(--paper); }
-  .contact-row .rarrow { font-family: var(--serif); color: #d4b47a; font-size: 1.2rem; }
+  .contact-row .rarrow {
+    font-family: var(--serif); color: var(--gold); font-size: 1.2rem;
+    transition: transform 0.4s var(--ease);
+  }
+  .contact-row:hover .rarrow { transform: translateX(9px); }
 
   .footline {
-    background: var(--ink); color: #7a7162;
+    background: #0d1728; color: #7a7162;
     padding: 1.4rem 3vw;
     font-family: var(--mono); font-size: 11px;
     letter-spacing: 0.04em;
     display: flex; justify-content: space-between;
-    border-top: 1px solid #3a332a;
+    border-top: 1px solid rgba(212,180,122,0.18);
   }
 
   @media (max-width: 900px) {
-    .masthead { grid-template-columns: 1fr; justify-items: start; gap: 0.9rem; }
-    .masthead nav { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 1.1rem; }
-    .hero-frame { height: 420px; }
+    .masthead nav { gap: 1.1rem; }
+    .hero { min-height: 86vh; min-height: 86svh; }
+    .hero-headline-wrap { padding: 9rem 1.5rem 7rem; }
+    .hero-footer { margin-top: -3rem; }
     .hero-footer, .section-head, .thesis, .colophon-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .thesis-body { border-right: none; padding-right: 0; }
     .hero-dek { grid-column: 1; }
     .hero-byline { text-align: left; }
+    .hero-byline .mini-links { justify-content: flex-start; }
     .practice-list { grid-template-columns: 1fr; }
-    .practice-item:nth-child(odd) { border-right: none; padding-right: 0; }
-    .practice-item:nth-child(even) { padding-left: 0; }
+    .sim-panel canvas { height: 240px; }
     .intel-item { grid-template-columns: auto 1fr; }
     .intel-item .intel-num, .intel-item .intel-meta { grid-column: 1 / -1; }
+    .intel-meta { text-align: left; }
   }
 
 </style>
@@ -518,26 +671,24 @@
 </header>
 
 <main>
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-frame" id="heroFrame">
-    <canvas id="networkCanvas"></canvas>
-    <div class="hero-headline-wrap">
-      <div class="hero-headline">
-        <span class="kicker-inline">A Research Practice</span>
-        Markets aren't in static equilibrium.
-        <em>Our models shouldn't assume they are.</em>
-      </div>
+<!-- HERO — full-bleed living network -->
+<section class="hero" id="heroFrame">
+  <canvas id="networkCanvas"></canvas>
+  <div class="hero-headline-wrap">
+    <div class="hero-headline">
+      <span class="kicker-inline load-in">A Research Practice</span>
+      <span class="load-in d1" style="display:block">Markets aren't in static equilibrium.</span>
+      <em class="grad-ink load-in d2">Our models shouldn't assume they are.</em>
     </div>
   </div>
 </section>
 
 <!-- HERO FOOTER -->
 <div class="hero-footer">
-  <div class="hero-dek">
+  <div class="hero-dek reveal">
     <strong>Complexity Insights</strong> is an independent research practice combining traditional econometrics with emergent complexity science — agent-based modeling, network science, non-linear dynamics, feedback loops, contagion, emergent behavior, and phase transitions in financial and economic systems.
   </div>
-  <div class="hero-byline">
+  <div class="hero-byline reveal">
     <span class="by">Nicholas Thomas</span>
     <span class="role">Founder · Researcher</span>
     <div class="mini-links">
@@ -546,33 +697,46 @@
   </div>
 </div>
 
+
 <!-- THESIS -->
 <section class="section" id="thesis">
-  <div class="section-head">
-    <div class="label"><span class="num">01</span>Thesis</div>
-    <h2>The standard model is a special case. <em>Real economies are networks of adapting agents.</em></h2>
+  <div class="section-head reveal">
+    <div class="label">Thesis</div>
+    <h2>The standard model is a special case. <em class="grad-ink">Real economies are networks of adapting agents.</em></h2>
   </div>
 
-  <div class="thesis">
-    <div></div>
+  <div class="thesis reveal">
     <div class="thesis-body">
       <p class="dropcap">Equilibrium models answer a narrower question than the ones markets pose. They describe where prices settle when everyone is rational, identical, and finished adjusting — assumptions that buy tractability in a seminar, and become dangerous on a trading floor or in a supply chain.</p>
       <p>The alternative is not to abandon rigor — it is to model behavior that is genuinely adaptive. Traders who learn. Firms that imitate. Shocks that propagate through network topology rather than dissipating smoothly across representative agents. The methods are now mature: agent-based models, calibrated networks, non-linear stochastic dynamics. The bottleneck is practitioners who can translate between the research and a real business problem.</p>
       <p>That is the practice.</p>
     </div>
+    <figure class="sim-panel">
+      <div class="sim-head"><span>Fig. — Herding model</span><b id="simRegime">CALM</b></div>
+      <canvas id="herdCanvas"></canvas>
+      <figcaption class="sim-caption">A minimal market of imitating agents, running live. Sentiment sits in a double well — bubbles build and break with no outside shock. Adaptation, not equilibrium.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pull-quote">
+  <div class="pull-quote-inner reveal">
+    <p>&ldquo;More is <em>different.</em>&rdquo;</p>
+    <span class="pull-quote-attr">Philip W. Anderson · Nobel Laureate in Physics · Science, 1972</span>
+    <span class="pull-quote-note">The founding observation of complexity science: aggregate behavior cannot be deduced from the parts alone.</span>
   </div>
 </section>
 
 <!-- PRACTICE -->
 <section class="section" id="practice">
-  <div class="section-head">
-    <div class="label"><span class="num">02</span>Practice</div>
-    <h2>Four problems worth modeling <em>properly.</em></h2>
+  <div class="section-head reveal">
+    <div class="label">Practice</div>
+    <h2>Four problems worth modeling <em class="grad-ink">properly.</em></h2>
   </div>
 
-  <div class="practice-list">
+  <div class="practice-list reveal">
     <article class="practice-item">
-      <div class="practice-num">i.</div>
       <div>
         <h3>Market simulation &amp; strategy</h3>
         <p>Stress-test pricing, launch strategy, or trading rules against synthetic populations of heterogeneous agents before committing capital. Finds the failure modes averages can't see.</p>
@@ -581,7 +745,6 @@
     </article>
 
     <article class="practice-item">
-      <div class="practice-num">ii.</div>
       <div>
         <h3>Supply-chain &amp; exposure networks</h3>
         <p>Map the graph — who actually depends on whom, two and three hops deep. Identify nodes whose failure triggers cascades disproportionate to their size or spend.</p>
@@ -590,7 +753,6 @@
     </article>
 
     <article class="practice-item">
-      <div class="practice-num">iii.</div>
       <div>
         <h3>Systemic &amp; tail-risk indicators</h3>
         <p>Conventional VaR underestimates regime change. Complexity-based indicators — correlation structure, critical slowing-down — give early warning of phase transitions conventional models miss by construction.</p>
@@ -599,7 +761,6 @@
     </article>
 
     <article class="practice-item">
-      <div class="practice-num">iv.</div>
       <div>
         <h3>M&amp;A &amp; integration analysis</h3>
         <p>Apply network theory to deal sourcing, synergy modeling, and post-merger integration risk. Synergies live in the graph of who-talks-to-whom; so do the integration failures.</p>
@@ -609,14 +770,15 @@
   </div>
 </section>
 
+
 <!-- WRITING -->
 <section class="section" id="writing">
-  <div class="section-head">
-    <div class="label"><span class="num">03</span>Writing &amp; research</div>
+  <div class="section-head reveal">
+    <div class="label">Writing &amp; research</div>
     <h2>Working papers, projects, and case studies.</h2>
   </div>
 
-  <div class="intel-list">
+  <div class="intel-list reveal">
     <div class="intel-item">
       <div class="intel-num">№ 001</div>
       <div class="intel-cat">Data Pipeline</div>
@@ -658,12 +820,12 @@
 <!-- CONTACT -->
 <section class="colophon" id="contact">
   <div class="colophon-inner">
-    <div>
+    <div class="reveal">
       <div class="label">Get in touch</div>
       <h2>The best problems come in <em>through the front door.</em></h2>
       <p>If you have an interesting question — inside a firm, a research group, or a hiring pipeline — the fastest path is a direct note.</p>
     </div>
-    <div class="contact-list">
+    <div class="contact-list reveal">
       <a class="contact-row" href="mailto:Complexityinsights@gmail.com">
         <span class="rlabel">Email</span>
         <span class="rval">Complexityinsights@gmail.com</span>
@@ -696,23 +858,32 @@
 
 <script>
 /* ============================================================
-   NETWORK ANIMATION
+   LIVING NETWORK — gradient-tinted agents + contagion pulses
    ============================================================ */
 (function(){
   const canvas = document.getElementById('networkCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let nodes = [], mouse = { x: null, y: null };
   const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const LINK_D = 118;
 
-  function palette() {
-    const css = getComputedStyle(document.documentElement);
-    return {
-      ink:    css.getPropertyValue('--ink').trim(),
-      accent: css.getPropertyValue('--accent').trim(),
-      accent2:css.getPropertyValue('--accent-2').trim(),
-    };
+  /* The three house hues as RGB, for gradient interpolation */
+  const NAVY   = [26, 42, 68];
+  const FOREST = [29, 58, 47];
+  const BRASS  = [138, 106, 42];
+  const GOLD   = [212, 180, 122];
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function mix(c1, c2, t) {
+    return [ lerp(c1[0],c2[0],t), lerp(c1[1],c2[1],t), lerp(c1[2],c2[2],t) ];
   }
+  /* sample the navy → forest → brass spectrum at t ∈ [0,1] */
+  function spectrum(t) {
+    return t < 0.55 ? mix(NAVY, FOREST, t / 0.55) : mix(FOREST, BRASS, (t - 0.55) / 0.45);
+  }
+  function rgba(c, a) { return `rgba(${c[0]|0},${c[1]|0},${c[2]|0},${a})`; }
 
   class Node {
     constructor(w, h) {
@@ -720,29 +891,62 @@
       this.y = Math.random() * h;
       this.vx = (Math.random() - 0.5) * 0.32;
       this.vy = (Math.random() - 0.5) * 0.32;
-      this.r = Math.random() * 1.4 + 1.2;
-      const r = Math.random();
-      this.kind = r < 0.10 ? 'accent' : r < 0.17 ? 'accent2' : 'ink';
+      this.r = Math.random() * 1.5 + 1.3;
+      this.t = Math.random();          /* position on the color spectrum */
+      this.glow = 0;                   /* contagion excitement, decays */
     }
     update(w, h) {
-      this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > w) this.vx *= -1;
-      if (this.y < 0 || this.y > h) this.vy *= -1;
-      if (mouse.x !== null) {
-        const dx = mouse.x - this.x, dy = mouse.y - this.y;
-        const d = Math.hypot(dx, dy), R = 160;
-        if (d < R) { const f = (R - d) / R; this.x += dx * f * 0.028; this.y += dy * f * 0.028; }
+      if (!reduceMotion) {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > w) this.vx *= -1;
+        if (this.y < 0 || this.y > h) this.vy *= -1;
+        if (mouse.x !== null) {
+          const dx = mouse.x - this.x, dy = mouse.y - this.y;
+          const d = Math.hypot(dx, dy), R = 170;
+          if (d < R) { const f = (R - d) / R; this.x += dx * f * 0.028; this.y += dy * f * 0.028; }
+        }
+      }
+      this.glow *= 0.955;
+      if (this.glow < 0.01) this.glow = 0;
+    }
+    draw() {
+      const base = spectrum(this.t);
+      const g = this.glow;
+      /* excited nodes shift toward gold and swell */
+      const c = g > 0 ? mix(base, GOLD, Math.min(1, g)) : base;
+      const r = this.r + g * 3.2;
+      if (g > 0.05) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, r + 7 * g, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(GOLD, 0.14 * g);
+        ctx.fill();
+      }
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(c, 0.72 + 0.28 * Math.min(1, g));
+      ctx.fill();
+    }
+  }
+
+  /* ---- Contagion pulse: a shock at one agent propagates outward ---- */
+  let pulse = null; /* { x, y, radius } */
+  function seedPulse() {
+    if (!nodes.length) return;
+    const origin = nodes[(Math.random() * nodes.length) | 0];
+    pulse = { x: origin.x, y: origin.y, radius: 0 };
+    origin.glow = 1.2;
+  }
+  function stepPulse(w, h) {
+    if (!pulse) return;
+    pulse.radius += 3.4;
+    const band = 34;
+    for (const n of nodes) {
+      const d = Math.hypot(n.x - pulse.x, n.y - pulse.y);
+      if (Math.abs(d - pulse.radius) < band) {
+        n.glow = Math.max(n.glow, 1 - pulse.radius / (Math.hypot(w, h)));
       }
     }
-    draw(p) {
-      const c = this.kind === 'accent' ? p.accent : this.kind === 'accent2' ? p.accent2 : p.ink;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-      ctx.fillStyle = c;
-      ctx.globalAlpha = this.kind === 'ink' ? 0.7 : 0.95;
-      ctx.fill();
-      ctx.globalAlpha = 1;
-    }
+    if (pulse.radius > Math.hypot(w, h)) pulse = null;
   }
 
   function resize() {
@@ -754,41 +958,46 @@
   }
   function init(w, h) {
     nodes = [];
-    const n = Math.floor((w * h) / 6500);
+    const n = Math.floor((w * h) / 6200);
     for (let i = 0; i < n; i++) nodes.push(new Node(w, h));
-    const nc = document.getElementById('nodeCount');
-    if (nc) nc.textContent = n;
   }
+
   let frame = 0;
   function draw() {
     const rect = canvas.getBoundingClientRect();
     const w = rect.width, h = rect.height;
-    const p = palette();
     ctx.clearRect(0, 0, w, h);
+    stepPulse(w, h);
+
     let edgeCount = 0;
     for (let i = 0; i < nodes.length; i++) {
-      for (let j = i+1; j < nodes.length; j++) {
-        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+      for (let j = i + 1; j < nodes.length; j++) {
+        const A = nodes[i], B = nodes[j];
+        const dx = A.x - B.x, dy = A.y - B.y;
         const d = Math.hypot(dx, dy);
-        if (d < 115) {
+        if (d < LINK_D) {
           edgeCount++;
-          const a = 0.28 * (1 - d/115);
+          const closeness = 1 - d / LINK_D;
+          const excite = Math.max(A.glow, B.glow);
+          /* edge color = midpoint of the two agents' spectrum colors,
+             warmed toward gold when a shock passes through */
+          let c = spectrum((A.t + B.t) / 2);
+          if (excite > 0) c = mix(c, GOLD, Math.min(1, excite));
           ctx.beginPath();
-          ctx.moveTo(nodes[i].x, nodes[i].y);
-          ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = p.ink;
-          ctx.globalAlpha = a;
-          ctx.lineWidth = 0.65;
+          ctx.moveTo(A.x, A.y);
+          ctx.lineTo(B.x, B.y);
+          ctx.strokeStyle = rgba(c, 0.30 * closeness + 0.45 * excite * closeness);
+          ctx.lineWidth = 0.7 + excite * 0.9;
           ctx.stroke();
-          ctx.globalAlpha = 1;
         }
       }
     }
-    nodes.forEach(n => { n.update(w, h); n.draw(p); });
-    if (frame++ % 30 === 0) {
-      const ad = document.getElementById('avgDeg');
-      if (ad && nodes.length) ad.textContent = (2*edgeCount/nodes.length).toFixed(1);
-    }
+
+    nodes.forEach(n => { n.update(w, h); n.draw(); });
+
+    /* a shock roughly every 6.5s — markets are quiet until they aren't */
+    if (!reduceMotion && !pulse && frame % 390 === 240) seedPulse();
+    frame++;
     requestAnimationFrame(draw);
   }
 
@@ -799,10 +1008,156 @@
     mouse.y = e.clientY - r.top;
   });
   frame_el.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+  /* click = trigger a shock where you clicked */
+  frame_el.addEventListener('click', e => {
+    if (reduceMotion) return;
+    const r = canvas.getBoundingClientRect();
+    pulse = { x: e.clientX - r.left, y: e.clientY - r.top, radius: 0 };
+  });
   window.addEventListener('resize', resize);
   resize(); draw();
 })();
 
+/* ============================================================
+   MASTHEAD — GLASS ON SCROLL
+   ============================================================ */
+(function(){
+  const m = document.querySelector('.masthead');
+  if (!m) return;
+  const onScroll = () => m.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ============================================================
+   GLASS CARDS — CURSOR GLOW TRACKING
+   ============================================================ */
+document.querySelectorAll('.practice-item').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+/* ============================================================
+   HERDING MODEL — live sentiment in a double well
+   Sentiment s follows ds = a(bs − s³)dt + σ dW  (two stable
+   regimes, endogenous flips). Log-price drifts with s.
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('herdCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  const N = 420;                       /* points kept in the window */
+  let s = 0.6, prices = [], w = 0, h = 0, running = false, rafId = null;
+
+  function gauss() {
+    let u = 0, v = 0;
+    while (!u) u = Math.random();
+    while (!v) v = Math.random();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  function step() {
+    /* double-well sentiment: herding sustains a regime until noise tips it */
+    s += 0.9 * (0.048 * (s - s * s * s)) + 0.055 * gauss();
+    s = Math.max(-1.6, Math.min(1.6, s));
+    const last = prices.length ? prices[prices.length - 1] : 0;
+    prices.push(last + 0.0016 * s + 0.0035 * gauss());
+    if (prices.length > N) prices.shift();
+  }
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    w = rect.width; h = rect.height;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function render() {
+    ctx.clearRect(0, 0, w, h);
+    if (prices.length < 2) return;
+    let min = Infinity, max = -Infinity;
+    for (const p of prices) { if (p < min) min = p; if (p > max) max = p; }
+    const pad = (max - min) * 0.12 + 1e-6;
+    min -= pad; max += pad;
+    const X = i => (i / (N - 1)) * w;
+    const Y = p => h - ((p - min) / (max - min)) * h;
+
+    /* midline */
+    ctx.strokeStyle = 'rgba(106,104,95,0.25)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([2, 5]);
+    ctx.beginPath(); ctx.moveTo(0, Y(prices[0])); ctx.lineTo(w, Y(prices[0])); ctx.stroke();
+    ctx.setLineDash([]);
+
+    /* area fill tinted by regime: navy calm, brass mania, forest recovery */
+    const bull = s > 0.35, bear = s < -0.35;
+    const lineC = bear ? '138,106,42' : bull ? '29,58,47' : '26,42,68';
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, `rgba(${lineC},0.16)`);
+    grad.addColorStop(1, `rgba(${lineC},0)`);
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(prices[0]));
+    for (let i = 1; i < prices.length; i++) ctx.lineTo(X(i), Y(prices[i]));
+    ctx.lineTo(X(prices.length - 1), h); ctx.lineTo(0, h); ctx.closePath();
+    ctx.fillStyle = grad; ctx.fill();
+
+    /* price line */
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(prices[0]));
+    for (let i = 1; i < prices.length; i++) ctx.lineTo(X(i), Y(prices[i]));
+    ctx.strokeStyle = `rgba(${lineC},0.9)`;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+
+    /* live tip */
+    const tx = X(prices.length - 1), ty = Y(prices[prices.length - 1]);
+    ctx.beginPath(); ctx.arc(tx, ty, 3, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(212,180,122,0.95)'; ctx.fill();
+
+    const badge = document.getElementById('simRegime');
+    if (badge) badge.textContent = bear ? 'DELEVERAGING' : bull ? 'EUPHORIA' : 'CALM';
+  }
+  function loop() {
+    step(); render();
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+  /* seed some history so it never starts empty */
+  for (let i = 0; i < N; i++) step();
+
+  if (reduceMotion) {
+    resize(); render();
+  } else if ('IntersectionObserver' in window) {
+    /* only burn frames while the panel is on screen */
+    new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting && !running) { running = true; resize(); loop(); }
+        else if (!en.isIntersecting && running) { running = false; cancelAnimationFrame(rafId); }
+      });
+    }, { threshold: 0.15 }).observe(canvas);
+  } else {
+    running = true; resize(); loop();
+  }
+  window.addEventListener('resize', () => { resize(); render(); });
+})();
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+(function(){
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+})();
 </script>
 </body>
-</html>     
+</html>
