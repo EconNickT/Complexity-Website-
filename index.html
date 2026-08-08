@@ -308,7 +308,6 @@
     font-size: clamp(1.9rem, 2.7vw, 2.6rem);
     line-height: 1.08;
     letter-spacing: -0.012em;
-    max-width: 26ch;
     color: var(--ink);
   }
   .section-head h2 em { font-style: italic; font-weight: 400; }
@@ -628,12 +627,11 @@
   .contact-row:hover .rarrow { transform: translateX(9px); }
 
   .footline {
-    background: #0d1728; color: #7a7162;
+    background: var(--ink); color: var(--paper);
     padding: 1.4rem 3vw;
     font-family: var(--mono); font-size: 11px;
     letter-spacing: 0.04em;
-    display: flex; justify-content: space-between;
-    border-top: 1px solid rgba(212,180,122,0.18);
+    text-align: center;
   }
 
   @media (max-width: 900px) {
@@ -702,7 +700,7 @@
 <section class="section" id="thesis">
   <div class="section-head reveal">
     <div class="label">Thesis</div>
-    <h2>The standard model is a special case. <em class="grad-ink">Real economies are networks of adapting agents.</em></h2>
+    <h2>The standard model is a special case. <em>Real economies are networks of adapting agents.</em></h2>
   </div>
 
   <div class="thesis reveal">
@@ -732,7 +730,7 @@
 <section class="section" id="practice">
   <div class="section-head reveal">
     <div class="label">Practice</div>
-    <h2>Four problems worth modeling <em class="grad-ink">properly.</em></h2>
+    <h2>Four problems worth modeling <em>properly.</em></h2>
   </div>
 
   <div class="practice-list reveal">
@@ -853,7 +851,6 @@
 
 <div class="footline">
   <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
-  <span>Set in Source Serif 4, Inter &amp; JetBrains Mono</span>
 </div>
 
 <script>
@@ -1002,18 +999,23 @@
   }
 
   const frame_el = document.getElementById('heroFrame');
-  frame_el.addEventListener('mousemove', e => {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - r.left;
-    mouse.y = e.clientY - r.top;
-  });
-  frame_el.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-  /* click = trigger a shock where you clicked */
-  frame_el.addEventListener('click', e => {
-    if (reduceMotion) return;
-    const r = canvas.getBoundingClientRect();
-    pulse = { x: e.clientX - r.left, y: e.clientY - r.top, radius: 0 };
-  });
+  /* touch screens: no cursor attraction, no tap shocks — ambient only.
+     (Touch events report as mouse coords and make the field go haywire.) */
+  const hasMouse = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (hasMouse) {
+    frame_el.addEventListener('mousemove', e => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    frame_el.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+    /* click = trigger a shock where you clicked */
+    frame_el.addEventListener('click', e => {
+      if (reduceMotion) return;
+      const r = canvas.getBoundingClientRect();
+      pulse = { x: e.clientX - r.left, y: e.clientY - r.top, radius: 0 };
+    });
+  }
   window.addEventListener('resize', resize);
   resize(); draw();
 })();
