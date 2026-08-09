@@ -362,7 +362,15 @@
     transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
   }
   .sim-panel:hover { transform: translateY(-4px); border-color: rgba(138,106,42,0.35); }
-  .sim-panel canvas { display: block; width: 100%; height: 300px; }
+  .sim-panel img {
+    display: block;
+    width: 100%;
+    height: 300px;        /* same slot the herding canvas occupied */
+    object-fit: contain;  /* never crop the landscape at any panel width */
+    background: #0c0e12;  /* matches the figure's own backdrop, so the
+                             letterbox reads as one seamless dark plate */
+    border-radius: 6px;
+  }
   .sim-head {
     display: flex; justify-content: space-between; align-items: baseline;
     font-family: var(--mono); font-size: 10.5px;
@@ -644,7 +652,7 @@
     .hero-byline { text-align: left; }
     .hero-byline .mini-links { justify-content: flex-start; }
     .practice-list { grid-template-columns: 1fr; }
-    .sim-panel canvas { height: 240px; }
+    .sim-panel img { height: 240px; }
     .intel-item { grid-template-columns: auto 1fr; }
     .intel-item .intel-num, .intel-item .intel-meta { grid-column: 1 / -1; }
     .intel-meta { text-align: left; }
@@ -710,9 +718,11 @@
       <p>That is the practice.</p>
     </div>
     <figure class="sim-panel">
-      <div class="sim-head"><span>Fig. — Herding model</span><b id="simRegime">CALM</b></div>
-      <canvas id="herdCanvas"></canvas>
-      <figcaption class="sim-caption">A minimal market of imitating agents, running live. Sentiment sits in a double well — bubbles build and break with no outside shock. Adaptation, not equilibrium.</figcaption>
+      <div class="sim-head"><span>Fig. — Fitness landscape</span><b>ADAPTIVE SEARCH</b></div>
+      <img src="/images/fitness_landscape-3.webp" width="1600" height="900"
+           alt="A rugged fitness landscape — a surface of peaks and valleys where height represents the payoff of a strategy."
+           loading="lazy" decoding="async">
+      <figcaption class="sim-caption">A fitness landscape: every point a strategy, every height its payoff. Agents climb what they can see from where they stand — and the tallest peak is rarely the nearest one. Adaptation, not equilibrium.</figcaption>
     </figure>
   </div>
 </section>
@@ -1041,108 +1051,6 @@ document.querySelectorAll('.practice-item').forEach(card => {
     card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
   });
 });
-
-/* ============================================================
-   HERDING MODEL — live sentiment in a double well
-   Sentiment s follows ds = a(bs − s³)dt + σ dW  (two stable
-   regimes, endogenous flips). Log-price drifts with s.
-   ============================================================ */
-(function(){
-  const canvas = document.getElementById('herdCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
-  const N = 420;                       /* points kept in the window */
-  let s = 0.6, prices = [], w = 0, h = 0, running = false, rafId = null;
-
-  function gauss() {
-    let u = 0, v = 0;
-    while (!u) u = Math.random();
-    while (!v) v = Math.random();
-    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
-  }
-  function step() {
-    /* double-well sentiment: herding sustains a regime until noise tips it */
-    s += 0.9 * (0.048 * (s - s * s * s)) + 0.055 * gauss();
-    s = Math.max(-1.6, Math.min(1.6, s));
-    const last = prices.length ? prices[prices.length - 1] : 0;
-    prices.push(last + 0.0016 * s + 0.0035 * gauss());
-    if (prices.length > N) prices.shift();
-  }
-  function resize() {
-    const rect = canvas.getBoundingClientRect();
-    w = rect.width; h = rect.height;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  function render() {
-    ctx.clearRect(0, 0, w, h);
-    if (prices.length < 2) return;
-    let min = Infinity, max = -Infinity;
-    for (const p of prices) { if (p < min) min = p; if (p > max) max = p; }
-    const pad = (max - min) * 0.12 + 1e-6;
-    min -= pad; max += pad;
-    const X = i => (i / (N - 1)) * w;
-    const Y = p => h - ((p - min) / (max - min)) * h;
-
-    /* midline */
-    ctx.strokeStyle = 'rgba(106,104,95,0.25)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([2, 5]);
-    ctx.beginPath(); ctx.moveTo(0, Y(prices[0])); ctx.lineTo(w, Y(prices[0])); ctx.stroke();
-    ctx.setLineDash([]);
-
-    /* area fill tinted by regime: navy calm, brass mania, forest recovery */
-    const bull = s > 0.35, bear = s < -0.35;
-    const lineC = bear ? '138,106,42' : bull ? '29,58,47' : '26,42,68';
-    const grad = ctx.createLinearGradient(0, 0, 0, h);
-    grad.addColorStop(0, `rgba(${lineC},0.16)`);
-    grad.addColorStop(1, `rgba(${lineC},0)`);
-    ctx.beginPath();
-    ctx.moveTo(X(0), Y(prices[0]));
-    for (let i = 1; i < prices.length; i++) ctx.lineTo(X(i), Y(prices[i]));
-    ctx.lineTo(X(prices.length - 1), h); ctx.lineTo(0, h); ctx.closePath();
-    ctx.fillStyle = grad; ctx.fill();
-
-    /* price line */
-    ctx.beginPath();
-    ctx.moveTo(X(0), Y(prices[0]));
-    for (let i = 1; i < prices.length; i++) ctx.lineTo(X(i), Y(prices[i]));
-    ctx.strokeStyle = `rgba(${lineC},0.9)`;
-    ctx.lineWidth = 1.6;
-    ctx.stroke();
-
-    /* live tip */
-    const tx = X(prices.length - 1), ty = Y(prices[prices.length - 1]);
-    ctx.beginPath(); ctx.arc(tx, ty, 3, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(212,180,122,0.95)'; ctx.fill();
-
-    const badge = document.getElementById('simRegime');
-    if (badge) badge.textContent = bear ? 'DELEVERAGING' : bull ? 'EUPHORIA' : 'CALM';
-  }
-  function loop() {
-    step(); render();
-    if (running) rafId = requestAnimationFrame(loop);
-  }
-  /* seed some history so it never starts empty */
-  for (let i = 0; i < N; i++) step();
-
-  if (reduceMotion) {
-    resize(); render();
-  } else if ('IntersectionObserver' in window) {
-    /* only burn frames while the panel is on screen */
-    new IntersectionObserver(entries => {
-      entries.forEach(en => {
-        if (en.isIntersecting && !running) { running = true; resize(); loop(); }
-        else if (!en.isIntersecting && running) { running = false; cancelAnimationFrame(rafId); }
-      });
-    }, { threshold: 0.15 }).observe(canvas);
-  } else {
-    running = true; resize(); loop();
-  }
-  window.addEventListener('resize', () => { resize(); render(); });
-})();
 
 /* ============================================================
    SCROLL REVEAL
