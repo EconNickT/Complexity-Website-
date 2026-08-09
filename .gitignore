@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Local design playgrounds — experimental mockups, not deployed
+mockup/
+experimental/
