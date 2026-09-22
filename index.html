@@ -647,7 +647,9 @@
     .hero { min-height: 86vh; min-height: 86svh; }
     .hero-headline-wrap { padding: 9rem 1.5rem 7rem; }
     .hero-footer { margin-top: -3rem; }
-    .hero-footer, .section-head, .thesis, .colophon-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-footer, .section-head, .thesis, .colophon-inner { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+    .contact-row { grid-template-columns: 76px minmax(0, 1fr) auto; gap: 0.9rem; }
+    .contact-row .rval { overflow-wrap: anywhere; }
     .hero-dek { grid-column: 1; }
     .hero-byline { text-align: left; }
     .hero-byline .mini-links { justify-content: flex-start; }
