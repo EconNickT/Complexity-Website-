@@ -196,7 +196,6 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal, .load-in { opacity: 1; transform: none; animation: none; transition: none; }
     .work-card, .masthead { transition: none; }
-    .putter, .ball { animation: none; }
     html { scroll-behavior: auto; }
   }
 
@@ -335,7 +334,7 @@
      ============================================================ */
   .tee {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.35fr);
     gap: clamp(2rem, 5vw, 4rem);
     align-items: center;
   }
@@ -352,22 +351,43 @@
   .tee-copy p { margin-top: 1rem; color: var(--ink-2); max-width: 44ch; font-size: 1.04rem; }
   .tee-copy .sub { font-family: var(--sans); font-size: 0.85rem; color: var(--muted); margin-top: 1.2rem; }
   .tee-copy .sub a { color: var(--negative); border-bottom: 1px solid rgba(138,106,42,0.4); }
-  .golf-scene { width: 100%; height: auto; }
-  .putter { transform-origin: 275px 85px; animation: swing 4s infinite ease-in-out; }
-  .ball { animation: roll 4s infinite cubic-bezier(0.25, 1, 0.5, 1); }
-  @keyframes swing {
-    0%, 10% { transform: rotate(0deg); }
-    15% { transform: rotate(-15deg); }
-    20% { transform: rotate(0deg); }
-    25% { transform: rotate(18deg); }
-    35%, 100% { transform: rotate(0deg); }
+  .golf-wrap {
+    position: relative;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1.2rem 1.2rem 1.1rem;
   }
-  @keyframes roll {
-    0%, 20% { transform: translate(0, 0); opacity: 1; }
-    40% { transform: translate(-145px, 2px); }
-    50% { transform: translate(-165px, -8px); opacity: 1; }
-    60% { transform: translate(-170px, -10px); opacity: 0; }
-    100% { transform: translate(0, 0); opacity: 0; }
+  .golf-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    font-family: var(--mono); font-size: 10.5px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 0.9rem;
+  }
+  .golf-head b { color: var(--accent); font-weight: 600; }
+  .golf-stage {
+    position: relative;
+    aspect-ratio: 1000 / 560;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #e8e2cc;
+  }
+  .golf-scene { display: block; width: 100%; height: 100%; }
+  .golf-grain {
+    position: absolute; inset: 0;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+  .golf-caption {
+    margin-top: 0.9rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--muted);
+    max-width: 60ch;
   }
 
   .footline {
@@ -383,7 +403,6 @@
     .section-head { grid-template-columns: 1fr; gap: 1.2rem; }
     .gallery { grid-template-columns: 1fr; }
     .tee { grid-template-columns: 1fr; }
-    .tee .golf-wrap { max-width: 360px; }
   }
   @media (max-width: 700px) {
     .masthead nav { gap: 1.1rem; }
@@ -465,26 +484,79 @@
     <p>Research doesn't ship on a content calendar. Pipeline pieces land here as they clear the same bar as everything above — reproducible, documented, worth your time.</p>
     <p class="sub">Want early drafts and working notes? They surface first on <a href="https://complexityinsights.substack.com" target="_blank" rel="noopener">the Substack</a>.</p>
   </div>
-  <div class="golf-wrap reveal">
-    <svg class="golf-scene" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A patient golfer lining up a putt that never quite drops">
-      <ellipse cx="200" cy="150" rx="150" ry="40" fill="var(--accent-2)" stroke="var(--rule-strong)" stroke-width="1"/>
-      <ellipse cx="105" cy="150" rx="8" ry="3" fill="var(--ink)"/>
-      <line x1="105" y1="150" x2="105" y2="60" stroke="var(--ink-2)" stroke-width="1.5"/>
-      <polygon points="105,60 135,72 105,85" fill="#6b1f1a"/>
-      <g stroke="var(--ink-2)" stroke-width="2" stroke-linecap="round" fill="none">
-        <line x1="270" y1="145" x2="280" y2="110"/>
-        <line x1="290" y1="145" x2="280" y2="110"/>
-        <line x1="280" y1="110" x2="275" y2="75"/>
-        <circle cx="275" cy="65" r="6" fill="var(--ink-2)"/>
-        <line x1="275" y1="75" x2="265" y2="105"/>
-      </g>
-      <g class="putter">
-        <line x1="265" y1="105" x2="252" y2="145" stroke="var(--ink)" stroke-width="1.5"/>
-        <line x1="250" y1="145" x2="256" y2="147" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="square"/>
-      </g>
-      <circle class="ball" cx="248" cy="148" r="2.5" fill="var(--paper)"/>
-    </svg>
-  </div>
+  <figure class="golf-wrap reveal">
+    <div class="golf-head"><span>Fig. — Reading the green</span></div>
+    <div class="golf-stage">
+      <svg id="golfScene" class="golf-scene" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="At golden hour, a golfer strokes a long putt. The ball curls toward the cup, slows on the lip, hangs for a moment, then spins back out.">
+        <defs>
+          <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#d7ded6"/>
+            <stop offset="0.5" stop-color="#ebe6d2"/>
+            <stop offset="1" stop-color="#f5e1b3"/>
+          </linearGradient>
+          <radialGradient id="gSun" cx="178" cy="226" r="330" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#fff5d8" stop-opacity="0.95"/>
+            <stop offset="0.22" stop-color="#fbe4ae" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#f5e1b3" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="gGround" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#9aa77a"/>
+            <stop offset="0.3" stop-color="#6c8854"/>
+            <stop offset="1" stop-color="#3b5a3a"/>
+          </linearGradient>
+          <radialGradient id="gGreen" cx="470" cy="360" r="560" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#a6c27c"/>
+            <stop offset="0.45" stop-color="#80a760"/>
+            <stop offset="1" stop-color="#5a874b"/>
+          </radialGradient>
+          <radialGradient id="gSheen" cx="0.3" cy="0.25" r="0.6">
+            <stop offset="0" stop-color="#fff4cf" stop-opacity="0.22"/>
+            <stop offset="1" stop-color="#fff4cf" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="cGreen"><ellipse cx="540" cy="430" rx="470" ry="112"/></clipPath>
+          <clipPath id="cFace"><ellipse id="cFaceShape" rx="15" ry="18"/></clipPath>
+          <linearGradient id="gStick" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fffbef"/>
+            <stop offset="1" stop-color="#cfc6b0"/>
+          </linearGradient>
+          <linearGradient id="gPolo" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#34507f"/>
+            <stop offset="0.45" stop-color="#23385f"/>
+            <stop offset="1" stop-color="#172644"/>
+          </linearGradient>
+          <linearGradient id="gTrou" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ece3cb"/>
+            <stop offset="0.5" stop-color="#d3c7a7"/>
+            <stop offset="1" stop-color="#b2a482"/>
+          </linearGradient>
+          <linearGradient id="gSkin" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#e9b893"/>
+            <stop offset="1" stop-color="#cf966f"/>
+          </linearGradient>
+          <linearGradient id="gCap" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fcf9f1"/>
+            <stop offset="1" stop-color="#d6cfbc"/>
+          </linearGradient>
+          <radialGradient id="gBall" cx="0.34" cy="0.3" r="0.8">
+            <stop offset="0" stop-color="#ffffff"/>
+            <stop offset="0.55" stop-color="#f1eee4"/>
+            <stop offset="1" stop-color="#bdb7a4"/>
+          </radialGradient>
+          <radialGradient id="gVig" cx="0.5" cy="0.45" r="0.75">
+            <stop offset="0.6" stop-color="#2a2a18" stop-opacity="0"/>
+            <stop offset="1" stop-color="#2a2a18" stop-opacity="0.2"/>
+          </radialGradient>
+          <filter id="fShadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feFlood flood-color="#1e3322" flood-opacity="0.32"/>
+            <feComposite in2="SourceAlpha" operator="in"/>
+            <feGaussianBlur stdDeviation="1.3"/>
+          </filter>
+        </defs>
+      </svg>
+      <div class="golf-grain" aria-hidden="true"></div>
+    </div>
+    <figcaption class="golf-caption">Perfect read. Perfect pace. The hole had other plans.</figcaption>
+  </figure>
 </section>
 </main>
 
@@ -523,6 +595,543 @@ document.querySelectorAll('.work-card').forEach(card => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   items.forEach(el => io.observe(el));
+})();
+
+/* ============================================================
+   ON THE TEE — the lip-out. Golden-hour green, a patient golfer,
+   a putt that hangs on the edge long enough to hope.
+   Static scenery is generated once; the golfer, ball, flag and
+   camera are posed every frame from one looping timeline.
+   ============================================================ */
+(function(){
+  const svg = document.getElementById('golfScene');
+  if (!svg) return;
+  const NS = 'http://www.w3.org/2000/svg';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const mk = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  };
+  const r1 = v => Math.round(v * 10) / 10;
+  const P = p => r1(p[0]) + ',' + r1(p[1]);
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = {
+    lin: t => t,
+    io: t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
+    sine: t => -(Math.cos(Math.PI * t) - 1) / 2,
+    in: t => t * t,
+    out: t => 1 - (1 - t) * (1 - t)
+  };
+  const rot = (c, a, v) => {
+    const s = Math.sin(a), k = Math.cos(a);
+    return [c[0] + v[0] * k - v[1] * s, c[1] + v[0] * s + v[1] * k];
+  };
+
+  /* Catmull-Rom → cubic Bézier. crOpen continues from pts[0]. */
+  function crOpen(p) {
+    let d = '';
+    for (let i = 0; i < p.length - 1; i++) {
+      const p0 = p[i - 1] || p[i], p1 = p[i], p2 = p[i + 1], p3 = p[i + 2] || p2;
+      d += 'C' + P([p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6]) + ' ' +
+                 P([p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6]) + ' ' + P(p2);
+    }
+    return d;
+  }
+  function crClosed(p) {
+    const n = p.length;
+    let d = 'M' + P(p[0]);
+    for (let i = 0; i < n; i++) {
+      const p0 = p[(i - 1 + n) % n], p1 = p[i], p2 = p[(i + 1) % n], p3 = p[(i + 2) % n];
+      d += 'C' + P([p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6]) + ' ' +
+                 P([p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6]) + ' ' + P(p2);
+    }
+    return d + 'Z';
+  }
+  function mulberry(a) {
+    return function() {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  /* ---------- scene constants (viewBox 1000 × 560) ---------- */
+  const W = 1000, H = 560;
+  const GREEN = { cx: 540, cy: 430, rx: 470, ry: 112 };
+  const CUP = { x: 770, y: 420, R: 19, r: 6.4 };
+  const FEET = [380, 456];
+  const FLAG_TOP = 150;
+  const SUN = [178, 226];
+  /* long golden-hour shadows: height h above ground lands (0.55h, 0.18h) away */
+  const shadowM = y0 => `matrix(1,0,-0.55,-0.18,${r1(0.55 * y0)},${r1(1.18 * y0)})`;
+
+  /* ---------- sky, sun, clouds, birds ---------- */
+  mk('rect', { width: W, height: H, fill: 'url(#gSky)' });
+  mk('rect', { width: W, height: 330, fill: 'url(#gSun)' });
+  mk('circle', { cx: SUN[0], cy: SUN[1], r: 30, fill: '#fff8e4' });
+
+  const cloudG = mk('g', { opacity: 0.55 });
+  const clouds = [[640, 88, 1, 3.2], [900, 58, 0.8, 2.4], [300, 64, 1.15, 2.8], [60, 118, 0.7, 3.8]].map(([x, y, s, v]) => {
+    const g = mk('g', {}, cloudG);
+    [[0, 0, 46, 13], [-34, 5, 30, 9], [30, 4, 34, 10], [6, -9, 26, 11]].forEach(([dx, dy, rx, ry]) =>
+      mk('ellipse', { cx: dx * s, cy: dy * s, rx: rx * s, ry: ry * s, fill: '#fffaf0' }, g));
+    return { g, x, y, v };
+  });
+  const birdG = mk('g', { fill: 'none', stroke: '#4d4a3e', 'stroke-width': 1.3, 'stroke-linecap': 'round' });
+  const birds = [[0, 0], [16, -7], [30, 3]].map(([dx, dy]) => ({ e: mk('path', {}, birdG), dx, dy }));
+
+  /* ---------- tree line: three hazy layers ---------- */
+  const rnd = mulberry(11);
+  [
+    { base: 262, h: [18, 46], w: [26, 54], fill: '#bec3a9' },
+    { base: 266, h: [12, 36], w: [30, 62], fill: '#97a585' },
+    { base: 271, h: [4, 22],  w: [36, 70], fill: '#708762' }
+  ].forEach(L => {
+    let x = -60, d = 'M-60,340L-60,' + L.base;
+    while (x < 1060) {
+      const w = lerp(L.w[0], L.w[1], rnd());
+      let h = lerp(L.h[0], L.h[1], rnd());
+      if (rnd() < 0.14) h *= 1.45;
+      const y = L.base - h;
+      /* each tree: a rounded crown built from two or three lobes */
+      const lobes = 2 + Math.floor(rnd() * 2);
+      d += 'L' + P([x, L.base]);
+      let px = x, py = L.base;
+      for (let j = 1; j <= lobes; j++) {
+        const nx = x + w * j / lobes, ny = j === lobes ? L.base : y + rnd() * h * 0.35;
+        const peak = y - rnd() * 4 + (j === 1 || j === lobes ? h * 0.2 : 0);
+        d += 'C' + P([px, peak]) + ' ' + P([nx, peak]) + ' ' + P([nx, ny]);
+        px = nx; py = ny;
+      }
+      x += w * lerp(0.55, 0.85, rnd());
+    }
+    mk('path', { d: d + 'L1060,340Z', fill: L.fill });
+  });
+
+  /* ---------- ground, bunkers, green ---------- */
+  mk('rect', { y: 268, width: W, height: H - 268, fill: 'url(#gGround)' });
+  [[168, 297, 96, 13], [912, 303, 72, 10]].forEach(([x, y, rx, ry]) => {
+    mk('ellipse', { cx: x, cy: y - 1.5, rx: rx + 3, ry: ry + 2, fill: '#5c7446' });
+    mk('ellipse', { cx: x, cy: y, rx, ry, fill: '#eadcb4' });
+    mk('ellipse', { cx: x + rx * 0.08, cy: y + ry * 0.25, rx: rx * 0.86, ry: ry * 0.62, fill: '#f3e8c8' });
+  });
+  mk('ellipse', { cx: GREEN.cx, cy: GREEN.cy - 2, rx: GREEN.rx + 16, ry: GREEN.ry + 9, fill: '#557d3f' });
+  mk('ellipse', { cx: GREEN.cx, cy: GREEN.cy, rx: GREEN.rx, ry: GREEN.ry, fill: 'url(#gGreen)' });
+  const stripes = mk('g', { 'clip-path': 'url(#cGreen)', fill: '#fffbe6', opacity: 0.075 });
+  for (let b = -700; b < 1700; b += 124) {
+    const vx = 640, top = 300, k = 0.34;
+    const tx = x => vx + (x - vx) * k;
+    mk('polygon', { points: [[b, H], [b + 62, H], [tx(b + 62), top], [tx(b), top]].map(P).join(' ') }, stripes);
+  }
+  mk('ellipse', { cx: GREEN.cx, cy: GREEN.cy, rx: GREEN.rx, ry: GREEN.ry, fill: 'url(#gSheen)' });
+
+  /* ---------- the cup ---------- */
+  {
+    const { x, y, R, r } = CUP;
+    mk('ellipse', { cx: x, cy: y + 0.5, rx: R + 5, ry: r + 2, fill: '#4f7a42', opacity: 0.45 });
+    mk('ellipse', { cx: x, cy: y, rx: R, ry: r, fill: '#12170f' });
+    mk('path', { d: `M${x - R},${y}A${R},${r} 0 0 1 ${x + R},${y}A${R},${r - 2} 0 0 0 ${x - R},${y}Z`, fill: '#dcd5c1' });
+    mk('path', { d: `M${x - R + 3},${y + 0.8}A${R - 3},${r - 3.6} 0 0 1 ${x + R - 3},${y + 0.8}`, fill: 'none', stroke: '#2b2f25', 'stroke-width': 1.4, opacity: 0.8 });
+    mk('path', { d: `M${x - R},${y}A${R},${r} 0 0 0 ${x + R},${y}`, fill: 'none', stroke: '#e9f0cf', 'stroke-width': 1, opacity: 0.35 });
+  }
+
+  /* ---------- shadows (golfer + flag, cast from live geometry) ---------- */
+  const shadowG = mk('g', { filter: 'url(#fShadow)' });
+  mk('use', { href: '#golfFlag', transform: shadowM(CUP.y) }, shadowG);
+  mk('use', { href: '#golfer', transform: shadowM(FEET[1]) }, shadowG);
+  const ballShadow = mk('ellipse', { rx: 10, ry: 3, fill: '#1e3322', opacity: 0.3 });
+
+  /* ---------- flag ---------- */
+  const flagG = mk('g', { id: 'golfFlag' });
+  mk('rect', { x: CUP.x - 1.6, y: FLAG_TOP - 2, width: 3.2, height: CUP.y - FLAG_TOP + 3, rx: 1.2, fill: 'url(#gStick)' }, flagG);
+  mk('circle', { cx: CUP.x, cy: FLAG_TOP - 3, r: 2.6, fill: '#e9e2cf' }, flagG);
+  const FLAG_N = 12;
+  const flagStrips = Array.from({ length: FLAG_N }, () => mk('polygon', {}, flagG));
+
+  /* ---------- golfer (local coords, origin between the feet) ---------- */
+  const G = mk('g', { id: 'golfer', transform: `translate(${FEET[0]},${FEET[1]})` });
+  const shoe = (cx, flip) => {
+    mk('path', { d: `M${cx - 15},-4C${cx - 15},-14 ${cx + 15},-14 ${cx + 15},-4C${cx + 15},3 ${cx - 15},3 ${cx - 15},-4Z`, fill: '#f4f1e8', stroke: '#b8ae96', 'stroke-width': 0.8 }, G);
+    mk('path', { d: `M${cx - 12 + flip * 2},-1C${cx - 8},4 ${cx + 8},4 ${cx + 12 + flip * 2},-1C${cx + 6},-4 ${cx - 6},-4 ${cx - 12 + flip * 2},-1Z`, fill: '#a9804f' }, G);
+    mk('path', { d: `M${cx - 14},0.5C${cx - 6},3.4 ${cx + 6},3.4 ${cx + 14},0.5`, fill: 'none', stroke: '#6c604c', 'stroke-width': 1.2 }, G);
+  };
+  shoe(-25, -1); shoe(25, 1);
+  const eLegs = mk('path', { fill: 'url(#gTrou)' }, G);
+  const eCrease = mk('path', { fill: 'none', stroke: '#fffaf0', 'stroke-width': 1, opacity: 0.35 }, G);
+  const eTorso = mk('path', { fill: 'url(#gPolo)' }, G);
+  const eFold = mk('path', { fill: 'none', stroke: '#101b30', 'stroke-width': 1.2, opacity: 0.35, 'stroke-linecap': 'round' }, G);
+  const eBelt = mk('path', { fill: '#3a2a1f' }, G);
+  const eBuckle = mk('rect', { width: 7, height: 6, rx: 1, fill: '#d0ab62' }, G);
+  const eNeck = mk('path', { fill: '#c58c67' }, G);
+  const eCollarL = mk('path', { fill: '#34528a' }, G);
+  const eCollarR = mk('path', { fill: '#34528a' }, G);
+  const eEarL = mk('ellipse', { rx: 3.6, ry: 5.5, fill: '#d49c77' }, G);
+  const eEarR = mk('ellipse', { rx: 3.6, ry: 5.5, fill: '#c98f6b' }, G);
+  const eHair = mk('path', { fill: '#4a3527' }, G);
+  const eFace = mk('ellipse', { rx: 15, ry: 18, fill: 'url(#gSkin)' }, G);
+  const faceClip = document.getElementById('cFaceShape');
+  const faceDetail = mk('g', { 'clip-path': 'url(#cFace)' }, G);
+  const eFaceShade = mk('ellipse', { rx: 10, ry: 20, fill: '#8a4b2a', opacity: 0.16 }, faceDetail);
+  const eBrimShadow = mk('ellipse', { rx: 20, ry: 7, fill: '#5b2f1c', opacity: 0.28 }, faceDetail);
+  const eNose = mk('path', { fill: '#b77a56' }, faceDetail);
+  const eCrown = mk('path', { fill: 'url(#gCap)' }, G);
+  const eLogo = mk('rect', { width: 7, height: 4, rx: 1.4, fill: '#1f3257' }, G);
+  const eButton = mk('ellipse', { rx: 2.4, ry: 1.4, fill: '#d6cfbb' }, G);
+  const eBrim = mk('ellipse', { rx: 20, ry: 5, stroke: '#14213b', 'stroke-width': 0.7 }, G);
+  const eGrip = mk('line', { stroke: '#1d1d1b', 'stroke-width': 5.2, 'stroke-linecap': 'round' }, G);
+  const eShaft = mk('line', { stroke: '#c7cbd0', 'stroke-width': 2, 'stroke-linecap': 'round' }, G);
+  const eHead = mk('path', { fill: '#2c2f34' }, G);
+  const eHeadHi = mk('path', { fill: 'none', stroke: '#9ba2ab', 'stroke-width': 1 }, G);
+  const armEls = () => ({
+    fore: mk('path', { fill: 'none', stroke: '#d29a74', 'stroke-width': 10.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, G),
+    sleeve: mk('path', { fill: 'none', stroke: '#23385f', 'stroke-width': 14.5, 'stroke-linecap': 'round' }, G),
+    cuff: mk('path', { fill: 'none', stroke: '#34528a', 'stroke-width': 2.2, 'stroke-linecap': 'round' }, G)
+  });
+  const armL = armEls(), armR = armEls();
+  const eHandL = mk('ellipse', { rx: 6.4, ry: 7, fill: '#d29a74' }, G);
+  const eHandR = mk('ellipse', { rx: 6.4, ry: 7, fill: '#f7f5ef', stroke: '#cfc8b6', 'stroke-width': 0.8 }, G);
+
+  /* ---------- ball ---------- */
+  const ballG = mk('g', {});
+  const eBall = mk('circle', { r: 7.5, fill: 'url(#gBall)', stroke: '#b9b3a1', 'stroke-width': 0.6 }, ballG);
+  const eBallDot = mk('circle', { r: 1.3, fill: '#a9a393' }, ballG);
+  mk('rect', { width: W, height: H, fill: 'url(#gVig)', 'pointer-events': 'none' });
+  const vignette = svg.lastChild;
+
+  /* ============================================================
+     BALL — precomputed roll: approach, the lip, the horseshoe out
+     ============================================================ */
+  const START = [FEET[0] + 17, FEET[1] + 13];
+  const PHI0 = 1.3 * Math.PI, DPHI = 1.25 * Math.PI;
+  const rimPt = phi => [CUP.x + CUP.R * Math.cos(phi), CUP.y + CUP.r * Math.sin(phi)];
+  const approach = (() => {
+    const E = rimPt(PHI0);
+    const tg = [-CUP.R * Math.sin(PHI0), CUP.r * Math.cos(PHI0)];
+    const tl = Math.hypot(tg[0], tg[1]);
+    const P1 = [START[0] + 140, START[1] + 12];
+    const P2 = [E[0] - 110 * tg[0] / tl, E[1] - 110 * tg[1] / tl];
+    const pts = [], cum = [0];
+    for (let i = 0; i <= 240; i++) {
+      const u = i / 240, a = (1 - u) ** 3, b = 3 * u * (1 - u) ** 2, c = 3 * u * u * (1 - u), d = u ** 3;
+      pts.push([a * START[0] + b * P1[0] + c * P2[0] + d * E[0], a * START[1] + b * P1[1] + c * P2[1] + d * E[1]]);
+      if (i) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+    }
+    return { pts, cum, L: cum[cum.length - 1] };
+  })();
+  const exitDir = (() => {
+    const phi = PHI0 + DPHI, v = [-CUP.R * Math.sin(phi), CUP.r * Math.cos(phi)], l = Math.hypot(v[0], v[1]);
+    return [v[0] / l, v[1] / l];
+  })();
+  const V0 = 236, VR = 70, VMIN = 13, VE = 58, UM = 0.6, LE = 36;
+  const RIM_L = CUP.R * DPHI;
+  const A1 = (V0 * V0 - VR * VR) / (2 * approach.L), A2 = VE * VE / (2 * LE);
+  const DT = 1 / 240;
+  const roll = [];  // [x, y, onRim, sinPhi, dip, dist]
+  const ev = {};
+  {
+    let phase = 0, s = 0, t = 0, dist = 0;
+    while (phase < 3 && t < 20) {
+      let v, x, y, on = 0, sp = 0, dip = 0;
+      if (phase === 0) {
+        v = Math.sqrt(Math.max(VR * VR, V0 * V0 - 2 * A1 * s));
+        let i = 1; while (i < approach.cum.length - 1 && approach.cum[i] < s) i++;
+        const f = (s - approach.cum[i - 1]) / (approach.cum[i] - approach.cum[i - 1] || 1);
+        x = lerp(approach.pts[i - 1][0], approach.pts[i][0], clamp(f, 0, 1));
+        y = lerp(approach.pts[i - 1][1], approach.pts[i][1], clamp(f, 0, 1));
+      } else if (phase === 1) {
+        const u = s / RIM_L;
+        v = u < UM ? VMIN + (VR - VMIN) * (1 - u / UM) ** 2 : VMIN + (VE - VMIN) * (u - UM) / (1 - UM);
+        const phi = PHI0 + DPHI * u;
+        [x, y] = rimPt(phi);
+        on = 1; sp = Math.sin(phi);
+        dip = 2.2 * Math.sin(Math.PI * u) + 1.6 * Math.exp(-(((u - UM) / 0.13) ** 2));
+        if (ev.hang === undefined && u >= UM) ev.hang = t;
+      } else {
+        v = Math.sqrt(Math.max(0, VE * VE - 2 * A2 * s));
+        const e = rimPt(PHI0 + DPHI);
+        x = e[0] + exitDir[0] * s; y = e[1] + exitDir[1] * s;
+      }
+      roll.push([x, y, on, sp, dip, dist]);
+      const ds = v * DT; s += ds; dist += ds; t += DT;
+      if (phase === 0 && s >= approach.L) { phase = 1; s -= approach.L; ev.rim = t; }
+      else if (phase === 1 && s >= RIM_L) { phase = 2; s -= RIM_L; ev.out = t; }
+      else if (phase === 2 && (v < 0.8 || s >= LE)) { phase = 3; ev.stop = t; }
+    }
+  }
+
+  /* ============================================================
+     TIMELINE — golfer poses, camera, loop length
+     ============================================================ */
+  const T_TOP = 3.3, T_HIT = T_TOP + 0.46;
+  const tRim = T_HIT + ev.rim, tHang = T_HIT + ev.hang, tOut = T_HIT + ev.out, tStop = T_HIT + ev.stop;
+  const tReset = tOut + 4.9, T_END = tReset + 2.1;
+
+  const POSE0 = { b: 1, sway: 0, th: 0, yaw: 0, pitch: -1, react: 0 };
+  const pose = o => Object.assign({}, POSE0, o);
+  const ADDR = pose({});
+  const LOOK = pose({ yaw: 0.95, pitch: -0.5 });
+  const WATCH = pose({ b: 0.86, th: -0.2, yaw: 0.95, pitch: -0.35, sway: 3 });
+  const HOPE = pose({ b: 0.6, th: -0.44, yaw: 1, pitch: -0.12, sway: 12 });
+  const HOPE2 = pose({ b: 0.7, th: -0.52, yaw: 1, pitch: -0.2, sway: 13 });
+  const SAG = pose({ b: 0.42, th: -0.34, yaw: 0.9, pitch: 0.05, sway: 7 });
+  const DESPAIR = pose({ b: 0, yaw: 0.05, pitch: 0.85, react: 1 });
+  const SLUMP = pose({ b: 0.14, yaw: 0.2, pitch: -0.65, react: 1, sway: -2 });
+  const keys = [
+    [0, ADDR], [0.7, ADDR], [1.35, LOOK], [1.9, LOOK], [2.45, ADDR], [2.6, ADDR],
+    [T_TOP, pose({ th: 0.17 }), 'sine'],
+    [T_HIT, pose({ th: 0 }), 'in'],
+    [T_HIT + 0.54, pose({ th: -0.2 }), 'out'],
+    [T_HIT + 0.95, pose({ th: -0.2 })],
+    [T_HIT + 1.7, WATCH],
+    [tRim - 0.35, HOPE],
+    [tHang, HOPE2, 'sine'],
+    [tOut - 0.1, SAG, 'sine'],
+    [tOut + 0.95, DESPAIR],
+    [tOut + 1.9, DESPAIR],
+    [tOut + 2.7, SLUMP],
+    [tReset, SLUMP],
+    [tReset + 1.5, ADDR],
+    [T_END, ADDR]
+  ];
+  const FULL = [500, 280, 1000], CLOSE = [598, 330, 700];
+  const cams = [
+    [0, FULL], [T_HIT + 0.45, FULL], [tRim + 0.2, CLOSE, 'io'],
+    [tOut + 0.35, CLOSE], [tOut + 2.3, FULL, 'io'], [T_END, FULL]
+  ];
+  function sample(list, t) {
+    let i = 0;
+    while (i < list.length - 2 && list[i + 1][0] <= t) i++;
+    const a = list[i], b = list[i + 1];
+    const u = clamp((t - a[0]) / ((b[0] - a[0]) || 1), 0, 1);
+    return [a[1], b[1], (ease[b[2]] || ease.io)(u)];
+  }
+
+  /* ============================================================
+     DRAW
+     ============================================================ */
+  const L1 = 52, L2 = 50;
+  function ik(S, Hd, pole) {
+    const dx = Hd[0] - S[0], dy = Hd[1] - S[1];
+    const d = Math.min(Math.hypot(dx, dy), L1 + L2 - 0.5);
+    const u = [dx / (Math.hypot(dx, dy) || 1), dy / (Math.hypot(dx, dy) || 1)];
+    const a = (L1 * L1 - L2 * L2 + d * d) / (2 * d), h = Math.sqrt(Math.max(0, L1 * L1 - a * a));
+    let pp = [-u[1], u[0]];
+    if (pp[0] * pole[0] + pp[1] * pole[1] < 0) pp = [-pp[0], -pp[1]];
+    const E = [S[0] + u[0] * a + pp[0] * h, S[1] + u[1] * a + pp[1] * h];
+    const Hc = [S[0] + u[0] * d, S[1] + u[1] * d];
+    return [E, Hc];
+  }
+  function drawArm(el, S, Hd, pole) {
+    const [E, Hc] = ik(S, Hd, pole);
+    el.fore.setAttribute('d', 'M' + P(S) + 'L' + P(E) + 'L' + P(Hc));
+    const sl = [lerp(S[0], E[0], 0.55), lerp(S[1], E[1], 0.55)];
+    el.sleeve.setAttribute('d', 'M' + P(S) + 'L' + P(sl));
+    const n = [-(E[1] - S[1]), E[0] - S[0]], nl = Math.hypot(n[0], n[1]) || 1;
+    el.cuff.setAttribute('d', 'M' + P([sl[0] + n[0] / nl * 6.6, sl[1] + n[1] / nl * 6.6]) + 'L' + P([sl[0] - n[0] / nl * 6.6, sl[1] - n[1] / nl * 6.6]));
+    return Hc;
+  }
+
+  function drawGolfer(p, t) {
+    const b = p.b, sway = p.sway, th = p.th, rc = p.react;
+    const wy = -160 + 10 * b, ky = -80 + 6 * b, cy = -135 + 8 * b, kx = 2.5 * b;
+    const shY = wy - 72 * (1 - 0.24 * b);
+    const piv = [sway, shY + 8];
+    const ths = th * 0.8;
+
+    /* trousers */
+    eLegs.setAttribute('d',
+      'M' + P([-33, wy]) + crOpen([[-33, wy], [-36, wy + 26], [-29 - kx, ky], [-28, -7]]) +
+      'L' + P([-13, -7]) + crOpen([[-13, -7], [-12 - kx * 0.4, ky + 2], [-4, cy + 6], [0, cy]]) +
+      crOpen([[0, cy], [4, cy + 6], [12 + kx * 0.4, ky + 2], [13, -7]]) +
+      'L' + P([28, -7]) + crOpen([[28, -7], [29 + kx, ky], [36, wy + 26], [33, wy]]) + 'Z');
+    eCrease.setAttribute('d',
+      'M' + P([-20, wy + 22]) + crOpen([[-20, wy + 22], [-21 - kx, ky], [-20, -9]]) +
+      'M' + P([20, wy + 22]) + crOpen([[20, wy + 22], [21 + kx, ky], [20, -9]]));
+
+    /* torso */
+    const q = v => rot(piv, ths, v);
+    const WL = [-31 + sway * 0.2, wy + 1], WR = [31 + sway * 0.2, wy + 1];
+    const AL = q([-33, 16]), AR = q([33, 16]);
+    const ML = [lerp(WL[0], AL[0], 0.5) - 3, lerp(WL[1], AL[1], 0.5)];
+    const MR = [lerp(WR[0], AR[0], 0.5) + 3, lerp(WR[1], AR[1], 0.5)];
+    const SL = q([-37, -6]), SR = q([37, -6]);
+    eTorso.setAttribute('d', crClosed([WL, ML, AL, SL, q([-27, -12]), q([-10, -13]), q([10, -13]), q([27, -12]), SR, AR, MR, WR]));
+    eFold.setAttribute('d', 'M' + P([WL[0] + 10, wy - 4]) + 'Q' + P([lerp(WL[0], AL[0], 0.5) + 14, lerp(wy, AL[1], 0.5)]) + ' ' + P([AL[0] + 12, AL[1] + 10]) +
+      'M' + P([WR[0] - 9, wy - 3]) + 'Q' + P([lerp(WR[0], AR[0], 0.5) - 13, lerp(wy, AR[1], 0.55)]) + ' ' + P([AR[0] - 11, AR[1] + 12]));
+    const bx = sway * 0.2;
+    eBelt.setAttribute('d', `M${r1(-32 + bx)},${r1(wy - 3)}L${r1(32 + bx)},${r1(wy - 3)}L${r1(32 + bx)},${r1(wy + 4)}L${r1(-32 + bx)},${r1(wy + 4)}Z`);
+    eBuckle.setAttribute('x', r1(bx - 3.5)); eBuckle.setAttribute('y', r1(wy - 2.5));
+
+    /* head */
+    const yaw = p.yaw, pitch = p.pitch, dn = Math.max(0, -pitch), upv = Math.max(0, pitch);
+    const hc = [sway * 1.05 + yaw * 3, shY - (36 - 18 * b) - upv * 2];
+    const nb = q([0, -10]);
+    eNeck.setAttribute('d', `M${r1(nb[0] - 9)},${r1(nb[1] + 4)}L${r1(hc[0] - 8)},${r1(hc[1] + 8)}L${r1(hc[0] + 8)},${r1(hc[1] + 8)}L${r1(nb[0] + 9)},${r1(nb[1] + 4)}Z`);
+    const cl = q([-12, -12]), cr = q([12, -12]), cm = q([0, 2]);
+    eCollarL.setAttribute('d', 'M' + P(cl) + 'L' + P(q([-3, -8])) + 'L' + P(cm) + 'L' + P(q([-14, 0])) + 'Z');
+    eCollarR.setAttribute('d', 'M' + P(cr) + 'L' + P(q([3, -8])) + 'L' + P(cm) + 'L' + P(q([14, 0])) + 'Z');
+    eEarL.setAttribute('cx', r1(hc[0] - 15 - yaw * 1.5)); eEarL.setAttribute('cy', r1(hc[1] + 1 - pitch * 2));
+    eEarR.setAttribute('cx', r1(hc[0] + 15 - yaw * 2.5)); eEarR.setAttribute('cy', r1(hc[1] + 1 - pitch * 2));
+    eEarR.setAttribute('rx', r1(3.6 * (1 - 0.55 * Math.max(0, yaw))));
+    eHair.setAttribute('d', `M${r1(hc[0] - 16)},${r1(hc[1] - 8)}Q${r1(hc[0] - 18)},${r1(hc[1] + 2)} ${r1(hc[0] - 13)},${r1(hc[1] + 4)}L${r1(hc[0] - 12)},${r1(hc[1] - 6)}Z` +
+      `M${r1(hc[0] + 16)},${r1(hc[1] - 8)}Q${r1(hc[0] + 18)},${r1(hc[1] + 2)} ${r1(hc[0] + 13)},${r1(hc[1] + 4)}L${r1(hc[0] + 12)},${r1(hc[1] - 6)}Z`);
+    for (const e of [eFace, faceClip]) { e.setAttribute('cx', r1(hc[0])); e.setAttribute('cy', r1(hc[1])); }
+    eFaceShade.setAttribute('cx', r1(hc[0] + 12 - yaw * 4)); eFaceShade.setAttribute('cy', r1(hc[1] + 2));
+    const cb = hc[1] - 6 - pitch * 3;
+    const ch = 15 + dn * 6 - upv * 3;
+    const brimY = cb + 2 + dn * 4.5 - upv * 5, brimRy = 3.8 + dn * 3.6 - upv * 1.4;
+    const bxh = hc[0] + yaw * 5;
+    eBrimShadow.setAttribute('cx', r1(bxh)); eBrimShadow.setAttribute('cy', r1(brimY + brimRy + 1));
+    eBrimShadow.setAttribute('opacity', r1(0.28 * (1 - upv * 0.6) * 100) / 100);
+    const nx = hc[0] + yaw * 8, ny = hc[1] + 5 - pitch * 3;
+    eNose.setAttribute('d', `M${r1(nx - 1)},${r1(ny - 6)}Q${r1(nx + 2 + yaw * 1.5)},${r1(ny)} ${r1(nx + 2)},${r1(ny + 2)}Q${r1(nx - 1)},${r1(ny + 3)} ${r1(nx - 3)},${r1(ny + 1.5)}Z`);
+    eNose.setAttribute('opacity', r1(clamp(1 - dn * 1.4, 0, 1) * 100) / 100);
+    eCrown.setAttribute('d', `M${r1(hc[0] - 17.5)},${r1(cb)}C${r1(hc[0] - 17.5)},${r1(cb - ch * 1.33)} ${r1(hc[0] + 17.5)},${r1(cb - ch * 1.33)} ${r1(hc[0] + 17.5)},${r1(cb)}Z`);
+    eLogo.setAttribute('x', r1(hc[0] + yaw * 6 - 3.5)); eLogo.setAttribute('y', r1(cb - ch * 0.55));
+    eButton.setAttribute('cx', r1(hc[0] - yaw)); eButton.setAttribute('cy', r1(cb - ch + 0.6));
+    eButton.setAttribute('opacity', r1(dn * 100) / 100);
+    eBrim.setAttribute('cx', r1(bxh)); eBrim.setAttribute('cy', r1(brimY)); eBrim.setAttribute('ry', r1(brimRy));
+    eBrim.setAttribute('fill', pitch > 0.12 ? '#3f5548' : '#1f3257');
+
+    /* putter + hands: blend a pendulum grip with a dejected carry */
+    const gTop = rot(piv, th, [3, 60]), gLead = rot(piv, th, [3, 72]), gTrail = rot(piv, th, [3, 81]);
+    const leadR = [44 + sway, shY + 98], trailR = [hc[0] - 5, hc[1] - 21];
+    const lead = [lerp(gLead[0], leadR[0], rc), lerp(gLead[1], leadR[1], rc)];
+    const trail = [lerp(gTrail[0], trailR[0], rc), lerp(gTrail[1], trailR[1], rc)];
+    const alpha = lerp(-th, 0.29, rc);
+    const dir = [Math.sin(alpha), Math.cos(alpha)];
+    const top = [lead[0] - dir[0] * 12, lead[1] - dir[1] * 12];
+    const sole = [lead[0] + dir[0] * 137.7, lead[1] + dir[1] * 137.7];
+    const gEnd = [top[0] + dir[0] * 30, top[1] + dir[1] * 30];
+    eGrip.setAttribute('x1', r1(top[0])); eGrip.setAttribute('y1', r1(top[1]));
+    eGrip.setAttribute('x2', r1(gEnd[0])); eGrip.setAttribute('y2', r1(gEnd[1]));
+    eShaft.setAttribute('x1', r1(gEnd[0])); eShaft.setAttribute('y1', r1(gEnd[1]));
+    eShaft.setAttribute('x2', r1(sole[0] - dir[0] * 5)); eShaft.setAttribute('y2', r1(sole[1] - dir[1] * 5));
+    const hr = v => P(rot(sole, -alpha, v));
+    eHead.setAttribute('d', 'M' + hr([-6, -8]) + 'L' + hr([6, -8]) + 'Q' + hr([8, -8]) + ' ' + hr([8, -5]) + 'L' + hr([7.5, -1]) + 'Q' + hr([7, 1]) + ' ' + hr([4, 1]) + 'L' + hr([-5, 1]) + 'Q' + hr([-7.5, 1]) + ' ' + hr([-7.5, -3]) + 'L' + hr([-7.5, -6]) + 'Q' + hr([-7.5, -8]) + ' ' + hr([-6, -8]) + 'Z');
+    eHeadHi.setAttribute('d', 'M' + hr([-5, -6.8]) + 'L' + hr([5.5, -6.8]));
+
+    const hL = drawArm(armL, q([-31, 1]), trail, [-1, 0.2]);
+    const hR = drawArm(armR, q([31, 1]), lead, [1, 0.2]);
+    eHandL.setAttribute('cx', r1(hL[0])); eHandL.setAttribute('cy', r1(hL[1]));
+    eHandR.setAttribute('cx', r1(hR[0])); eHandR.setAttribute('cy', r1(hR[1]));
+  }
+
+  const flagBase = [CUP.x + 1.4, FLAG_TOP];
+  function drawFlag(clock, wind) {
+    const L = 64, Hh = 38;
+    let prev = null;
+    for (let i = 0; i <= FLAG_N; i++) {
+      const f = i / FLAG_N, ph = f * 5.2 - clock * 5.4;
+      const dy = (1.2 + 4.2 * wind) * f * Math.sin(ph) + f * f * (4 - 2.5 * wind);
+      const x = flagBase[0] + L * f * (0.93 + 0.07 * wind) - f * (1 - wind) * 3;
+      const cur = { x, t: flagBase[1] + dy, b: flagBase[1] + Hh + dy * 0.85 + f * f * (1 - wind) * 6, s: Math.cos(ph) };
+      if (prev) {
+        const k = 0.86 + 0.14 * (prev.s * wind + (1 - wind) * 0.4);
+        const c = [176 * k, 70 * k, 48 * k].map(Math.round);
+        flagStrips[i - 1].setAttribute('points', `${r1(prev.x)},${r1(prev.t)} ${r1(cur.x + 0.5)},${r1(cur.t)} ${r1(cur.x + 0.5)},${r1(cur.b)} ${r1(prev.x)},${r1(prev.b)}`);
+        flagStrips[i - 1].setAttribute('fill', `rgb(${c})`);
+      }
+      prev = cur;
+    }
+  }
+
+  let ballBehind = null;
+  function drawBall(t) {
+    let x, y, on = 0, sp = 0, dip = 0, dist = 0, op = 1;
+    if (t >= tReset + 0.6 || t < T_HIT) {
+      [x, y] = START;
+      op = t >= tReset ? clamp((t - tReset - 0.6) / 0.6, 0, 1) : 1;
+    } else {
+      const i = Math.min(roll.length - 1, Math.floor((t - T_HIT) / DT));
+      [x, y, on, sp, dip, dist] = roll[i];
+      if (t > tReset - 0.45) op = clamp((tReset - t) / 0.45, 0, 1);
+    }
+    const r = 7.5 * (1 + (y - CUP.y) * 0.0025);
+    const cy = y - r + dip;
+    eBall.setAttribute('cx', r1(x)); eBall.setAttribute('cy', r1(cy)); eBall.setAttribute('r', r1(r));
+    const a = dist / r;
+    eBallDot.setAttribute('cx', r1(x + Math.cos(a) * r * 0.52)); eBallDot.setAttribute('cy', r1(cy + Math.sin(a) * r * 0.52));
+    ballG.setAttribute('opacity', r1(op * 100) / 100);
+    ballShadow.setAttribute('cx', r1(x + 6)); ballShadow.setAttribute('cy', r1(y + 1.2));
+    ballShadow.setAttribute('opacity', r1(0.3 * op * (on ? 0.6 : 1) * 100) / 100);
+    const behind = on && sp < 0;
+    if (behind !== ballBehind) {
+      svg.insertBefore(ballG, behind ? flagG : vignette);
+      ballBehind = behind;
+    }
+  }
+
+  function drawCamera(t) {
+    const [a, b, u] = sample(cams, t);
+    const w = lerp(a[2], b[2], u), h = w * H / W;
+    const x = clamp(lerp(a[0], b[0], u) - w / 2, 0, W - w), y = clamp(lerp(a[1], b[1], u) - h / 2, 0, H - h);
+    svg.setAttribute('viewBox', `${r1(x)} ${r1(y)} ${r1(w)} ${r1(h)}`);
+  }
+
+  function drawAmbient(clock) {
+    clouds.forEach(c => {
+      const x = ((c.x + clock * c.v) % 1240) - 120;
+      c.g.setAttribute('transform', `translate(${r1(x)},${c.y})`);
+    });
+    const cyc = clock % 64, bx = 1060 - cyc * 22;
+    birds.forEach((bd, i) => {
+      const f = Math.sin(clock * 8 + i * 1.7) * 3;
+      const x = bx + bd.dx, y = 118 + bd.dy + Math.sin(clock * 0.8 + i) * 2;
+      bd.e.setAttribute('d', `M${r1(x - 5)},${r1(y - f * 0.3)}Q${r1(x - 2.5)},${r1(y - 2 - f)} ${r1(x)},${r1(y)}Q${r1(x + 2.5)},${r1(y - 2 - f)} ${r1(x + 5)},${r1(y - f * 0.3)}`);
+    });
+  }
+
+  function render(t, clock) {
+    const [a, b, u] = sample(keys, t);
+    const p = {};
+    for (const k in POSE0) p[k] = lerp(a[k], b[k], u);
+    const s0 = tOut + 2.9;
+    if (t > s0 && t < s0 + 1.3) p.yaw += 0.32 * Math.sin((t - s0) / 1.3 * Math.PI * 4) * Math.sin((t - s0) / 1.3 * Math.PI);
+    drawGolfer(p, t);
+    drawBall(t);
+    drawCamera(t);
+    /* the wind drops while the ball hangs on the lip */
+    const hush = t > tRim - 0.2 && t < tOut + 0.6 ? Math.sin(clamp((t - tRim + 0.2) / (tOut - tRim + 0.8), 0, 1) * Math.PI) : 0;
+    drawFlag(clock, 1 - 0.85 * hush);
+    drawAmbient(clock);
+  }
+
+  /* ---------- film grain, drawn once ---------- */
+  const grain = svg.parentNode.querySelector('.golf-grain');
+  if (grain) {
+    try {
+      const c = document.createElement('canvas'); c.width = c.height = 140;
+      const x = c.getContext('2d'), img = x.createImageData(140, 140), gr = mulberry(5);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = 110 + gr() * 145;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 26;
+      }
+      x.putImageData(img, 0, 0);
+      grain.style.backgroundImage = `url(${c.toDataURL()})`;
+    } catch (e) {}
+  }
+
+  if (reduce) { render(tHang, 0); return; }
+  let t = 0, clock = 0, last = null, raf = 0, visible = false;
+  render(0, 0);
+  function frame(now) {
+    if (last === null) last = now;
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now; t += dt; clock += dt;
+    if (t >= T_END) t -= T_END;
+    render(t, clock);
+    raf = visible ? requestAnimationFrame(frame) : 0;
+  }
+  const start = () => { if (!raf) { last = null; raf = requestAnimationFrame(frame); } };
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(es => es.forEach(e => { visible = e.isIntersecting; if (visible) start(); }), { threshold: 0.05 }).observe(svg);
+  } else { visible = true; start(); }
 })();
 </script>
 </body>
