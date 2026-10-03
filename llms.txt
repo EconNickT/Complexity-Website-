@@ -7,13 +7,13 @@ The research covers market simulation, supply-chain and exposure networks, syste
 ## Pages
 
 - [Home](https://complexityinsights.com/): Thesis, research areas, and current work
-- [Projects](https://complexityinsights.com/projects/): Applied research portfolio, including the Banking Deserts interactive county-level map
+- [Projects](https://complexityinsights.com/projects/): Research projects, including the Banking Deserts interactive county-level map
 - [Writings](https://complexityinsights.com/writings/): Essays and research notes on traditional and complexity economics -- published on Substack
 - [About](https://complexityinsights.com/about/): The research house and its founder, Nicholas Thomas
 
 ## Current work
 
-- [United-Continental Merger Analysis](https://complexityinsights.substack.com/p/did-the-united-continental-merger): Econometric analysis of 13 million data points investigating whether the United-Continental airline merger harmed consumers. Published on Substack.
+- [United-Continental Merger Analysis](https://complexityinsights.substack.com/p/did-the-united-continental-merger): Difference-in-differences analysis of 13.7 million observations, estimating the effect of the United-Continental airline merger on consumers. Finds statistically significant results and concludes the merger did not harm consumer welfare. Published on Substack.
 - [Banking Deserts](https://complexityinsights.com/projects/banking-deserts/): Spatial and network analysis of financial-access gaps, with an interactive county-level map.
 - Designing a Better Job Market: A two-part study of why entry-level hiring clears so poorly. Part I diagnoses the market; Part II simulates a deferred-acceptance clearinghouse against today's open-application process.
 - Data Ingestion Project: A multi-layer scraping, cleaning, and standardization pipeline that produces model-ready data for agent-based models.
