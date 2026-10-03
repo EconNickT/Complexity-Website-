@@ -11,6 +11,13 @@ The research covers market simulation, supply-chain and exposure networks, syste
 - [Writings](https://complexityinsights.com/writings/): Essays and research notes on traditional and complexity economics -- published on Substack
 - [About](https://complexityinsights.com/about/): The research house and its founder, Nicholas Thomas
 
+## Current work
+
+- [United-Continental Merger Analysis](https://complexityinsights.substack.com/p/did-the-united-continental-merger): Econometric analysis of 13 million data points investigating whether the United-Continental airline merger harmed consumers. Published on Substack.
+- [Banking Deserts](https://complexityinsights.com/projects/banking-deserts/): Spatial and network analysis of financial-access gaps, with an interactive county-level map.
+- Designing a Better Job Market: A two-part study of why entry-level hiring clears so poorly. Part I diagnoses the market; Part II simulates a deferred-acceptance clearinghouse against today's open-application process.
+- Data Ingestion Project: A multi-layer scraping, cleaning, and standardization pipeline that produces model-ready data for agent-based models.
+
 ## Founder
 
 Nicholas Thomas — economist (B.S. Economics, Penn State University, 2025), Washington, DC metro area. Core stack: Python · R · Stata · Julia · SQL · NetworkX. Open to full-time roles in economic research, data analysis, and financial modeling.
