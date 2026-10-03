@@ -716,8 +716,8 @@
   <div class="thesis reveal">
     <div class="thesis-body">
       <p class="dropcap">Equilibrium models answer a narrower question than the ones markets pose. They describe where prices settle when everyone is rational, identical, and finished adjusting — assumptions that buy tractability in a seminar, and become dangerous on a trading floor or in a supply chain.</p>
-      <p>The alternative is not to abandon rigor — it is to model behavior that is genuinely adaptive. Traders who learn. Firms that imitate. Shocks that propagate through network topology rather than dissipating smoothly across representative agents. The methods are now mature: agent-based models, calibrated networks, non-linear stochastic dynamics. The bottleneck is practitioners who can translate between the research and a real business problem.</p>
-      <p>That is the practice.</p>
+      <p>The alternative is not to abandon rigor — it is to model behavior that is genuinely adaptive. Traders who learn. Firms that imitate. Shocks that propagate through network topology rather than dissipating smoothly across representative agents. The methods are now mature: agent-based models, calibrated networks, non-linear stochastic dynamics. The bottleneck is empirical: calibrating these models to real data and showing where they beat the standard ones.</p>
+      <p>That is the research agenda.</p>
     </div>
     <figure class="sim-panel">
       <div class="sim-head"><span>Fig. — Fitness landscape</span><b>ADAPTIVE SEARCH</b></div>
@@ -732,24 +732,24 @@
 <!-- PULL QUOTE -->
 <section class="pull-quote">
   <div class="pull-quote-inner reveal">
-    <p>&ldquo;More is <em>different.</em>&rdquo;</p>
-    <span class="pull-quote-attr">Philip W. Anderson · Nobel Laureate in Physics · Science, 1972</span>
-    <span class="pull-quote-note">The founding observation of complexity science: aggregate behavior cannot be deduced from the parts alone.</span>
+    <p>&ldquo;&hellip;it is now within our reach to <em>understand</em> complex human systems&rdquo;</p>
+    <span class="pull-quote-attr">Eric Beinhocker · The Origin of Wealth, 2006 · Epilogue</span>
+    <span class="pull-quote-note">The book that first drew me to complexity economics.</span>
   </div>
 </section>
 
 <!-- PRACTICE -->
 <section class="section" id="practice">
   <div class="section-head reveal">
-    <div class="label">Practice</div>
-    <h2>Four problems worth modeling <em>properly.</em></h2>
+    <div class="label">Research areas</div>
+    <h2>Four questions worth modeling <em>properly.</em></h2>
   </div>
 
   <div class="practice-list reveal">
     <article class="practice-item">
       <div>
-        <h3>Market simulation &amp; strategy</h3>
-        <p>Stress-test pricing, launch strategy, or trading rules against synthetic populations of heterogeneous agents before committing capital. Finds the failure modes averages can't see.</p>
+        <h3>Market simulation</h3>
+        <p>How do pricing rules, launch dynamics, and trading strategies behave in synthetic populations of heterogeneous agents? Simulation surfaces failure modes that averages can't see.</p>
         <div class="methods"><span>Agent-based</span><span>Monte Carlo</span><span>Calibration</span></div>
       </div>
     </article>
@@ -757,7 +757,7 @@
     <article class="practice-item">
       <div>
         <h3>Supply-chain &amp; exposure networks</h3>
-        <p>Map the graph — who actually depends on whom, two and three hops deep. Identify nodes whose failure triggers cascades disproportionate to their size or spend.</p>
+        <p>Who actually depends on whom, two and three hops deep? Studying which nodes trigger cascades disproportionate to their size or spend.</p>
         <div class="methods"><span>Network science</span><span>Centrality</span><span>Percolation</span></div>
       </div>
     </article>
@@ -765,15 +765,15 @@
     <article class="practice-item">
       <div>
         <h3>Systemic &amp; tail-risk indicators</h3>
-        <p>Conventional VaR underestimates regime change. Complexity-based indicators — correlation structure, critical slowing-down — give early warning of phase transitions conventional models miss by construction.</p>
+        <p>Conventional VaR underestimates regime change. Do complexity-based indicators — correlation structure, critical slowing-down — give earlier warning of phase transitions that conventional models miss by construction?</p>
         <div class="methods"><span>Non-linear dynamics</span><span>Correlation structure</span><span>Early warning</span></div>
       </div>
     </article>
 
     <article class="practice-item">
       <div>
-        <h3>M&amp;A &amp; integration analysis</h3>
-        <p>Apply network theory to deal sourcing, synergy modeling, and post-merger integration risk. Synergies live in the graph of who-talks-to-whom; so do the integration failures.</p>
+        <h3>M&amp;A &amp; integration</h3>
+        <p>What does network structure say about which deals create value and which integrations fail? Synergies live in the graph of who-talks-to-whom; so do the failures.</p>
         <div class="methods"><span>Graph analysis</span><span>Synergy modeling</span><span>Integration risk</span></div>
       </div>
     </article>
@@ -788,23 +788,23 @@
     <h2>Working papers, projects, and case studies.</h2>
   </div>
 
-  <div class="intel-list reveal" 
-    <a class="intel-item" href="https://complexityinsights.substack.com/p/did-the-united-continental-merger"> 
+  <div class="intel-list reveal">
+    <a class="intel-item" href="https://complexityinsights.substack.com/p/did-the-united-continental-merger">
       <div class="intel-num">№ 001</div>
       <div class="intel-cat">Econometrics</div>
       <div class="intel-title">United-Continental Merger Analysis
-        <span class="sub">An analysis of 13 million data points to investigate whether the airlines merger harmed consumers.</span>
+        <span class="sub">A difference-in-differences analysis of 13.7 million observations finding the airline merger did not harm consumers.</span>
       </div>
       <div class="intel-meta"><span class="ticker-code">UCM</span><br/><span class="status-live">LIVE →</span></div>
-    </div>
+    </a>
 
     <div class="intel-item">
       <div class="intel-num">№ 002</div>
-      <div class="intel-cat">Agent-based model</div>
-      <div class="intel-title">Global Agent Based Model
-        <span class="sub">Simulating how real world recessions form to predict the next.</span>
+      <div class="intel-cat">Market design</div>
+      <div class="intel-title">Designing a Better Job Market
+        <span class="sub">Why 12,000 people apply for 72 openings, and what it would take to fix it. Part I diagnoses the market; Part II simulates a deferred-acceptance clearinghouse against today's open applications, scored on match rank, direct and indirect experience, and income preferences.</span>
       </div>
-      <div class="intel-meta"><span class="ticker-code">GABM</span><br/>In progress · Q4 2026</div>
+      <div class="intel-meta"><span class="ticker-code">JMD</span><br/>In progress</div>
     </div>
 
     <div class="intel-item">
@@ -832,8 +832,8 @@
   <div class="colophon-inner">
     <div class="reveal">
       <div class="label">Get in touch</div>
-      <h2>The best problems come in <em>through the front door.</em></h2>
-      <p>If you have an interesting question — inside a firm, a research group, or a hiring pipeline — the fastest path is a direct note.</p>
+      <h2>Questions, critiques, and <em>collaborations welcome.</em></h2>
+      <p>If you have a question, a correction, or want to collaborate on research — or you're hiring for economic research — a direct note is the fastest path.</p>
     </div>
     <div class="contact-list reveal">
       <a class="contact-row" href="mailto:Complexityinsights@gmail.com">
