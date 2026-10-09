@@ -5,6 +5,8 @@ description: Difference-in-differences estimate of the United–Continental airl
 topic: Econometrics · Industrial organization
 category: Working paper
 date: 2025-11-01            # TODO: set to the original Substack publish date
+cover: /images/writings/did-the-united-continental-merger/cover.svg
+cover_alt: Route map of the United and Continental hub networks joined by the 2010 merger.
 stat:
   value: 13.7M
   label: observations in the difference-in-differences panel

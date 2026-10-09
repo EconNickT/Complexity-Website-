@@ -29,6 +29,8 @@ Front matter reference (only title is required):
     href: /projects/some-page.html           # listing only — links here instead
                                              # of building /writings/<slug>/
     minutes: 12                              # read time override (for href entries)
+    cover: /images/writings/slug/cover.svg   # image on the lead card
+    cover_alt: What the image shows.
     stat:                                    # headline number on the lead card
       value: 13.7M
       label: route-quarter fare observations
@@ -245,6 +247,8 @@ def load_articles():
             "url": meta.get("href") or f"/writings/{slug}/",
             "featured": bool(meta.get("featured")),
             "stat": meta.get("stat"),
+            "cover": meta.get("cover"),
+            "cover_alt": meta.get("cover_alt", ""),
             "forthcoming": meta.get("forthcoming"),
         })
 
