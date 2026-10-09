@@ -540,7 +540,7 @@
 
 <div class="art-next">
   {%- if prev %}
-  <a href="/writings/{{ prev.slug }}/">
+  <a href="{{ prev.url }}">
     <div class="label">← Previous · № {{ prev.number }}</div>
     <div class="title">{{ prev.title_html }}</div>
   </a>
@@ -551,7 +551,7 @@
   </a>
   {%- endif %}
   {%- if next %}
-  <a href="/writings/{{ next.slug }}/">
+  <a href="{{ next.url }}">
     <div class="label" style="text-align: right">Next · № {{ next.number }} →</div>
     <div class="title" style="text-align: right">{{ next.title_html }}</div>
   </a>

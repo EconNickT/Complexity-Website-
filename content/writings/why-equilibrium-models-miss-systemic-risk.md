@@ -4,6 +4,7 @@ subtitle: Standard equilibrium models assume independence. Real markets are inte
 topic: Complexity economics
 category: Essay
 date: 2026-06-10
+draft: true                # off the index for now — page kept at its URL
 references:
   - "Arthur, W. B. (2021). *Foundations of complexity economics.* Nature Reviews Physics."
   - "Haldane, A. G. & May, R. M. (2011). *Systemic risk in banking ecosystems.* Nature 469, 351–355."
