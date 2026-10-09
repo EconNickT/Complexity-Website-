@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Projects — Complexity Insights</title>
-<meta name="description" content="Research projects — agent-based models, network science, and data pipelines, including the live Banking Deserts interactive county map.">
+<meta name="description" content="Research projects from Complexity Insights — agent-based models, market design simulations, and data pipelines.">
 <link rel="canonical" href="https://complexityinsights.com/projects/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://complexityinsights.com/projects/">
 <meta property="og:site_name" content="Complexity Insights">
 <meta property="og:title" content="Projects — Complexity Insights">
-<meta property="og:description" content="Research projects, including the Banking Deserts interactive county-level map.">
+<meta property="og:description" content="Research projects from Complexity Insights — agent-based models, market design simulations, and data pipelines.">
 <meta property="og:image" content="https://complexityinsights.com/favicon/android-chrome-512x512.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@EconNickT">
@@ -200,67 +200,8 @@
   }
 
   /* ============================================================
-     PAGE HEAD — clears the fixed masthead
+     WORK CARD — liquid glass (as homepage .practice-item)
      ============================================================ */
-  .page-head {
-    max-width: 1560px;
-    margin: 0 auto;
-    padding: 13rem 3vw 3rem;
-    background:
-      radial-gradient(1100px 620px at 12% 0%,  rgba(26,42,68,0.08),  transparent 62%),
-      radial-gradient(900px 640px at 88% 10%, rgba(29,58,47,0.07),  transparent 60%),
-      var(--paper);
-  }
-  .kicker-inline {
-    display: block;
-    font-family: var(--sans);
-    font-size: 11.5px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 500;
-    margin-bottom: 1.1rem;
-  }
-  .page-head h1 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(2.5rem, 5vw, 4.4rem);
-    line-height: 1.02;
-    letter-spacing: -0.02em;
-    color: var(--ink);
-    text-wrap: balance;
-    max-width: 20ch;
-  }
-  .page-head h1 em { font-style: italic; font-weight: 400; }
-  .page-head .dek {
-    margin-top: 1.6rem;
-    font-family: var(--serif);
-    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
-    line-height: 1.5;
-    color: var(--ink-2);
-    max-width: 52ch;
-    text-wrap: pretty;
-  }
-
-  /* ============================================================
-     GALLERY — glass cards over ambient washes
-     ============================================================ */
-  #portfolio { position: relative; padding-top: 2.5rem; }
-  #portfolio::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(760px 480px at 16% 30%, rgba(26,42,68,0.07), transparent 62%),
-      radial-gradient(680px 460px at 86% 70%, rgba(29,58,47,0.07), transparent 60%),
-      radial-gradient(560px 400px at 55% 100%, rgba(138,106,42,0.05), transparent 58%);
-    pointer-events: none;
-  }
-  .gallery {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.6rem;
-  }
   .work-card {
     position: relative;
     background: var(--glass-bg);
@@ -333,12 +274,16 @@
      ON THE TEE — the practice's patient mascot
      ============================================================ */
   .tee {
+    padding-top: 12.5rem;
+    background:
+      radial-gradient(1000px 620px at 12% 10%, rgba(26,42,68,0.07), transparent 62%),
+      radial-gradient(820px 600px at 88% 40%, rgba(29,58,47,0.06), transparent 60%);
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.35fr);
     gap: clamp(2rem, 5vw, 4rem);
     align-items: center;
   }
-  .tee-copy h2 {
+  .tee-copy h1 {
     font-family: var(--serif);
     font-weight: 400;
     font-size: clamp(1.8rem, 3vw, 2.5rem);
@@ -347,7 +292,9 @@
     color: var(--ink);
     max-width: 18ch;
   }
-  .tee-copy h2 em { font-style: italic; font-weight: 400; }
+  .tee-copy h1 em { font-style: italic; font-weight: 400; }
+  .tee-copy .work-card { margin-top: 2.2rem; padding: 1.8rem 1.7rem; }
+  .tee-copy .work-card p { font-size: 0.97rem; margin-top: 0; }
   .tee-copy p { margin-top: 1rem; color: var(--ink-2); max-width: 44ch; font-size: 1.04rem; }
   .tee-copy .sub { font-family: var(--sans); font-size: 0.85rem; color: var(--muted); margin-top: 1.2rem; }
   .tee-copy .sub a { color: var(--negative); border-bottom: 1px solid rgba(138,106,42,0.4); }
@@ -399,14 +346,13 @@
   }
 
   @media (max-width: 1000px) {
-    .page-head { padding-top: 12rem; }
+    .tee { padding-top: 11.5rem; }
     .section-head { grid-template-columns: 1fr; gap: 1.2rem; }
-    .gallery { grid-template-columns: 1fr; }
     .tee { grid-template-columns: 1fr; }
   }
   @media (max-width: 700px) {
     .masthead nav { gap: 1.1rem; }
-    .page-head { padding-top: 11rem; }
+    .tee { padding-top: 10.5rem; }
   }
 </style>
 </head>
@@ -427,64 +373,24 @@
 </header>
 
 <main>
-<!-- PAGE HEAD -->
-<header class="page-head">
-  <span class="kicker-inline load-in">Projects</span>
-  <h1 class="load-in d1">Work in the open. <em class="grad-ink">Papers, pipelines, models.</em></h1>
-  <p class="dek load-in d2">The current portfolio — what's live, what's in the pipeline, and roughly when it lands. Everything here follows the same rule: reproducible methods, real data, and findings you can interrogate.</p>
-</header>
-
-<!-- GALLERY -->
-<section class="section" id="portfolio">
-  <div class="gallery">
-    <a class="work-card featured reveal" href="/projects/banking-deserts-article.html">
-      <div class="kind">Applied research · Live</div>
-      <h3>Banking deserts in America</h3>
-      <p>Spatial and network analysis of financial-access gaps — a bivariate choropleth of 3,200+ U.S. counties mapping FDIC branch density against median household income, with interactive map, methodology, and findings.</p>
-      <div class="foot"><span>Case study</span><span class="live">Read →</span></div>
-    </a>
-
-    <div class="work-card reveal">
-      <div class="kind">Data infrastructure</div>
-      <h3>Data ingestion for ABMs</h3>
-      <p>Multi-layer scraping, cleaning, and standardization built to feed agent-based models with reproducible, versioned economic inputs.</p>
-      <div class="foot"><span>In progress</span><span>Q2 2026</span></div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="kind">Agent-based model</div>
-      <h3>Global recession formation</h3>
-      <p>Heterogeneous agents, network transmission, and regime-dependent dynamics — simulating how real-world recessions take shape.</p>
-      <div class="foot"><span>In progress</span><span>Q3 2026</span></div>
-    </div>
-
-    <div class="work-card reveal">
-      <div class="kind">Research note</div>
-      <h3>How to survive a recession</h3>
-      <p>Household and firm resilience when averages stop working and regime change rewrites the playbook.</p>
-      <div class="foot"><span>In progress</span><span>Q2 2026</span></div>
-    </div>
-
-    <a class="work-card reveal" href="/writings/why-equilibrium-models-miss-systemic-risk/">
-      <div class="kind">Essay</div>
-      <h3>Why traditional models miss systemic risk</h3>
-      <p>Independence is a convenient assumption. Real markets are interconnected — and small shocks cascade.</p>
-      <div class="foot"><span>Archive</span><span class="live">Read →</span></div>
-    </a>
-  </div>
-</section>
-
 <!-- ON THE TEE -->
 <section class="section tee">
-  <div class="tee-copy reveal">
+  <div class="tee-copy">
     <div class="section-head" style="margin-bottom:1.2rem; grid-template-columns:1fr;">
       <div class="label">On the tee</div>
     </div>
-    <h2>Reading the green. <em class="grad-ink">More in the works.</em></h2>
-    <p>Research doesn't ship on a content calendar. Pipeline pieces land here as they clear the same bar as everything above — reproducible, documented, worth your time.</p>
+    <h1 class="load-in d1">Reading the green. <em>More in the works.</em></h1>
+    <p>Research doesn't ship on a content calendar. New projects land here once they clear the bar — reproducible, documented, worth your time.</p>
     <p class="sub">Finished papers and essays are collected under <a href="/writings/">Writings</a>.</p>
+
+    <div class="work-card">
+      <div class="kind">Market design · Part II</div>
+      <h3>Designing a better job market</h3>
+      <p>Part II simulates a deferred-acceptance clearinghouse against today's open applications, scored on match rank, direct and indirect experience, and income preferences.</p>
+      <div class="foot"><span>Simulation</span><span>In progress</span></div>
+    </div>
   </div>
-  <figure class="golf-wrap reveal">
+  <figure class="golf-wrap load-in d2">
     <div class="golf-head"><span>Fig. — Reading the green</span></div>
     <div class="golf-stage">
       <svg id="golfScene" class="golf-scene" viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="At golden hour, a golfer strokes a long putt. The ball curls toward the cup, slows on the lip, hangs for a moment, then spins back out.">
