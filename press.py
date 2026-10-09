@@ -25,6 +25,15 @@ Front matter reference (only title is required):
     date: 2026-06-10
     number: 5                                # optional — auto-assigned by date order
     draft: true                              # skip this file when building
+    featured: true                           # lead card on the index (else newest)
+    href: /projects/some-page.html           # listing only — links here instead
+                                             # of building /writings/<slug>/
+    minutes: 12                              # read time override (for href entries)
+    stat:                                    # headline number on the lead card
+      value: 13.7M
+      label: route-quarter fare observations
+    forthcoming: Q4 2026                     # or true — listed under "In the pipeline" only,
+                                             # no page, no № (body can be empty)
     references:
       - "Arthur, W. B. (2021). *Foundations of complexity economics.* Nature Reviews Physics."
     related:
@@ -231,8 +240,17 @@ def load_articles():
             "description": meta.get("description") or meta.get("subtitle", ""),
             "topic": meta.get("topic", "Research"),
             "category": meta.get("category", "Essay"),
-            "read_minutes": max(1, round(word_count / 200)),
+            "read_minutes": meta.get("minutes") or max(1, round(word_count / 200)),
+            "href": meta.get("href"),
+            "url": meta.get("href") or f"/writings/{slug}/",
+            "featured": bool(meta.get("featured")),
+            "stat": meta.get("stat"),
+            "forthcoming": meta.get("forthcoming"),
         })
+
+    # forthcoming pieces are listed in the pipeline, never numbered or built
+    pipeline = [a for a in articles if a["forthcoming"]]
+    articles = [a for a in articles if not a["forthcoming"]]
 
     # № numbering: explicit `number:` wins; otherwise chronological order
     articles.sort(key=lambda a: (a["date"], a["slug"]))
@@ -246,16 +264,18 @@ def load_articles():
                 n += 1
             a["number"] = f"{n:03d}"
             taken.add(n)
-    return articles
+    return articles, pipeline
 
 
 def build():
-    articles = load_articles()
+    articles, pipeline = load_articles()
     tpl_article = env.get_template("writing.html")
     tpl_index = env.get_template("writings_index.html")
     year = datetime.date.today().year
 
-    for i, a in enumerate(articles):
+    # href entries are listed on the index but have no page of their own
+    built = [a for a in articles if not a["href"]]
+    for i, a in enumerate(built):
         content, toc = render_body(a["body_md"], a["slug"])
         out_dir = os.path.join(OUTPUT_DIR, a["slug"])
         os.makedirs(out_dir, exist_ok=True)
@@ -275,8 +295,8 @@ def build():
             read_minutes=a["read_minutes"],
             references=[inline_md(r) for r in a["meta"].get("references", [])],
             related=a["meta"].get("related", []),
-            prev=articles[i - 1] if i > 0 else None,
-            next=articles[i + 1] if i < len(articles) - 1 else None,
+            prev=built[i - 1] if i > 0 else None,
+            next=built[i + 1] if i < len(built) - 1 else None,
             year=year,
         )
         with open(os.path.join(out_dir, "index.html"), "w",
@@ -285,9 +305,15 @@ def build():
         print(f"  ✓ writings/{a['slug']}/  (№ {a['number']}, "
               f"{a['read_minutes']} min)")
 
-    # newest first on the index
+    # newest first on the index; the lead card is the flagged piece or the newest
+    newest_first = list(reversed(articles))
+    lead = next((a for a in newest_first if a["featured"]),
+                newest_first[0] if newest_first else None)
     index_html = tpl_index.render(
-        articles=list(reversed(articles)), year=year)
+        lead=lead,
+        articles=[a for a in newest_first if a is not lead],
+        pipeline=pipeline,
+        year=year)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     with open(os.path.join(OUTPUT_DIR, "index.html"), "w",
               encoding="utf-8") as f:

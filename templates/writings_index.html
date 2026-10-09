@@ -4,113 +4,498 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
 <title>Writings — Complexity Insights</title>
-<meta name="description" content="Essays, research notes, and case studies on complexity economics, network science, and financial markets by Nicholas Thomas." />
-<link rel="canonical" href="https://complexityinsights.com/writings/" />
-<meta property="og:title" content="Writings — Complexity Insights" />
-<meta property="og:description" content="Essays, research notes, and case studies on complexity economics, network science, and financial markets." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://complexityinsights.com/writings/" />
+<meta name="description" content="Working papers, essays, and case studies on econometrics, complexity economics, and financial systems by Nicholas Thomas.">
+<link rel="canonical" href="https://complexityinsights.com/writings/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://complexityinsights.com/writings/">
+<meta property="og:site_name" content="Complexity Insights">
+<meta property="og:title" content="Writings — Complexity Insights">
+<meta property="og:description" content="Working papers, essays, and case studies on econometrics, complexity economics, and financial systems.">
+<meta property="og:image" content="https://complexityinsights.com/favicon/android-chrome-512x512.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@EconNickT">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* ==============================================================
+     V4.2 DESIGN LANGUAGE — see /index.html for the master notes.
+     Tokens, glass, gradient system and masthead mirror the homepage.
+     ============================================================== */
   :root {
     --paper:       #faf9f6;
     --paper-2:     #f0ede3;
     --paper-3:     #fffef8;
     --ink:         #10100f;
     --ink-2:       #23231f;
+    --ink-3:       #3a3a34;
     --muted:       #6a685f;
     --rule:        #ddd9cc;
     --rule-strong: #bfbaa8;
     --accent:      #1a2a44;
+    --accent-ink:  #12213a;
     --accent-2:    #1d3a2f;
-    --oxblood:     #6b1f1a;
-    --brass:       #8a6a2a;
-    --brass-2:     #d4b47a;
+    --positive:    #1d3a2f;
+    --negative:    #8a6a2a;
+    --gold:        #d4b47a;
+
+    --grad-ink:  linear-gradient(115deg, var(--accent) 0%, var(--accent-2) 58%, var(--negative) 100%);
+    --grad-rule: linear-gradient(90deg, transparent, var(--accent) 18%, var(--accent-2) 55%, var(--negative) 82%, transparent);
+    --grad-deep: linear-gradient(140deg, #101d33 0%, var(--accent) 42%, #16302a 100%);
+
+    --glass-bg:     rgba(255, 254, 248, 0.55);
+    --glass-border: rgba(26, 42, 68, 0.14);
+    --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+
     --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
     --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
     --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { background: var(--paper); color: var(--ink); }
-  body { font-family: var(--serif); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; display: flex; flex-direction: column; min-height: 100vh; }
+  body {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
   a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--accent-ink); }
 
+  .grad-ink,
+  .lead-card h2 em {
+    background: var(--grad-ink);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ============================================================
+     MASTHEAD — fixed, glass on scroll (mirrors homepage)
+     ============================================================ */
   .masthead {
-    padding: 1.3rem 3vw 1rem;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.6rem 3vw 1.1rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    border-bottom: 1px solid var(--rule-strong);
+    gap: 0.8rem;
     font-family: var(--sans);
-    gap: 2rem;
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
   }
-  .wordmark { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; color: var(--ink); display: inline-flex; align-items: center; gap: 0.55em; }
-  .wordmark .mark { width: 1.35em; height: 1.35em; display: inline-block; flex-shrink: 0; }
-  .masthead nav { display: flex; gap: 2rem; justify-content: center; font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-  .masthead nav a { color: var(--muted); }
-  .masthead nav a:hover, .masthead nav a.active { color: var(--ink); }
-  .masthead nav a.active { border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .masthead.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+  }
+  .wordmark .mark { width: 2em; height: 2em; display: inline-block; flex-shrink: 0; }
+  .masthead nav {
+    display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
+    font-size: 12.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .masthead nav a { color: var(--muted); position: relative; padding-bottom: 3px; }
+  .masthead nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.3s ease;
+  }
+  .masthead nav a:hover { color: var(--ink); }
+  .masthead nav a:hover::after { right: 0; }
+  .masthead nav a.active { color: var(--ink); }
+  .masthead nav a.active::after { right: 0; }
 
-  main { flex: 1; max-width: 1400px; width: 100%; margin: 0 auto; padding: 4rem 3vw 5rem; }
-
-  .section-head { margin-bottom: 3rem; }
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  .section {
+    position: relative;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 4.5rem 3vw;
+  }
+  .section-head {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
+    margin-bottom: 2.4rem;
+  }
   .section-head .label {
-    font-family: var(--sans); font-size: 11px; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;
-    display: flex; align-items: center; gap: 0.8rem;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 0.55rem;
+    align-self: start;
+    max-width: 200px;
+    position: relative;
   }
-  .section-head .label::before { content: ""; height: 1px; background: var(--rule-strong); width: 160px; order: 2; }
-  .section-head h1 {
-    font-family: var(--serif); font-weight: 400;
-    font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.1;
-    letter-spacing: -0.015em; color: var(--ink); max-width: 22ch;
+  .section-head .label::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 1px;
+    background: var(--grad-ink);
+  }
+  .section-head h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.6rem, 2.3vw, 2.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+  }
+  .section-head h2 em { font-style: italic; font-weight: 400; }
+
+  /* Scroll reveal + load-in */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .load-in { opacity: 0; animation: rise-in 1.1s var(--ease) forwards; }
+  .load-in.d1 { animation-delay: 0.15s; }
+  .load-in.d2 { animation-delay: 0.35s; }
+  .load-in.d3 { animation-delay: 0.55s; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .load-in { opacity: 1; transform: none; animation: none; transition: none; }
+    .lead-card, .masthead, .contact-row .rarrow { transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============================================================
+     PAGE HEAD — clears the fixed masthead
+     ============================================================ */
+  .page-head {
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 13rem 3vw 2rem;
+    background:
+      radial-gradient(1100px 620px at 12% 0%,  rgba(26,42,68,0.08),  transparent 62%),
+      radial-gradient(900px 640px at 88% 10%, rgba(29,58,47,0.07),  transparent 60%),
+      var(--paper);
+  }
+  .kicker-inline {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 1.1rem;
+  }
+  .page-head h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .page-head h1 em { font-style: italic; font-weight: 400; }
+  .page-head .dek {
+    margin-top: 1.6rem;
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--ink-2);
+    max-width: 54ch;
+    text-wrap: pretty;
+  }
+
+  /* ============================================================
+     LEAD CARD — the featured piece, glass over ambient washes
+     ============================================================ */
+  #lead { padding-top: 2rem; }
+  #lead::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(760px 480px at 16% 40%, rgba(26,42,68,0.07), transparent 62%),
+      radial-gradient(680px 460px at 86% 60%, rgba(29,58,47,0.07), transparent 60%),
+      radial-gradient(560px 400px at 55% 100%, rgba(138,106,42,0.05), transparent 58%);
+    pointer-events: none;
+  }
+  .lead-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    color: inherit;
+    transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease);
+  }
+  .lead-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(26,42,68,0.10), rgba(29,58,47,0.05) 40%, transparent 62%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .lead-card:hover {
+    color: inherit;
+    transform: translateY(-6px);
+    border-color: rgba(138,106,42,0.4);
+    background: rgba(255, 254, 248, 0.75);
+  }
+  .lead-card:hover::before { opacity: 1; }
+  .lead-body {
+    position: relative;
+    padding: 2.8rem 2.6rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .lead-tags {
+    display: flex; flex-wrap: wrap; gap: 0.6rem 1.4rem;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-bottom: 1.4rem;
+  }
+  .lead-tags .num { font-family: var(--mono); letter-spacing: 0.08em; color: var(--muted); }
+  .lead-card h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 3.4vw, 3rem);
+    line-height: 1.06;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    max-width: 20ch;
     text-wrap: balance;
   }
-  .section-head h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .lead-card h2 em { font-style: italic; font-weight: 400; }
+  .lead-card .sub {
+    margin-top: 1.2rem;
+    font-size: 1.08rem;
+    line-height: 1.55;
+    color: var(--ink-2);
+    max-width: 56ch;
+    text-wrap: pretty;
+    flex: 1;
+  }
+  .lead-foot {
+    margin-top: 2rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .lead-foot .read { color: var(--accent-2); font-weight: 600; }
+  .lead-foot .read .arr { display: inline-block; transition: transform 0.4s var(--ease); }
+  .lead-card:hover .lead-foot .read .arr { transform: translateX(6px); }
 
+  /* deep gradient plate with the headline number */
+  .lead-plate {
+    position: relative;
+    background: var(--grad-deep);
+    color: var(--paper);
+    padding: 2.6rem 2.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    overflow: hidden;
+  }
+  .lead-plate::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(2px 2px at 18% 24%, rgba(212,180,122,0.55), transparent 55%),
+      radial-gradient(1.6px 1.6px at 76% 16%, rgba(250,249,246,0.4), transparent 55%),
+      radial-gradient(1.6px 1.6px at 84% 70%, rgba(212,180,122,0.4), transparent 55%),
+      radial-gradient(1.4px 1.4px at 30% 82%, rgba(250,249,246,0.35), transparent 55%),
+      radial-gradient(1.8px 1.8px at 58% 48%, rgba(212,180,122,0.3), transparent 55%);
+    pointer-events: none;
+  }
+  .lead-plate > * { position: relative; }
+  .lead-plate .plate-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9c907a;
+  }
+  .lead-plate .stat {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3.4rem, 6.5vw, 5.6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--gold);
+  }
+  .lead-plate .stat-label {
+    margin-top: 0.7rem;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.45;
+    color: #d9d2c2;
+    max-width: 28ch;
+  }
+  .lead-plate .topic {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #bba98a;
+  }
+
+  /* ============================================================
+     ROWS — archive + pipeline (mirrors homepage intel list)
+     ============================================================ */
   .intel-list { display: grid; gap: 0; }
   .intel-item {
+    position: relative;
     display: grid;
-    grid-template-columns: 90px 140px 1fr auto;
+    grid-template-columns: 90px 160px 1fr auto;
     gap: 2rem;
-    padding: 1.6rem 0;
+    padding: 1.6rem 0.4rem;
     border-bottom: 1px solid var(--rule);
     align-items: baseline;
-    transition: background 0.15s ease, padding 0.15s ease;
+    transition: background 0.2s ease, padding 0.2s ease;
   }
+  a.intel-item::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: -1px;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.45s ease;
+  }
+  a.intel-item:hover::after { right: 0; }
+  a.intel-item:hover { background: var(--paper-3); padding-left: 1.2rem; padding-right: 1.2rem; }
   .intel-item:first-child { border-top: 1px solid var(--rule); }
-  .intel-item:hover { background: var(--paper-2); padding-left: 1rem; padding-right: 1rem; }
   .intel-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
   .intel-cat { font-family: var(--sans); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
   .intel-title { font-family: var(--serif); font-size: 1.4rem; line-height: 1.2; color: var(--ink); letter-spacing: -0.005em; }
-  .intel-title em { font-style: italic; color: var(--accent); }
+  .intel-title em { font-style: italic; }
   .intel-title .sub { display: block; font-size: 0.95rem; color: var(--muted); margin-top: 0.35rem; font-style: italic; line-height: 1.4; }
-  .intel-title .sub em { color: var(--muted); }
-  .intel-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; white-space: nowrap; }
+  .intel-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    text-align: right; white-space: nowrap; letter-spacing: 0.05em;
+  }
+  .intel-meta .status-live { color: var(--accent-2); font-weight: 600; }
+  .pipeline .intel-title { color: var(--ink-3); }
+
+  /* ============================================================
+     COLOPHON — follow the work
+     ============================================================ */
+  .colophon {
+    background: var(--grad-deep);
+    color: var(--paper);
+    padding: 4.5rem 3vw 3rem;
+  }
+  .colophon-inner {
+    max-width: 1560px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 4rem;
+  }
+  .colophon .label {
+    font-family: var(--sans); font-size: 11px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #bba98a; margin-bottom: 1rem;
+  }
+  .colophon h2 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.08;
+    margin-bottom: 1.5rem; color: var(--paper);
+    letter-spacing: -0.01em; max-width: 20ch;
+  }
+  .colophon h2 em { font-style: italic; color: var(--gold); font-weight: 400; }
+  .colophon p {
+    font-family: var(--serif); font-size: 1.1rem;
+    line-height: 1.55; color: #d9d2c2;
+    max-width: 44ch; margin-bottom: 2rem;
+  }
+  .contact-list { border-top: 1px solid rgba(212,180,122,0.28); font-family: var(--sans); }
+  .contact-row {
+    display: grid; grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem; padding: 1rem 0;
+    border-bottom: 1px solid rgba(212,180,122,0.28);
+    align-items: center; color: var(--paper);
+    font-size: 14px; transition: padding 0.2s ease;
+  }
+  .contact-row:hover { padding-left: 0.8rem; color: var(--gold); }
+  .contact-row .rlabel { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #9c907a; }
+  .contact-row .rval { font-family: var(--serif); font-size: 1.05rem; color: var(--paper); }
+  .contact-row .rarrow { font-family: var(--serif); color: var(--gold); font-size: 1.2rem; transition: transform 0.4s var(--ease); }
+  .contact-row:hover .rarrow { transform: translateX(9px); }
 
   .footline {
-    background: var(--ink); color: #7a7162;
+    background: var(--ink); color: var(--paper);
     padding: 1.4rem 3vw;
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em;
-    display: flex; justify-content: space-between;
-    border-top: 1px solid #3a332a;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em;
+    text-align: center;
   }
-  .footline a { color: var(--brass-2); }
 
-  @media (max-width: 900px) {
-    .masthead { grid-template-columns: 1fr auto; }
-    .masthead nav { display: flex; flex-wrap: wrap; gap: 1.1rem; }
-    .intel-item { grid-template-columns: 1fr; gap: 0.4rem; }
+  @media (max-width: 1000px) {
+    .page-head { padding-top: 12rem; }
+    .section-head, .colophon-inner { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; }
+    .colophon-inner { gap: 2rem; }
+    .lead-card { grid-template-columns: minmax(0, 1fr); }
+    .lead-plate { gap: 1.2rem; }
+  }
+  @media (max-width: 700px) {
+    .masthead nav { gap: 1.1rem; }
+    .page-head { padding-top: 11rem; }
+    .lead-body, .lead-plate { padding: 2rem 1.5rem; }
+    .lead-foot { flex-wrap: wrap; }
+    .intel-item { grid-template-columns: auto minmax(0, 1fr); gap: 0.4rem 1.2rem; }
+    .intel-item .intel-title, .intel-item .intel-meta { grid-column: 1 / -1; }
     .intel-meta { text-align: left; }
+    .contact-row { grid-template-columns: 76px minmax(0, 1fr) auto; gap: 0.9rem; }
+    .contact-row .rval { overflow-wrap: anywhere; }
   }
 </style>
 </head>
 <body>
 
+<!-- MASTHEAD -->
 <header class="masthead">
   <a href="/" class="wordmark">
     <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
@@ -118,22 +503,62 @@
   </a>
   <nav aria-label="Primary">
     <a href="/projects/">Projects</a>
-    <a href="/writings/" class="active">Writings</a>
+    <a href="/writings/" class="active" aria-current="page">Writings</a>
     <a href="/about/">About</a>
     <a href="/#contact">Contact</a>
   </nav>
-  <span></span>
 </header>
 
 <main>
-  <div class="section-head">
-    <div class="label">§ V — Writing &amp; research</div>
-    <h1>Essays, research notes, and <em>case studies.</em></h1>
-  </div>
+<!-- PAGE HEAD -->
+<header class="page-head">
+  <span class="kicker-inline load-in">Writings</span>
+  <h1 class="load-in d1">Working papers and essays. <em class="grad-ink">Methods shown, data cited.</em></h1>
+  <p class="dek load-in d2">Long-form research from Complexity Insights — econometric studies, applied network analysis, and essays on why economies behave like adaptive systems. Every piece states its data, its method, and where it could be wrong.</p>
+</header>
 
-  <div class="intel-list">
+{%- if lead %}
+<!-- LEAD -->
+<section class="section" id="lead">
+  <a class="lead-card load-in d3" href="{{ lead.url }}">
+    <div class="lead-body">
+      <div class="lead-tags">
+        <span class="num">№ {{ lead.number }}</span>
+        <span>{{ lead.category }}</span>
+      </div>
+      <h2>{{ lead.title_html }}</h2>
+      {%- if lead.subtitle %}
+      <p class="sub">{{ lead.subtitle }}</p>
+      {%- endif %}
+      <div class="lead-foot">
+        <span>{{ lead.date.strftime("%B %Y") }} · {{ lead.read_minutes }} min read</span>
+        <span class="read">Read the paper <span class="arr">→</span></span>
+      </div>
+    </div>
+    <div class="lead-plate">
+      <span class="plate-label">Fig. — At a glance</span>
+      {%- if lead.stat %}
+      <div>
+        <div class="stat">{{ lead.stat.value }}</div>
+        <div class="stat-label">{{ lead.stat.label }}</div>
+      </div>
+      {%- endif %}
+      <span class="topic">{{ lead.topic }}</span>
+    </div>
+  </a>
+</section>
+{%- endif %}
+
+{%- if articles %}
+<!-- ARCHIVE -->
+<section class="section" id="archive">
+  <div class="section-head reveal">
+    <div class="label">Archive</div>
+    <h2>Everything published, <em>newest first.</em></h2>
+  </div>
+  <div class="intel-list reveal">
     {%- for a in articles %}
-    <a class="intel-item" href="/writings/{{ a.slug }}/">
+    <a class="intel-item" href="{{ a.url }}">
       <div class="intel-num">№ {{ a.number }}</div>
       <div class="intel-cat">{{ a.category }}</div>
       <div class="intel-title">{{ a.title_html }}
@@ -141,16 +566,107 @@
         <span class="sub">{{ a.subtitle }}</span>
         {%- endif %}
       </div>
-      <div class="intel-meta">{{ a.date.strftime("%b %Y") | upper }}<br/>{{ a.read_minutes }} MIN</div>
+      <div class="intel-meta">{{ a.date.strftime("%b %Y") | upper }}<br/><span class="status-live">{{ a.read_minutes }} MIN →</span></div>
     </a>
     {%- endfor %}
   </div>
+</section>
+{%- endif %}
+
+{%- if pipeline %}
+<!-- PIPELINE -->
+<section class="section pipeline" id="pipeline">
+  <div class="section-head reveal">
+    <div class="label">In the pipeline</div>
+    <h2>Drafting now. <em>Published when it clears the bar.</em></h2>
+  </div>
+  <div class="intel-list reveal">
+    {%- for p in pipeline %}
+    <div class="intel-item">
+      <div class="intel-num">—</div>
+      <div class="intel-cat">{{ p.category }}</div>
+      <div class="intel-title">{{ p.title_html }}
+        {%- if p.subtitle %}
+        <span class="sub">{{ p.subtitle }}</span>
+        {%- endif %}
+      </div>
+      <div class="intel-meta">IN PROGRESS{% if p.forthcoming is string %}<br/>{{ p.forthcoming | upper }}{% endif %}</div>
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+<!-- FOLLOW -->
+<section class="colophon" id="follow">
+  <div class="colophon-inner">
+    <div class="reveal">
+      <div class="label">Follow the work</div>
+      <h2>New papers land here first. <em>Critiques welcome.</em></h2>
+      <p>Questions, critiques, and replication requests are welcome — a direct note is the fastest path, and data and code are available on request.</p>
+    </div>
+    <div class="contact-list reveal">
+      <a class="contact-row" href="mailto:Complexityinsights@gmail.com">
+        <span class="rlabel">Email</span>
+        <span class="rval">Complexityinsights@gmail.com</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="https://www.linkedin.com/in/thomasnicholasa/" target="_blank" rel="noopener">
+        <span class="rlabel">LinkedIn</span>
+        <span class="rval">/in/thomasnicholasa</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="https://x.com/EconNickT" target="_blank" rel="noopener">
+        <span class="rlabel">X</span>
+        <span class="rval">@EconNickT · DMs open</span>
+        <span class="rarrow">→</span>
+      </a>
+      <a class="contact-row" href="https://github.com/EconNickT" target="_blank" rel="noopener">
+        <span class="rlabel">GitHub</span>
+        <span class="rval">EconNickT</span>
+        <span class="rarrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
 </main>
 
 <div class="footline">
   <span>© {{ year }} Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
-  <span><a href="https://complexityinsights.substack.com" target="_blank" rel="noopener">Newsletter ↗</a></span>
 </div>
 
+<script>
+/* MASTHEAD — glass on scroll */
+(function(){
+  const m = document.querySelector('.masthead');
+  if (!m) return;
+  const onScroll = () => m.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* LEAD CARD — cursor glow tracking */
+document.querySelectorAll('.lead-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+/* SCROLL REVEAL */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  items.forEach(el => io.observe(el));
+})();
+</script>
 </body>
 </html>
