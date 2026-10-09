@@ -224,6 +224,7 @@ def load_articles():
             continue
 
         slug = meta.get("slug") or os.path.splitext(fn)[0]
+        has_date = bool(meta.get("date"))
         date = meta.get("date") or datetime.date.today()
         if isinstance(date, str):
             date = datetime.date.fromisoformat(date)
@@ -243,6 +244,9 @@ def load_articles():
             "topic": meta.get("topic", "Research"),
             "category": meta.get("category", "Essay"),
             "read_minutes": meta.get("minutes") or max(1, round(word_count / 200)),
+            "has_date": has_date,
+            # an href entry's body isn't the article, so only show a time if given
+            "show_minutes": bool(meta.get("minutes")) or not meta.get("href"),
             "href": meta.get("href"),
             "url": meta.get("href") or f"/writings/{slug}/",
             "featured": bool(meta.get("featured")),

@@ -4,7 +4,8 @@ subtitle: A difference-in-differences analysis of 13.7 million observations find
 description: Difference-in-differences estimate of the United–Continental airline merger's effect on fares, using 13.7 million observations.
 topic: Econometrics · Industrial organization
 category: Working paper
-date: 2025-11-01            # TODO: set to the original Substack publish date
+href: https://complexityinsights.substack.com/p/did-the-united-continental-merger   # TEMP until the text moves on-site
+# date: TODO — set to the original Substack publish date (hidden on the card until set)
 cover: /images/writings/did-the-united-continental-merger/cover.svg
 cover_alt: Route map of the United and Continental hub networks joined by the 2010 merger.
 stat:

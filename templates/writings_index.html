@@ -531,7 +531,11 @@
       <p class="sub">{{ lead.subtitle }}</p>
       {%- endif %}
       <div class="lead-foot">
-        <span>{{ lead.date.strftime("%B %Y") }} · {{ lead.read_minutes }} min read</span>
+        <span>
+          {%- if lead.has_date %}{{ lead.date.strftime("%B %Y") }}{% endif %}
+          {%- if lead.has_date and lead.show_minutes %} · {% endif %}
+          {%- if lead.show_minutes %}{{ lead.read_minutes }} min read{% endif -%}
+        </span>
         <span class="lead-go"><span class="txt">Read the paper</span> <span class="arr" aria-hidden="true">→</span></span>
       </div>
     </div>
@@ -556,7 +560,7 @@
         <span class="sub">{{ a.subtitle }}</span>
         {%- endif %}
       </div>
-      <div class="intel-meta">{{ a.date.strftime("%b %Y") | upper }}<br/><span class="status-live">{{ a.read_minutes }} MIN →</span></div>
+      <div class="intel-meta">{% if a.has_date %}{{ a.date.strftime("%b %Y") | upper }}<br/>{% endif %}<span class="status-live">{% if a.show_minutes %}{{ a.read_minutes }} MIN {% endif %}→</span></div>
     </a>
     {%- endfor %}
   </div>

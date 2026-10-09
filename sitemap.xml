@@ -35,11 +35,4 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- Writings -->
-  <url>
-    <loc>https://complexityinsights.com/writings/did-the-united-continental-merger/</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>
