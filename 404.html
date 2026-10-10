@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- COMPLEXITY INSIGHTS — 404
+     Served by Cloudflare Pages for any unmatched path, so every asset
+     and link on this page must be root-absolute (/brand/…, /writings/). -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page not found — Complexity Insights</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="This page doesn't exist. A small difference in the address, and the trajectory ends somewhere else entirely.">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ==============================================================
+     V4.2 DESIGN LANGUAGE — see /index.html for the master notes.
+     ============================================================== */
+  :root {
+    --paper:       #faf9f6;
+    --paper-2:     #f0ede3;
+    --paper-3:     #fffef8;
+    --ink:         #10100f;
+    --ink-2:       #23231f;
+    --ink-3:       #3a3a34;
+    --muted:       #6a685f;
+    --rule:        #ddd9cc;
+    --rule-strong: #bfbaa8;
+    --accent:      #1a2a44;   /* navy — the address that exists */
+    --accent-ink:  #12213a;
+    --accent-2:    #1d3a2f;
+    --negative:    #8a6a2a;   /* brass — the address that was typed */
+    --gold:        #d4b47a;
+
+    --grad-ink:  linear-gradient(115deg, var(--accent) 0%, var(--accent-2) 58%, var(--negative) 100%);
+    --glass-bg:     rgba(255, 254, 248, 0.55);
+    --glass-border: rgba(26, 42, 68, 0.14);
+    --ease:         cubic-bezier(0.16, 1, 0.3, 1);
+
+    --serif: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+    --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--paper); color: var(--ink); }
+  body {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  a { color: var(--ink); text-decoration: none; }
+  a:hover { color: var(--accent-ink); }
+
+  /* ============================================================
+     MASTHEAD — fixed, glass on scroll (mirrors homepage)
+     ============================================================ */
+  .masthead {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.6rem 3vw 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--sans);
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    transition: background 0.5s var(--ease), border-color 0.5s var(--ease), backdrop-filter 0.5s var(--ease);
+  }
+  .masthead.scrolled {
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(1.1);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .wordmark {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+  }
+  .wordmark .mark { width: 2em; height: 2em; display: inline-block; flex-shrink: 0; }
+  .masthead nav {
+    display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center;
+    font-size: 12.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .masthead nav a { color: var(--muted); position: relative; padding-bottom: 3px; }
+  .masthead nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: 0;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.3s ease;
+  }
+  .masthead nav a:hover { color: var(--ink); }
+  .masthead nav a:hover::after { right: 0; }
+
+  /* ============================================================
+     STAGE — copy left, the attractor right
+     ============================================================ */
+  main { flex: 1; display: flex; }
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 1560px;
+    margin: 0 auto;
+    padding: 10.5rem 3vw 4rem;
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 4vw, 4.5rem);
+    align-items: center;
+  }
+
+  .kicker {
+    display: flex; align-items: center; gap: 0.9rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.6rem;
+  }
+  .kicker b { color: var(--accent); font-weight: 600; }
+  .kicker::after { content: ''; height: 1px; width: 64px; background: var(--rule-strong); }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 5vw, 4.9rem);
+    line-height: 1.0;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  h1 em { font-style: italic; font-weight: 400; display: block; }
+
+  .dek {
+    margin-top: 1.7rem;
+    font-size: clamp(1.06rem, 1.3vw, 1.2rem);
+    line-height: 1.6;
+    color: var(--ink-2);
+    max-width: 46ch;
+    text-wrap: pretty;
+  }
+
+  /* the two addresses, keyed to the two trajectories */
+  .addresses {
+    margin-top: 2.2rem;
+    border-top: 1px solid var(--rule-strong);
+    max-width: 34rem;
+  }
+  .addr {
+    display: grid;
+    grid-template-columns: 14px 8.5rem minmax(0, 1fr) auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.95rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .addr .swatch { width: 14px; height: 2px; border-radius: 1px; }
+  .addr .k { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .addr .v {
+    color: var(--ink);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .addr.typed .swatch { background: var(--negative); }
+  .addr.typed .v { color: var(--negative); }
+  .addr.exists .swatch { background: var(--accent); }
+  .addr.exists .v { color: var(--accent); font-weight: 600; }
+  .addr .go { color: var(--accent); font-family: var(--serif); font-size: 1.1rem; transition: transform 0.4s var(--ease); }
+  a.addr:hover .go { transform: translateX(6px); }
+  a.addr { transition: background 0.2s ease, padding 0.2s ease; }
+  a.addr:hover { background: var(--paper-3); padding-left: 0.6rem; padding-right: 0.6rem; margin: 0 -0.6rem; }
+
+  .elsewhere {
+    margin-top: 1.8rem;
+    display: flex; flex-wrap: wrap; gap: 0.6rem 1.6rem;
+    font-family: var(--sans);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .elsewhere span { color: var(--muted); }
+  .elsewhere a { color: var(--ink-3); border-bottom: 1px solid var(--rule-strong); padding-bottom: 2px; }
+  .elsewhere a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ============================================================
+     PLATE — the Lorenz figure, set like an engraved plate
+     ============================================================ */
+  .plate {
+    position: relative;
+    height: min(76vh, 760px);
+    min-height: 420px;
+  }
+  .plate .wash {
+    position: absolute; inset: 6% 4%;
+    background:
+      radial-gradient(closest-side at 32% 55%, rgba(26,42,68,0.06), transparent),
+      radial-gradient(closest-side at 68% 50%, rgba(29,58,47,0.05), transparent);
+    pointer-events: none;
+  }
+  .plate canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .plate .ink { transition: opacity 1.4s ease; }
+  .plate .ink.fading { opacity: 0; }
+  /* crop marks at the corners */
+  .plate::before, .plate::after,
+  .plate .crop::before, .plate .crop::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border-color: var(--rule-strong);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .plate::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
+  .plate::after  { top: 0; right: 0; border-width: 1px 1px 0 0; }
+  .plate .crop::before { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+  .plate .crop::after  { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+  .plate .note {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .plate .tl { top: 1.1rem; left: 1.4rem; }
+  .plate .tl b { color: var(--ink-2); font-weight: 600; }
+  .plate .tr { top: 1.1rem; right: 1.4rem; text-align: right; text-transform: none; letter-spacing: 0.06em; }
+  .plate .bl { bottom: 1.1rem; left: 1.4rem; display: grid; gap: 0.45rem; }
+  .plate .bl i { display: inline-block; width: 18px; height: 2px; vertical-align: middle; margin-right: 0.6rem; border-radius: 1px; }
+  .plate .bl .n i { background: var(--accent); }
+  .plate .bl .b i { background: var(--negative); }
+  .plate .br {
+    bottom: 1.1rem; right: 1.4rem; text-align: right;
+    text-transform: none; letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    display: grid; gap: 0.45rem;
+  }
+  .plate .br b { color: var(--ink-2); font-weight: 500; }
+
+  .footline {
+    background: var(--ink); color: var(--paper);
+    padding: 1.4rem 3vw;
+    font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  /* load-in */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .load-in { opacity: 0; animation: rise-in 1.1s var(--ease) forwards; }
+  .load-in.d1 { animation-delay: 0.15s; }
+  .load-in.d2 { animation-delay: 0.35s; }
+  .load-in.d3 { animation-delay: 0.55s; }
+  .load-in.d4 { animation-delay: 0.75s; }
+  @keyframes plate-in { from { opacity: 0; } to { opacity: 1; } }
+  .plate { animation: plate-in 1.6s ease 0.2s both; }
+  @media (prefers-reduced-motion: reduce) {
+    .load-in, .plate { opacity: 1; transform: none; animation: none; }
+    .masthead, .plate .ink, .addr .go, a.addr { transition: none; }
+  }
+
+  @media (max-width: 1000px) {
+    .stage { grid-template-columns: minmax(0, 1fr); padding-top: 10rem; gap: 2.5rem; }
+    .plate { height: 72vw; min-height: 340px; }
+  }
+  @media (max-width: 700px) {
+    .masthead nav { gap: 1.1rem; }
+    .stage { padding-top: 9.5rem; }
+    .plate { height: 92vw; min-height: 0; max-height: 460px; }
+    .plate .tr { display: none; }
+    .plate .note { font-size: 9.5px; }
+    .addr { grid-template-columns: 14px 6.6rem minmax(0, 1fr) auto; gap: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true">
+    Complexity Insights
+  </a>
+  <nav aria-label="Primary">
+    <a href="/projects/">Projects</a>
+    <a href="/writings/">Writings</a>
+    <a href="/about/">About</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+<div class="stage">
+  <section class="copy">
+    <div class="kicker load-in"><span><b>404</b> &nbsp;·&nbsp; Page not found</span></div>
+    <h1 class="load-in d1">Sensitive dependence on <em>initial conditions.</em></h1>
+    <p class="dek load-in d2">Start two chaotic systems one part in a hundred thousand apart and, for a while, they move as one. Then they don't. Web addresses work the same way — a letter or a slash out of place, and you arrive somewhere that doesn't exist.</p>
+
+    <div class="addresses load-in d3">
+      <div class="addr typed">
+        <span class="swatch" aria-hidden="true"></span>
+        <span class="k">You asked for</span>
+        <span class="v" id="typedPath">this address</span>
+        <span></span>
+      </div>
+      <a class="addr exists" id="nearestLink" href="/">
+        <span class="swatch" aria-hidden="true"></span>
+        <span class="k">Nearest page</span>
+        <span class="v" id="nearestPath">/</span>
+        <span class="go" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <nav class="elsewhere load-in d4" aria-label="Elsewhere on the site">
+      <span>Or start over:</span>
+      <a href="/">Home</a>
+      <a href="/projects/">Projects</a>
+      <a href="/writings/">Writings</a>
+      <a href="/about/">About</a>
+    </nav>
+  </section>
+
+  <figure class="plate" aria-label="Two trajectories of the Lorenz system, started one hundred-thousandth apart, trace the same path and then diverge.">
+    <span class="wash" aria-hidden="true"></span>
+    <canvas class="ink" id="ink" aria-hidden="true"></canvas>
+    <canvas id="live" aria-hidden="true"></canvas>
+    <span class="crop" aria-hidden="true"></span>
+    <figcaption class="note tl"><b>Fig. 404</b> — The Lorenz system</figcaption>
+    <span class="note tr" aria-hidden="true">σ = 10 &nbsp;·&nbsp; ρ = 28 &nbsp;·&nbsp; β = 8⁄3</span>
+    <div class="note bl" aria-hidden="true">
+      <span class="n"><i></i>Where you meant to go</span>
+      <span class="b"><i></i>Where you went</span>
+    </div>
+    <div class="note br" aria-hidden="true">
+      <span>Δ₀ = 1 × 10⁻⁵</span>
+      <span>t = <b id="tOut">0.00</b> &nbsp; |Δ| = <b id="dOut">0.00001</b></span>
+    </div>
+  </figure>
+</div>
+</main>
+
+<div class="footline">
+  <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+</div>
+
+<script>
+/* MASTHEAD — glass on scroll */
+(function(){
+  const m = document.querySelector('.masthead');
+  const onScroll = () => m.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ============================================================
+   NEAREST PAGE — the attractor the visitor was probably aiming for.
+   Known first path segments, plus a few likely old/guessed names.
+   ============================================================ */
+(function(){
+  const PAGES = { projects: '/projects/', writings: '/writings/', about: '/about/' };
+  const ALIASES = {
+    blog: '/writings/', posts: '/writings/', post: '/writings/', articles: '/writings/',
+    essays: '/writings/', writing: '/writings/', papers: '/writings/', research: '/projects/',
+    portfolio: '/projects/', work: '/projects/', project: '/projects/', contact: '/#contact'
+  };
+  function lev(a, b) {
+    const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) d[0][j] = j;
+    for (let i = 1; i <= a.length; i++)
+      for (let j = 1; j <= b.length; j++)
+        d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1,
+                           d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1));
+    return d[a.length][b.length];
+  }
+  let path = '/';
+  try { path = decodeURIComponent(location.pathname); } catch (e) { path = location.pathname; }
+  const seg = (path.split('/').filter(Boolean)[0] || '').toLowerCase().replace(/\.html?$/, '');
+
+  let nearest = '/';
+  if (PAGES[seg]) nearest = PAGES[seg];
+  else if (ALIASES[seg]) nearest = ALIASES[seg];
+  else if (seg) {
+    let best = null, bestD = Infinity;
+    for (const k in PAGES) { const d = lev(seg, k); if (d < bestD) { bestD = d; best = k; } }
+    if (bestD <= Math.max(2, Math.floor(seg.length / 3))) nearest = PAGES[best];
+  }
+
+  const shown = path.length > 1 ? path : '/';
+  document.getElementById('typedPath').textContent = shown;
+  document.getElementById('typedPath').title = shown;
+  document.getElementById('nearestPath').textContent = nearest === '/' ? '/ (home)' : nearest;
+  document.getElementById('nearestLink').href = nearest;
+})();
+
+/* ============================================================
+   THE PLATE — two Lorenz trajectories, 10⁻⁵ apart.
+     dx/dt = σ(y − x),  dy/dt = x(ρ − z) − y,  dz/dt = xy − βz
+   Integrated with RK4. Ink accumulates on one canvas (never
+   cleared mid-run, so density builds like an engraving); the
+   moving heads and the divergence note live on a second canvas.
+   Each run lasts ~70 s, then the plate fades and a new pair starts.
+   ============================================================ */
+(function(){
+  const ink = document.getElementById('ink');
+  const live = document.getElementById('live');
+  const plate = ink.parentElement;
+  const ic = ink.getContext('2d');
+  const lc = live.getContext('2d');
+  const tOut = document.getElementById('tOut');
+  const dOut = document.getElementById('dOut');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const SIG = 10, RHO = 28, BETA = 8 / 3, DT = 0.005, STEPS = 7, DELTA0 = 1e-5;
+  const NAVY = '26,42,68', BRASS = '138,106,42', INK = '35,35,31';
+  const THETA = -0.62;                   /* view angle about the z axis */
+  const ct = Math.cos(THETA), st = Math.sin(THETA);
+
+  function deriv(p) {
+    return [SIG * (p[1] - p[0]), p[0] * (RHO - p[2]) - p[1], p[0] * p[1] - BETA * p[2]];
+  }
+  function rk4(p) {
+    const k1 = deriv(p);
+    const k2 = deriv([p[0] + k1[0] * DT / 2, p[1] + k1[1] * DT / 2, p[2] + k1[2] * DT / 2]);
+    const k3 = deriv([p[0] + k2[0] * DT / 2, p[1] + k2[1] * DT / 2, p[2] + k2[2] * DT / 2]);
+    const k4 = deriv([p[0] + k3[0] * DT, p[1] + k3[1] * DT, p[2] + k3[2] * DT]);
+    return [
+      p[0] + DT / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]),
+      p[1] + DT / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]),
+      p[2] + DT / 6 * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2])
+    ];
+  }
+
+  /* fit the projected attractor to the plate once, from a long sample run */
+  let bounds = (function(){
+    let p = [0.1, 0, 0], u0 = Infinity, u1 = -Infinity, v0 = Infinity, v1 = -Infinity;
+    for (let i = 0; i < 24000; i++) {
+      p = rk4(p);
+      if (i < 2000) continue;
+      const u = p[0] * ct - p[1] * st, v = p[2];
+      if (u < u0) u0 = u; if (u > u1) u1 = u; if (v < v0) v0 = v; if (v > v1) v1 = v;
+    }
+    return { u0, u1, v0, v1 };
+  })();
+
+  let W = 0, H = 0, scale = 1, ox = 0, oy = 0, dpr = 1;
+  function size() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    const r = plate.getBoundingClientRect();
+    W = r.width; H = r.height;
+    for (const c of [ink, live]) {
+      c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
+      c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    const narrow = W < 560;
+    const padX = W * 0.07, padTop = H * (narrow ? 0.14 : 0.12), padBot = H * (narrow ? 0.26 : 0.16);
+    const sw = (W - 2 * padX) / (bounds.u1 - bounds.u0);
+    const sh = (H - padTop - padBot) / (bounds.v1 - bounds.v0);
+    scale = Math.min(sw, sh);
+    ox = W / 2 - scale * (bounds.u0 + bounds.u1) / 2;
+    oy = padTop + (H - padTop - padBot) / 2 + scale * (bounds.v0 + bounds.v1) / 2;
+  }
+  function proj(p) { return [ox + scale * (p[0] * ct - p[1] * st), oy - scale * p[2]]; }
+
+  /* run state */
+  let a, b, t, trailA, trailB, split, frames, raf = null;
+  function seed() {
+    /* settle onto the attractor from a slightly different place each run */
+    a = [0.1 + Math.random() * 0.5, Math.random() * 0.5, 0];
+    for (let i = 0; i < 1500 + Math.floor(Math.random() * 1500); i++) a = rk4(a);
+    b = [a[0] + DELTA0, a[1], a[2]];
+    t = 0; frames = 0; split = null;
+    trailA = [proj(a)]; trailB = [proj(b)];
+    ic.clearRect(0, 0, W, H);
+    ink.classList.remove('fading');
+  }
+
+  function dist() {
+    return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+  }
+  function fmt(d) {
+    if (d < 0.001) return d.toExponential(1).replace('e-', '×10⁻').replace(/⁻(\d)/, (m, n) => '⁻' + '⁰¹²³⁴⁵⁶⁷⁸⁹'[n]);
+    return d < 10 ? d.toFixed(3) : d.toFixed(1);
+  }
+
+  /* one frame of integration; inks the new segments */
+  function advance(steps) {
+    const segA = [trailA[trailA.length - 1]], segB = [trailB[trailB.length - 1]];
+    for (let i = 0; i < steps; i++) {
+      a = rk4(a); b = rk4(b); t += DT;
+      segA.push(proj(a)); segB.push(proj(b));
+    }
+    /* brass first, navy over it: while the paths agree you see one
+       navy line; the brass only appears where it has broken away */
+    stroke(segB, BRASS, 0.42);
+    stroke(segA, NAVY, 0.44);
+    trailA.push(...segA.slice(1)); trailB.push(...segB.slice(1));
+    const keep = 90;
+    if (trailA.length > keep) { trailA.splice(0, trailA.length - keep); trailB.splice(0, trailB.length - keep); }
+
+    const d = dist();
+    if (!split && d > 1.6) split = { at: trailA[trailA.length - 1].slice(), t };
+    return d;
+  }
+  function stroke(pts, rgb, alpha) {
+    ic.beginPath();
+    ic.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 1; i < pts.length; i++) ic.lineTo(pts[i][0], pts[i][1]);
+    ic.strokeStyle = `rgba(${rgb},${alpha})`;
+    ic.lineWidth = 0.85;
+    ic.lineJoin = 'round';
+    ic.stroke();
+  }
+
+  /* heads, comet tails, and the note where the paths part */
+  function drawLive() {
+    lc.clearRect(0, 0, W, H);
+    for (const [trail, rgb] of [[trailB, BRASS], [trailA, NAVY]]) {
+      const n = trail.length;
+      for (let i = 1; i < n; i++) {
+        lc.beginPath();
+        lc.moveTo(trail[i - 1][0], trail[i - 1][1]);
+        lc.lineTo(trail[i][0], trail[i][1]);
+        lc.strokeStyle = `rgba(${rgb},${(i / n) * 0.9})`;
+        lc.lineWidth = 1.6;
+        lc.stroke();
+      }
+      const h = trail[n - 1];
+      lc.beginPath(); lc.arc(h[0], h[1], 9, 0, Math.PI * 2);
+      lc.fillStyle = `rgba(${rgb},0.12)`; lc.fill();
+      lc.beginPath(); lc.arc(h[0], h[1], 3.2, 0, Math.PI * 2);
+      lc.fillStyle = `rgb(${rgb})`; lc.fill();
+    }
+    if (split) {
+      /* leader runs outward, away from the dense middle of the plate */
+      const [x, y] = split.at;
+      const dx = x < W / 2 ? -1 : 1, dy = y < H / 2 ? -1 : 1;
+      const reach = Math.min(64, W * 0.09);
+      const lx = x + dx * reach;
+      const ly = Math.max(52, Math.min(H - 78, y + dy * reach));   /* clear of the corner notes */
+      const label = `PATHS PART · t = ${split.t.toFixed(1)}`;
+      lc.font = '500 10.5px "JetBrains Mono", ui-monospace, monospace';
+      const tw = lc.measureText(label).width;
+      /* keep the label on the plate */
+      let tx = dx > 0 ? lx + 18 : lx - 18 - tw;
+      tx = Math.max(10, Math.min(W - tw - 10, tx));
+      lc.strokeStyle = `rgba(${INK},0.6)`;
+      lc.lineWidth = 1;
+      lc.beginPath(); lc.arc(x, y, 7, 0, Math.PI * 2); lc.stroke();
+      lc.beginPath();
+      lc.moveTo(x + dx * 5, y + dy * 5); lc.lineTo(lx, ly);
+      lc.lineTo(dx > 0 ? tx - 6 : tx + tw + 6, ly);
+      lc.stroke();
+      lc.fillStyle = 'rgba(250,249,246,0.92)';
+      lc.fillRect(tx - 5, ly - 9, tw + 10, 18);
+      lc.fillStyle = `rgba(${INK},0.85)`;
+      lc.textAlign = 'left';
+      lc.textBaseline = 'middle';
+      lc.fillText(label, tx, ly + 0.5);
+    }
+  }
+  function readout(d) {
+    tOut.textContent = t.toFixed(2);
+    dOut.textContent = fmt(d);
+  }
+
+  const RUN_FRAMES = 60 * 70;
+  function loop() {
+    const d = advance(STEPS);
+    drawLive();
+    if (frames % 4 === 0) readout(d);
+    frames++;
+    if (frames === RUN_FRAMES) {
+      ink.classList.add('fading');
+      setTimeout(() => { seed(); raf = requestAnimationFrame(loop); }, 1500);
+      return;
+    }
+    raf = requestAnimationFrame(loop);
+  }
+
+  function still() {
+    /* reduced motion: draw a complete run at once */
+    seed();
+    let d = 0;
+    for (let f = 0; f < 1400; f++) d = advance(STEPS);
+    drawLive(); readout(d);
+  }
+
+  function start() {
+    cancelAnimationFrame(raf);
+    size();
+    if (reduce) { still(); return; }
+    seed();
+    raf = requestAnimationFrame(loop);
+  }
+
+  let rt = null, lastW = 0;
+  window.addEventListener('resize', () => {
+    const w = plate.getBoundingClientRect().width;
+    if (Math.abs(w - lastW) < 2) return;      /* ignore mobile URL-bar height jitter */
+    lastW = w;
+    clearTimeout(rt); rt = setTimeout(start, 200);
+  });
+  lastW = plate.getBoundingClientRect().width;
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>
