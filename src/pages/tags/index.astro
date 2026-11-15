@@ -1,0 +1,17 @@
+---
+/* All topics in one place. */
+import Base from '../../layouts/Base.astro';
+import { getTags } from '../../lib/content';
+const tags = await getTags();
+---
+<Base title="Topics" description="Browse Complexity Insights writings and projects by topic.">
+  <header class="page-head">
+    <span class="kicker-inline load-in">Topics</span>
+    <h1 class="load-in d1">Browse by <em>topic.</em></h1>
+  </header>
+  <section class="section">
+    <ul class="tag-cloud">
+      {tags.map((t) => <li><a class="tag" href={`/tags/${t.slug}/`}>{t.name}<span class="count">{t.entries.length}</span></a></li>)}
+    </ul>
+  </section>
+</Base>

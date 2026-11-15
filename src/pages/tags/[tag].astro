@@ -1,0 +1,24 @@
+---
+/* One page per topic tag, listing every writing and project that carries it. */
+import Base from '../../layouts/Base.astro';
+import EntryRow from '../../components/EntryRow.astro';
+import { getTags } from '../../lib/content';
+
+export async function getStaticPaths() {
+  return (await getTags()).map((t) => ({ params: { tag: t.slug }, props: { tag: t } }));
+}
+const { tag } = Astro.props;
+const n = tag.entries.length;
+---
+<Base title={`${tag.name} — Topics`} description={`Writings and projects from Complexity Insights on ${tag.name.toLowerCase()}.`}>
+  <header class="page-head">
+    <span class="kicker-inline load-in"><a href="/tags/">Topics</a></span>
+    <h1 class="load-in d1">{tag.name}</h1>
+    <p class="dek load-in d2">{n} {n === 1 ? 'piece' : 'pieces'} on this topic, newest first.</p>
+  </header>
+  <section class="section">
+    <div class="intel-list">
+      {tag.entries.map((e) => <EntryRow entry={e} showKind />)}
+    </div>
+  </section>
+</Base>

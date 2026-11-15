@@ -1,0 +1,14 @@
+---
+/* One page per writing entry that has body text (see src/content/writings/). */
+import { render } from 'astro:content';
+import Post from '../../layouts/Post.astro';
+import { getWritings, hasPage } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const entries = (await getWritings()).filter(hasPage);
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Post entry={entry}><Content /></Post>

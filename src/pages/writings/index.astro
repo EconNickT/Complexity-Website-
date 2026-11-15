@@ -1,0 +1,97 @@
+---
+/* WRITINGS — the list page. Builds itself from src/content/writings/:
+   · newest piece you can read  → the large lead card
+   · other readable pieces      → "Archive" rows, newest first
+   · pieces with no text yet    → "In the pipeline"                    */
+import Base from '../../layouts/Base.astro';
+import EntryRow from '../../components/EntryRow.astro';
+import FollowColophon from '../../components/FollowColophon.astro';
+import {
+  getWritings, getTags, hrefFor, titleHtml, formatDate, isoDate, readingMinutes, hasPage, tagSlug,
+} from '../../lib/content';
+
+const all = await getWritings();
+const readable = all.filter((e) => hrefFor(e));
+const pipeline = all.filter((e) => !hrefFor(e));
+const [lead, ...rest] = readable;
+// № 001 is the oldest piece; numbers count up from there.
+const num = (e: (typeof all)[number]) => `№ ${String(readable.length - readable.indexOf(e)).padStart(3, '0')}`;
+const tags = (await getTags()).filter((t) => t.entries.some((e) => e.collection === 'writings'));
+const cta = (c?: string) => (c === 'Working paper' ? 'Read the paper' : c === 'Essay' ? 'Read the essay' : 'Read');
+---
+<Base
+  title="Writings"
+  description="Working papers, essays, and case studies on econometrics, complexity economics, and financial systems by Nicholas Thomas."
+  section="writings"
+>
+  <header class="hero">
+    <span class="kicker-inline load-in">Writings</span>
+    <h1 class="load-in d1">Working papers and essays. <em>Methods shown, data cited.</em></h1>
+    <p class="dek load-in d2">Long-form research from Complexity Insights — econometric studies, applied network analysis, and essays on why economies behave like adaptive systems. Every piece states its data, its method, and where it could be wrong.</p>
+  </header>
+
+  {lead && (
+    <section class="section" id="lead">
+      <a class:list={['lead-card', 'reveal', { 'no-cover': !lead.data.cover }]} href={hrefFor(lead)}>
+        {lead.data.cover && (
+          <div class="lead-cover">
+            <img src={lead.data.cover} alt={lead.data.coverAlt ?? ''} loading="lazy" decoding="async" />
+            {lead.data.stat && <div class="stat"><b>{lead.data.stat.value}</b><span>{lead.data.stat.label}</span></div>}
+          </div>
+        )}
+        <div class="lead-body">
+          <div class="lead-tags">
+            <span class="num">{num(lead)}</span>
+            {lead.data.category && <span>{lead.data.category}</span>}
+            {lead.data.tags.length > 0 && <span>{lead.data.tags.join(' · ')}</span>}
+          </div>
+          <h2 set:html={titleHtml(lead.data.title)} />
+          <p class="sub">{lead.data.summary}</p>
+          <div class="lead-foot">
+            <span>
+              {lead.data.date && <time datetime={isoDate(lead.data.date)}>{formatDate(lead.data.date)}</time>}
+              {lead.data.date && hasPage(lead) && ' · '}
+              {hasPage(lead) && `${readingMinutes(lead.body)} min read`}
+              {lead.data.draft && ' · DRAFT'}
+            </span>
+            <span class="lead-go"><span class="txt">{cta(lead.data.category)}</span> <span class="arr" aria-hidden="true">→</span></span>
+          </div>
+        </div>
+      </a>
+    </section>
+  )}
+
+  {rest.length > 0 && (
+    <section class="section" id="archive">
+      <div class="section-head reveal">
+        <div class="label">Archive</div>
+        <h2>Everything published, <em>newest first.</em></h2>
+      </div>
+      <div class="intel-list reveal">
+        {rest.map((e) => <EntryRow entry={e} num={num(e)} />)}
+      </div>
+    </section>
+  )}
+
+  {pipeline.length > 0 && (
+    <section class="section pipeline" id="pipeline">
+      <div class="section-head reveal">
+        <div class="label">In the pipeline</div>
+        <h2>Drafting now. <em>Published when it clears the bar.</em></h2>
+      </div>
+      <div class="intel-list reveal">
+        {pipeline.map((e) => <EntryRow entry={e} />)}
+      </div>
+    </section>
+  )}
+
+  {tags.length > 0 && (
+    <nav class="section browse reveal" aria-label="Browse by topic">
+      <span class="browse-label">Browse by topic</span>
+      {tags.map((t) => <a class="tag" href={`/tags/${t.slug}/`}>{t.name}</a>)}
+      <a class="rss" href="/rss.xml">RSS feed →</a>
+    </nav>
+  )}
+
+  <FollowColophon />
+</Base>

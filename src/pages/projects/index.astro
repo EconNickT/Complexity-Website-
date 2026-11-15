@@ -1,3 +1,15 @@
+---
+/* PROJECTS — the list page. The golf scene and copy are hand-made;
+   the project cards build themselves from src/content/projects/:
+   · unfinished projects (no body text yet) → cards beside the golf scene
+   · projects with a page                   → "Projects" rows underneath   */
+import EntryRow from '../../components/EntryRow.astro';
+import { getProjects, hasPage, hrefFor, titleHtml } from '../../lib/content';
+
+const projects = await getProjects();
+const onTheTee = projects.filter((p) => !hasPage(p));
+const published = projects.filter(hasPage);
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+<style is:inline>
   /* ==============================================================
      V4.2 DESIGN LANGUAGE — see index.html for the master notes.
      Tokens, glass, gradient system and masthead mirror the homepage.
@@ -354,6 +366,47 @@
     .masthead nav { gap: 1.1rem; }
     .tee { padding-top: 10.5rem; }
   }
+
+  /* ---- added for the content-driven lists (mirrors src/styles/site.css) ---- */
+  .tee-copy .work-card + .work-card { margin-top: 1rem; }
+  .shipped { padding-top: 1rem; }
+  .intel-list { display: grid; gap: 0; }
+  .intel-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 90px 160px 1fr auto;
+    gap: 2rem;
+    padding: 1.6rem 0.4rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+    transition: background 0.2s ease, padding 0.2s ease;
+  }
+  a.intel-item::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 100%; bottom: -1px;
+    height: 1px;
+    background: var(--grad-ink);
+    transition: right 0.45s ease;
+  }
+  a.intel-item:hover::after { right: 0; }
+  a.intel-item:hover { background: var(--paper-3); padding-left: 1.2rem; padding-right: 1.2rem; }
+  .intel-item:first-child { border-top: 1px solid var(--rule); }
+  .intel-num { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.08em; }
+  .intel-cat { font-family: var(--sans); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); }
+  .intel-title { font-family: var(--serif); font-size: 1.4rem; line-height: 1.2; color: var(--ink); letter-spacing: -0.005em; }
+  .intel-title em { font-style: italic; }
+  .intel-title .sub { display: block; font-size: 0.95rem; color: var(--muted); margin-top: 0.35rem; font-style: italic; line-height: 1.4; }
+  .intel-meta {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    text-align: right; white-space: nowrap; letter-spacing: 0.05em;
+  }
+  .intel-meta .status-live { color: var(--accent-2); font-weight: 600; }
+  @media (max-width: 700px) {
+    .intel-item { grid-template-columns: auto minmax(0, 1fr); gap: 0.4rem 1.2rem; }
+    .intel-item .intel-title, .intel-item .intel-meta { grid-column: 1 / -1; }
+    .intel-meta { text-align: left; }
+  }
 </style>
 </head>
 <body>
@@ -383,12 +436,18 @@
     <p>Research doesn't ship on a content calendar. New projects land here once they clear the bar — reproducible, documented, worth your time.</p>
     <p class="sub">Finished papers and essays are collected under <a href="/writings/">Writings</a>.</p>
 
-    <div class="work-card">
-      <div class="kind">Market design · Part II</div>
-      <h3>Designing a better job market</h3>
-      <p>Part II simulates a deferred-acceptance clearinghouse against today's open applications, scored on match rank, direct and indirect experience, and income preferences.</p>
-      <div class="foot"><span>Simulation</span><span>In progress</span></div>
-    </div>
+    {onTheTee.map((p) => {
+      const href = hrefFor(p);
+      const Card = href ? 'a' : 'div';
+      return (
+        <Card class="work-card" href={href ?? undefined}>
+          <div class="kind">{p.data.tags[0]}</div>
+          <h3 set:html={titleHtml(p.data.title)} />
+          <p>{p.data.summary}</p>
+          <div class="foot"><span>{p.data.tags.slice(1).join(' · ')}</span><span>{p.data.status}{p.data.draft ? ' · DRAFT' : ''}</span></div>
+        </Card>
+      );
+    })}
   </div>
   <figure class="golf-wrap load-in d2">
     <div class="golf-head"><span>Fig. — Reading the green</span></div>
@@ -464,13 +523,25 @@
     <figcaption class="golf-caption">Perfect read. Perfect pace. The hole had other plans.</figcaption>
   </figure>
 </section>
+
+{published.length > 0 && (
+  <section class="section shipped">
+    <div class="section-head">
+      <div class="label">Projects</div>
+      <h2>In the clubhouse. <em>Documented and reproducible.</em></h2>
+    </div>
+    <div class="intel-list">
+      {published.map((p, i) => <EntryRow entry={p} num={`№ ${String(published.length - i).padStart(3, '0')}`} />)}
+    </div>
+  </section>
+)}
 </main>
 
 <div class="footline">
   <span>© 2026 Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
 </div>
 
-<script>
+<script is:inline>
 /* MASTHEAD — glass on scroll */
 (function(){
   const m = document.querySelector('.masthead');
