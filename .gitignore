@@ -4,3 +4,8 @@
 # Local design playgrounds — experimental mockups, not deployed
 mockup/
 experimental/
+
+# Astro / Node — generated, never edit or commit
+node_modules/
+dist/
+.astro/

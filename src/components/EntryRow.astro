@@ -1,0 +1,29 @@
+---
+/* One row in a list of writings/projects (the "intel list" from the homepage). */
+import { type Entry, hrefFor, titleHtml, formatDate, isoDate } from '../lib/content';
+interface Props { entry: Entry; num?: string; showKind?: boolean }
+const { entry, num, showKind = false } = Astro.props;
+const d = entry.data;
+const href = hrefFor(entry);
+const external = href?.startsWith('http');
+const Tag = href ? 'a' : 'div';
+const isProject = entry.collection === 'projects';
+const cat = showKind
+  ? (isProject ? 'Project' : (d as any).category ?? 'Writing')
+  : (isProject ? d.tags[0] : (d as any).category ?? d.tags[0]) ?? '';
+const status = isProject ? (d as any).status : 'In progress';
+---
+<Tag class="intel-item" href={href ?? undefined} rel={external ? 'noopener' : undefined}>
+  <div class="intel-num">{num ?? '—'}</div>
+  <div class="intel-cat">{cat}</div>
+  <div class="intel-title">
+    <Fragment set:html={titleHtml(d.title)} />
+    <span class="sub">{d.summary}</span>
+  </div>
+  <div class="intel-meta">
+    {href
+      ? (d.date ? <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time> : <span class="status-live">Read →</span>)
+      : status.toUpperCase()}
+    {d.draft && <><br /><span style="color:var(--negative)">DRAFT</span></>}
+  </div>
+</Tag>

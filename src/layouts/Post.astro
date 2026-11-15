@@ -1,0 +1,79 @@
+---
+/* READING PAGE — one calm column, used by every writing and project. */
+import Base from './Base.astro';
+import {
+  type Entry, titleHtml, titleText, formatDate, isoDate, readingMinutes, tagSlug,
+} from '../lib/content';
+
+interface Props { entry: Entry }
+const { entry } = Astro.props;
+const d = entry.data;
+const isProject = entry.collection === 'projects';
+const section = isProject ? 'projects' : 'writings';
+const kicker = isProject ? 'Project' : (d as any).category ?? 'Writing';
+const links = isProject
+  ? ([['Code', (d as any).links?.code], ['Paper', (d as any).links?.paper], ['Data', (d as any).links?.data]] as const).filter(([, u]) => u)
+  : [];
+const originalUrl = !isProject ? (d as any).originalUrl : undefined;
+const originalHost = originalUrl ? new URL(originalUrl).hostname.replace(/^www\./, '') : '';
+---
+<Base
+  title={titleText(d.title)}
+  description={d.summary}
+  section={section}
+  image={d.cover}
+  type="article"
+  published={d.date}
+  noindex={d.draft}
+>
+  <article class="read">
+    <header class="read-head">
+      {d.draft && <div class="draft-flag">Draft · not on the live site</div>}
+      <div class="read-kicker">
+        <a href={`/${section}/`}>{isProject ? 'Projects' : 'Writings'}</a>
+        <span class="sep" aria-hidden="true">/</span>
+        <span>{kicker}</span>
+        {isProject && <span class="status">{(d as any).status}</span>}
+      </div>
+      <h1 set:html={titleHtml(d.title)} />
+      <p class="read-dek">{d.summary}</p>
+      <div class="read-meta">
+        <span class="by">Nicholas Thomas</span>
+        {d.date && <time datetime={isoDate(d.date)}>{formatDate(d.date)}</time>}
+        <span>{readingMinutes(entry.body)} min read</span>
+      </div>
+      {links.length > 0 && (
+        <div class="read-links">
+          {links.map(([label, href]) => (
+            <a class="glass-btn" href={href} target="_blank" rel="noopener">{label} <span aria-hidden="true">↗</span></a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <footer class="read-foot">
+      {originalUrl && (
+        <p class="original">Originally published at <a href={originalUrl} rel="noopener">{originalHost}</a>.</p>
+      )}
+      {d.tags.length > 0 && (
+        <ul class="tag-row" aria-label="Topics">
+          {d.tags.map((t) => <li><a class="tag" href={`/tags/${tagSlug(t)}/`}>{t}</a></li>)}
+        </ul>
+      )}
+      {d.aiUse && (
+        <aside class="ai-note">
+          <div class="ai-label">AI use</div>
+          <p>{d.aiUse}</p>
+        </aside>
+      )}
+      <nav class="read-nav" aria-label="More">
+        <a href={`/${section}/`}><span aria-hidden="true">←</span> All {section}</a>
+        <a href="/rss.xml">RSS</a>
+      </nav>
+    </footer>
+  </article>
+</Base>

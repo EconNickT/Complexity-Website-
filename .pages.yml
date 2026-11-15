@@ -1,0 +1,155 @@
+# ==============================================================
+# PAGES CMS — the writing editor (https://app.pagescms.org)
+# This file tells the editor which fields to show for Writings
+# and Projects. Keep the fields in sync with src/content.config.ts.
+#
+# Only .md files are meant to be edited here. Pieces with
+# interactive charts are .mdx files and are edited as code instead.
+# ==============================================================
+
+media:
+  input: public/images/uploads     # where uploaded images are saved in the repo
+  output: /images/uploads          # the address written into the article
+  rename: safe
+  categories: [image]
+
+components:
+  title:
+    type: string
+    label: Title
+    required: true
+    description: "Wrap one phrase in *asterisks* to set it in italics, e.g. Did the merger *hurt consumers?*"
+  summary:
+    type: text
+    label: Summary
+    required: true
+    description: One or two sentences. Shown under the title, in lists, in search results and on share cards.
+  tags:
+    type: string
+    label: Tags
+    list: true
+    description: Topics, e.g. Econometrics. Each tag gets its own page automatically.
+  aiUse:
+    type: text
+    label: AI use
+    description: "How AI was (or wasn't) used in this piece. Shown in a note at the foot of the page. Leave empty to hide the note."
+  cover:
+    type: image
+    label: Cover image
+    description: Optional. Shown on the Writings lead card and used as the share image (PNG or JPG; SVG covers fall back to the brand share card).
+  coverAlt:
+    type: string
+    label: Cover image description
+    description: One sentence describing the image, for screen readers.
+  ticker:
+    type: string
+    label: Short code
+    description: "Optional. Three letters shown beside the piece on the homepage list, e.g. UCM."
+  draft:
+    type: boolean
+    label: Draft
+    default: true
+    description: "ON = hidden from the live site, lists, RSS and sitemap. Switch OFF to publish."
+  body:
+    type: rich-text
+    label: Body
+    description: "Leave empty for a piece that is announced but not written yet — it is listed without a page of its own."
+    options:
+      format: markdown
+      rename: safe
+
+content:
+  - name: writings
+    label: Writings
+    type: collection
+    path: src/content/writings
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, date, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, component: title }
+      - { name: summary, component: summary }
+      - name: date
+        type: date
+        label: Publish date
+        description: The original publish date (for Substack imports, the date it first went out). Required before a piece with text can go live.
+        options:
+          format: yyyy-MM-dd
+      - name: category
+        type: select
+        label: Category
+        options:
+          values: [Working paper, Essay, Research note, Case study, Market design]
+      - { name: tags, component: tags }
+      - name: originalUrl
+        type: string
+        label: Original URL
+        description: "Optional. Where the piece first appeared (e.g. the Substack link). Shown as 'Originally published at…'."
+      - { name: aiUse, component: aiUse }
+      - { name: cover, component: cover }
+      - { name: coverAlt, component: coverAlt }
+      - { name: ticker, component: ticker }
+      - name: stat
+        type: object
+        label: Headline number
+        description: Optional. A single figure shown over the cover on the lead card, e.g. 13.7M.
+        fields:
+          - { name: value, type: string, label: Number }
+          - { name: label, type: string, label: What it counts }
+      - { name: draft, component: draft }
+      - { name: body, component: body }
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    format: yaml-frontmatter
+    filename:
+      template: "{primary}.md"
+      field: create
+    view:
+      fields: [title, status, draft]
+      primary: title
+      sort: [date, title]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - { name: title, component: title }
+      - { name: summary, component: summary }
+      - name: date
+        type: date
+        label: Date
+        default: ""
+        description: Start or publish date. Can stay empty while the project is only announced; required once it has text.
+        options:
+          format: yyyy-MM-dd
+      - name: status
+        type: select
+        label: Status
+        default: In progress
+        options:
+          values: [In progress, Complete, Ongoing, Paused]
+      - { name: tags, component: tags }
+      - name: links
+        type: object
+        label: Links
+        description: Optional. Full addresses starting with https://
+        fields:
+          - { name: code, type: string, label: Code }
+          - { name: paper, type: string, label: Paper }
+          - { name: data, type: string, label: Data }
+      - { name: aiUse, component: aiUse }
+      - { name: cover, component: cover }
+      - { name: coverAlt, component: coverAlt }
+      - { name: ticker, component: ticker }
+      - { name: draft, component: draft }
+      - { name: body, component: body }

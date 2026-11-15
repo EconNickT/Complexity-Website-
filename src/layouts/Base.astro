@@ -1,0 +1,113 @@
+---
+/* BASE LAYOUT — the shell every templated page shares:
+   <head> tags (title, description, share card), masthead, footer. */
+import '../styles/site.css';
+import { SITE, SHOW_DRAFTS } from '../lib/content';
+
+interface Props {
+  title: string;            // browser tab + share card title
+  description: string;      // search result + share card text
+  section?: 'projects' | 'writings' | 'about';
+  image?: string;           // share image path (falls back to the brand card)
+  type?: 'website' | 'article';
+  published?: Date;
+  noindex?: boolean;
+}
+const { title, description, section, image, type = 'website', published, noindex = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+// Social networks can't show SVG — use the brand card instead.
+const shareImage = image && !image.endsWith('.svg') ? image : SITE.defaultShareImage;
+const shareUrl = new URL(shareImage, SITE.url).href;
+const fullTitle = title === SITE.name ? title : `${title} — ${SITE.name}`;
+const nav = [
+  { href: '/projects/', label: 'Projects', key: 'projects' },
+  { href: '/writings/', label: 'Writings', key: 'writings' },
+  { href: '/about/', label: 'About', key: 'about' },
+  { href: '/#contact', label: 'Contact', key: 'contact' },
+];
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{(noindex || SHOW_DRAFTS) && <meta name="robots" content="noindex" />}
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content={SITE.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={shareUrl} />
+{type === 'article' && published && <meta property="article:published_time" content={published.toISOString()} />}
+{type === 'article' && <meta property="article:author" content={SITE.author} />}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={SITE.twitter} />
+<meta name="twitter:image" content={shareUrl} />
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg" />
+<link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<noscript><style>.reveal, .load-in { opacity: 1 !important; transform: none !important; animation: none !important; }</style></noscript>
+</head>
+<body>
+
+<header class="masthead">
+  <a href="/" class="wordmark">
+    <img class="mark" src="/brand/favicon.svg" alt="" aria-hidden="true" />
+    Complexity Insights
+  </a>
+  <nav aria-label="Primary">
+    {nav.map((n) => (
+      <a href={n.href} class={n.key === section ? 'active' : undefined} aria-current={n.key === section ? 'page' : undefined}>{n.label}</a>
+    ))}
+  </nav>
+</header>
+
+<main>
+  <slot />
+</main>
+
+<div class="footline">
+  <span>© {new Date().getFullYear()} Complexity Insights · Nicholas Thomas · Washington, D.C.</span>
+</div>
+
+<script is:inline>
+/* The only script on templated pages — three small touches, ~1 KB. */
+/* MASTHEAD — glass on scroll */
+(function(){
+  const m = document.querySelector('.masthead');
+  if (!m) return;
+  const onScroll = () => m.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+/* GLASS CARDS — cursor glow tracking */
+document.querySelectorAll('.lead-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+/* SCROLL REVEAL */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const items = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  items.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
