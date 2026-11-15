@@ -11,3 +11,8 @@
 # Retired placeholder pages
 /projects/example-network-analysis.html  /projects/  301
 /writings/why-equilibrium-models-miss-systemic-risk/  /writings/  302
+
+# Banking Deserts is offline while it is being reworked
+/projects/banking-deserts-article.html  /projects/  302
+/projects/banking-deserts    /projects/  302
+/projects/banking-deserts/*  /projects/  302

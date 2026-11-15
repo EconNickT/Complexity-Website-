@@ -22,6 +22,7 @@ const shared = {
   aiUse: text, // how AI was (or wasn't) used — shown at the foot of the page
   cover: text, // image path, e.g. /images/uploads/chart.png
   coverAlt: text,
+  ticker: text, // optional short code shown on the homepage list, e.g. UCM
   draft: z.boolean().default(true), // new pieces stay hidden until this is switched off
 };
 

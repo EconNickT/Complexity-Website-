@@ -1,3 +1,30 @@
+---
+/* HOMEPAGE — hand-made, except the "Writing & research" list near the
+   bottom, which builds itself from src/content/ (writings + projects):
+   · published pieces first, newest at the top, each linking to its page
+   · then pieces still in progress
+   · drafts never appear
+   · a writing and a project with the same file name (the same piece of
+     work seen two ways) are shown once                                  */
+import { getWritings, getProjects, hrefFor, titleHtml, type Entry } from '../lib/content';
+
+const MAX_PUBLISHED = 6;
+const seen = new Set<string>();
+const all: Entry[] = [...(await getWritings()), ...(await getProjects())].filter((e) => {
+  if (seen.has(e.id)) return false;
+  seen.add(e.id);
+  return true;
+});
+const newest = (a: Entry, b: Entry) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0);
+const published = all.filter((e) => hrefFor(e)).sort(newest);
+const inProgress = all.filter((e) => !hrefFor(e));
+const pad = (n: number) => `№ ${String(n).padStart(3, '0')}`;
+// № 001 is the oldest published piece; work in progress continues the count.
+const rows = [
+  ...published.slice(0, MAX_PUBLISHED).map((entry, i) => ({ entry, num: pad(published.length - i), href: hrefFor(entry) })),
+  ...inProgress.map((entry, i) => ({ entry, num: pad(published.length + i + 1), href: null })),
+];
+---
 <!DOCTYPE html>
 <html lang="en" data-direction="archive">
 <head>
@@ -11,10 +38,11 @@
 <meta property="og:site_name" content="Complexity Insights">
 <meta property="og:title" content="Complexity Insights">
 <meta property="og:description" content="An independent research practice applying agent-based modeling, network science, and non-linear dynamics to problems in financial and economic systems.">
-<meta property="og:image" content="https://complexityinsights.com/favicon/android-chrome-512x512.png">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://complexityinsights.com/images/share/default.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@EconNickT">
 <link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<link rel="alternate" type="application/rss+xml" title="Complexity Insights" href="/rss.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -683,11 +711,11 @@
 <section class="hero" id="heroFrame">
   <canvas id="networkCanvas"></canvas>
   <div class="hero-headline-wrap">
-    <div class="hero-headline">
+    <h1 class="hero-headline">
       <span class="kicker-inline load-in">A Research Practice</span>
       <span class="load-in d1" style="display:block">Markets aren't in static equilibrium.</span>
       <em class="load-in d2">Our models shouldn't assume they are.</em>
-    </div>
+    </h1>
   </div>
 </section>
 
@@ -789,41 +817,22 @@
   </div>
 
   <div class="intel-list reveal">
-    <a class="intel-item" href="https://complexityinsights.substack.com/p/did-the-united-continental-merger">
-      <div class="intel-num">№ 001</div>
-      <div class="intel-cat">Econometrics</div>
-      <div class="intel-title">United-Continental Merger Analysis
-        <span class="sub">A difference-in-differences analysis of 13.7 million observations finding the airline merger did not harm consumers.</span>
-      </div>
-      <div class="intel-meta"><span class="ticker-code">UCM</span><br/><span class="status-live">LIVE →</span></div>
-    </a>
-
-    <div class="intel-item">
-      <div class="intel-num">№ 002</div>
-      <div class="intel-cat">Market design</div>
-      <div class="intel-title">Designing a Better Job Market
-        <span class="sub">Why 12,000 people apply for 72 openings, and what it would take to fix it. Part I diagnoses the market; Part II simulates a deferred-acceptance clearinghouse against today's open applications, scored on match rank, direct and indirect experience, and income preferences.</span>
-      </div>
-      <div class="intel-meta"><span class="ticker-code">JMD</span><br/>In progress</div>
-    </div>
-
-    <div class="intel-item">
-      <div class="intel-num">№ 003</div>
-      <div class="intel-cat">Data Pipeline</div>
-      <div class="intel-title">Data Ingestion Project
-        <span class="sub">Creating a multi-layer scraping, cleaning and standardization model to power ABMs.</span>
-      </div>
-      <div class="intel-meta"><span class="ticker-code">DPL</span><br/>In progress · Q4 2026</div>
-    </div>
-
-    <a class="intel-item" href="/projects/banking-deserts-article.html">
-      <div class="intel-num">№ 004</div>
-      <div class="intel-cat">Applied research</div>
-      <div class="intel-title">Banking deserts
-        <span class="sub">Spatial and network analysis of financial-access gaps.</span>
-      </div>
-      <div class="intel-meta"><span class="ticker-code">BNK</span><br/><span class="status-live">LIVE →</span></div>
-    </a>
+    {rows.map(({ entry, num, href }) => {
+      const Row = href ? 'a' : 'div';
+      return (
+        <Row class="intel-item" href={href ?? undefined}>
+          <div class="intel-num">{num}</div>
+          <div class="intel-cat">{entry.data.tags[0] ?? (entry.collection === 'projects' ? 'Project' : 'Writing')}</div>
+          <div class="intel-title"><Fragment set:html={titleHtml(entry.data.title)} />
+            <span class="sub">{entry.data.summary}</span>
+          </div>
+          <div class="intel-meta">
+            <span class="ticker-code">{entry.data.ticker ?? (entry.collection === 'projects' ? 'PROJECT' : 'WRITING')}</span><br/>
+            {href ? <span class="status-live">LIVE →</span> : (entry.collection === 'projects' ? entry.data.status : 'In progress')}
+          </div>
+        </Row>
+      );
+    })}
   </div>
 </section>
 

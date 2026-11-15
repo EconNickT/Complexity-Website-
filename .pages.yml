@@ -41,6 +41,10 @@ components:
     type: string
     label: Cover image description
     description: One sentence describing the image, for screen readers.
+  ticker:
+    type: string
+    label: Short code
+    description: "Optional. Three letters shown beside the piece on the homepage list, e.g. UCM."
   draft:
     type: boolean
     label: Draft
@@ -92,6 +96,7 @@ content:
       - { name: aiUse, component: aiUse }
       - { name: cover, component: cover }
       - { name: coverAlt, component: coverAlt }
+      - { name: ticker, component: ticker }
       - name: stat
         type: object
         label: Headline number
@@ -145,5 +150,6 @@ content:
       - { name: aiUse, component: aiUse }
       - { name: cover, component: cover }
       - { name: coverAlt, component: coverAlt }
+      - { name: ticker, component: ticker }
       - { name: draft, component: draft }
       - { name: body, component: body }
