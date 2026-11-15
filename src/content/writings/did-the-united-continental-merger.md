@@ -1,6 +1,6 @@
 ---
 title: Did the United–Continental merger *hurt consumers?*
-summary: A difference-in-differences analysis of 13.7 million observations finds a small, statistically significant decline in fares — the merger did not harm consumer welfare.
+summary: A difference-in-differences analysis of 13.7 million fare observations, weighing firm and consumer welfare. Fares rose as the market recovered from the recession, but the merger itself does not appear to have harmed consumers.
 date: 2026-09-29
 category: Working paper
 ticker: UCM
